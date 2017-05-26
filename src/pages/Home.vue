@@ -1,8 +1,8 @@
 <template>
-    <article class="home page">
-        <header>
+    <div>
+        <div class="page-header">
             <h1>JVM Metrics</h1>
-        </header>
+        </div>
         <div class="row row-cards-pf">
             <div :class="getColumnClass(card)" v-for="card in cards">
                 <pf-card :title="card.title" :accented="false">
@@ -10,7 +10,7 @@
                 </pf-card>
             </div>
         </div>
-    </article>
+    </div>
 </template>
 
 <script>
