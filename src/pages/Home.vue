@@ -5,7 +5,7 @@
         </header>
         <div class="row row-cards-pf">
             <div :class="getColumnClass(card)" v-for="card in cards">
-                <pf-card :title="card.title">
+                <pf-card :title="card.title" :accented="false">
                     <component :is="card.component" :items="card.items"></component>
                 </pf-card>
             </div>
@@ -112,7 +112,7 @@ export default {
     mounted() {
         const updateTask = () => {
 
-            this.updateMetrics('/metrics?',
+            this.updateMetrics('http://localhost:5000/metrics?',
                 ['jvm_memory_bytes_used', 'jvm_memory_bytes_max'],
                 metrics => {
                     var mappedMetrics = {};

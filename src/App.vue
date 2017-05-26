@@ -19,11 +19,4 @@ export default {
 </script>
 
 <style lang="scss">
-  $line-color: #d1d1d1;
-
-  .page header {
-    border-bottom: 1px solid $line-color;
-    margin-bottom: 25px;
-    padding-bottom: 10px;
-  }
 </style>
