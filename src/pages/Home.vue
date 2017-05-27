@@ -62,9 +62,6 @@ export default {
     destroyed() {
         Util.removeGreyBackground();
     },
-    mounted() {
-        console.log(this.$refs.donut.chart);
-    },
     methods: {
         getColumnClass(card) {
             return 'col-md-' + 3 * card.width;

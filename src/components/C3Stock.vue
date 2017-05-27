@@ -27,6 +27,10 @@ export default {
         tooltipText: {
             type: Function,
             default: d => Math.round(d[0].ratio * 100) + '% ' + d[0].name
+        },
+        chartCallback: {
+            type: Function,
+            default: chart => { }
         }
     },
     mounted() {
@@ -49,6 +53,7 @@ export default {
         }
 
         this.chart = c3.generate(chartData);
+        this.chartCallback(this.chart);
     },
 };
 </script>
