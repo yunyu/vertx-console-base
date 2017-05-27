@@ -17,6 +17,7 @@
 import Card from 'vue-patternfly';
 import UtilizationBarCard from '../cards/UtilizationBarCard.vue'
 import parsePrometheusTextFormat from 'parse-prometheus-text-format';
+import Util from '../util.js';
 
 function formatBytes(bytes, decimals) {
     if (bytes == 0) return '0 Bytes';
@@ -50,6 +51,12 @@ export default {
                 }
             ],
         }
+    },
+    beforeCreate() {
+        Util.addGreyBackground();
+    },
+    destroyed() {
+        Util.removeGreyBackground();
     },
     methods: {
         getColumnClass(card) {
