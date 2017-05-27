@@ -28,6 +28,10 @@ export default {
                 return {};
             },
         },
+        tooltipText: {
+            type: Function,
+            default: d => Math.round(d[0].ratio * 100) + '% ' + d[0].name
+        }
     },
 
     mounted() {
@@ -36,11 +40,7 @@ export default {
         if (this.type === 'donut') {
             chartData = c3ChartDefaults().getDefaultDonutConfig(this.title);
             chartData.tooltip = {
-                contents: function (d) {
-                    return '<span class="donut-tooltip-pf" style="white-space: nowrap;">' +
-                        Math.round(d[0].ratio * 100) + '%' + ' Gbps ' + d[0].name +
-                        '</span>';
-                }
+                contents: d => '<span class="donut-tooltip-pf" style="white-space: nowrap;">' + this.tooltipText(d) + '</span>'
             };
         } else if (this.type === 'bar') {
             chartData = c3ChartDefaults().getDefaultBarConfig(this.categories);
