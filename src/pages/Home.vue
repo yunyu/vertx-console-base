@@ -41,12 +41,6 @@ export default {
                     width: 2,
                     component: UtilizationBarCard,
                     items: [
-                        {
-                            title: 'RAM Usage',
-                            units: 'MB',
-                            value: 8,
-                            total: 24
-                        }
                     ]
                 }
             ],
