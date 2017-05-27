@@ -14,7 +14,8 @@ const router = new VueRouter({
       path: '/',
       component: Home
     }
-  ]
+  ],
+  mode: 'abstract'
 });
 
 new Vue({
@@ -22,3 +23,5 @@ new Vue({
   router,
   render: h => h(App)
 })
+
+router.replace('/');
