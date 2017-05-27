@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import Metrics from './metrics.js';
+
 export default {
   name: 'app',
   data() {
@@ -24,10 +26,16 @@ export default {
     }
   }
 }
+
+Metrics.initialize('/metrics');
 </script>
 
 <style lang="scss">
 .navbar-brand-name {
   line-height: 35px; // Full height
+}
+
+.c3 svg {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
 }
 </style>

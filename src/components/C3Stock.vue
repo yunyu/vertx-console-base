@@ -1,0 +1,58 @@
+<template>
+  <div></div>
+</template>
+
+<script>
+import c3 from 'c3';
+
+export default {
+  name: 'pf-c3-stock',
+
+  props: {
+    type: {
+      type: String,
+      default: 'bar',
+    },
+    title: String,
+    categories: Array,
+    data: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    axis: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+
+  mounted() {
+    const c3ChartDefaults = window.patternfly.c3ChartDefaults;
+    let chartData = {};
+    if (this.type === 'donut') {
+        chartData = c3ChartDefaults().getDefaultDonutConfig(this.title);
+    } else if (this.type === 'bar') {
+        chartData = c3ChartDefaults().getDefaultBarConfig(this.categories);
+    }
+    chartData.bindto = this.$el;
+    chartData.data = this.data;
+    chartData.data.type = this.type;
+    chartData.tooltip = {};
+
+    if (this.title) {
+      chartData[this.type].title = this.title;
+    }
+
+    this.chart = c3.generate(chartData);
+  },
+};
+</script>
+
+<style>
+.c3-tooltip td {
+  color: inherit;
+}
+</style>

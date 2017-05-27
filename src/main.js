@@ -1,11 +1,24 @@
+require('./pf-settings/patternfly-settings.js');
+require('./pf-settings/patternfly-settings-base.js');
+require('./pf-settings/patternfly-settings-charts.js');
+require('./pf-settings/patternfly-settings-colors.js');
+
 import Vue from 'vue'
+
+import C3Wrapper from './components/C3Wrapper.vue';
+import C3Stock from './components/C3Stock.vue';
+
 import VuePatternFly from 'vue-patternfly'
 import VueRouter from 'vue-router';
 import App from './App.vue'
 
 import Home from './pages/Home.vue'
 
+console.log(window);
+
 Vue.use(VuePatternFly);
+Vue.component(C3Wrapper.name, C3Wrapper);
+Vue.component(C3Stock.name, C3Stock);
 Vue.use(VueRouter);
 
 const router = new VueRouter({
