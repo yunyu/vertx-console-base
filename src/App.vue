@@ -27,5 +27,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+.navbar-brand-name {
+  line-height: 35px; // Full height
+}
 </style>
