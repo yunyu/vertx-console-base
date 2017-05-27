@@ -1,77 +1,65 @@
 <template>
-  <div>
-  </div>
+    <div>
+    </div>
 </template>
 
 <script>
 import c3 from 'c3';
 
 export default {
-  name: 'pf-chart',
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    categories: {
-      type: Array,
-      default() {
-        return [];
-      }
-    },
-    type: {
-      type: String,
-      default: 'bar',
-    },
-    data: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-    generated: {
-      type: Function,
-      default() {
-        return () => { };
-      }
-    }
-  },
-  data() {
-    return {
-      chart: undefined
-    }
-  },
-  mounted() {
-    const c3ChartDefaults = window.patternfly.c3ChartDefaults;
-    let config;
-    let mappedType;
-    switch (this.type) {
-      case 'bar':
-        config = c3ChartDefaults().getDefaultBarConfig(this.categories);
-        mappedType = 'bar';
-        break;
-      case 'grouped-bar':
-        config = c3ChartDefaults().getDefaultGroupedBarConfig();
-        mappedType = 'bar';
-        break;
-      case 'donut':
-        config = c3ChartDefaults().getDefaultDonutConfig(this.title);
-        mappedType = 'donut';
-        break;
-    }
-    var donutConfig = config;
-    donutConfig.color = {
-      pattern: ["#EC7A08", "#D1D1D1"]
-    };
-    donutConfig.data = this.data;
-    console.log(JSON.stringify(donutConfig));
+    name: 'pf-c3chart',
 
-    donutConfig.bindto = this.$el;
-    this.chart = c3.generate(donutConfig);
-    this.generated(this.chart);
-  },
-  beforeDestroy() {
-    this.chart.destroy();
-  }
+    props: {
+        type: {
+            type: String,
+            default: 'bar',
+        },
+        title: String,
+        categories: Array,
+        data: {
+            type: Object,
+            default: () => { }
+        },
+        axis: {
+            type: Object,
+            default: () => { }
+        },
+        tooltipText: {
+            type: Function,
+            default: d => Math.round(d[0].ratio * 100) + '% ' + d[0].name
+        },
+        chartCallback: {
+            type: Function,
+            default: chart => { }
+        }
+    },
+    mounted() {
+        const c3ChartDefaults = window.patternfly.c3ChartDefaults;
+        let chartData = {};
+        if (this.type === 'donut') {
+            chartData = c3ChartDefaults().getDefaultDonutConfig(this.title);
+            chartData.tooltip = {
+                contents: d => '<span class="donut-tooltip-pf">' + this.tooltipText(d) + '</span>'
+            };
+        } else if (this.type === 'bar') {
+            chartData = c3ChartDefaults().getDefaultBarConfig(this.categories);
+        }
+
+        chartData.bindto = this.$el;
+        chartData.data = this.data;
+        chartData.data.type = this.type;
+        if (this.title) {
+            chartData[this.type].title = this.title;
+        }
+
+        this.chart = c3.generate(chartData);
+        this.chartCallback(this.chart);
+    },
 };
 </script>
+
+<style>
+.c3-tooltip td {
+    color: inherit;
+}
+</style>

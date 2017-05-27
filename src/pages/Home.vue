@@ -7,7 +7,7 @@
             <div :class="getColumnClass(card)" v-for="card in cards">
                 <pf-card :title="card.title" :accented="false" :showTitlesSeparator="false">
                     <component :is="card.component" :items="card.items"></component>
-                    <pf-c3-stock ref="donut" type="donut" title="used" :data="{
+                    <pf-c3chart ref="donut" type="donut" title="used" :data="{
                     type: 'donut',
                       columns: [
                         ['Used', 123],
@@ -16,7 +16,7 @@
                       groups: [
                         ['used', 'available']
                       ]
-                    }"></pf-c3-stock>
+                    }"></pf-c3chart>
                 </pf-card>
     
             </div>
