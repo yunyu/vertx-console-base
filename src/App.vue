@@ -3,7 +3,15 @@
     <div slot="brand" class="navbar-brand">
       <span class="navbar-brand-name">Vert.x Metrics</span>
     </div>
-    <router-view></router-view>  
+    <template slot="vertical-menu">
+      <router-link tag="li" class="list-group-item" active-class="active" to="/" :exact="true">
+        <a>
+          <span class="list-group-item-value">Overview</span>
+        </a>
+      </router-link>
+    </template>
+  
+    <router-view></router-view>
   </pf-layout>
 </template>
 
@@ -19,4 +27,5 @@ export default {
 </script>
 
 <style lang="scss">
+
 </style>

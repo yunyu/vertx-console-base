@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="page-header">
-            <h1>JVM Metrics</h1>
+            <h1>Overview</h1>
         </div>
         <div class="row row-cards-pf">
             <div :class="getColumnClass(card)" v-for="card in cards">
@@ -52,7 +52,7 @@ export default {
             ],
         }
     },
-    beforeCreate() {
+    created() {
         Util.addGreyBackground();
     },
     destroyed() {
