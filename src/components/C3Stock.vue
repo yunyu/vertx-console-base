@@ -18,37 +18,32 @@ export default {
         categories: Array,
         data: {
             type: Object,
-            default() {
-                return {};
-            },
+            default: () => { }
         },
         axis: {
             type: Object,
-            default() {
-                return {};
-            },
+            default: () => { }
         },
         tooltipText: {
             type: Function,
             default: d => Math.round(d[0].ratio * 100) + '% ' + d[0].name
         }
     },
-
     mounted() {
         const c3ChartDefaults = window.patternfly.c3ChartDefaults;
         let chartData = {};
         if (this.type === 'donut') {
             chartData = c3ChartDefaults().getDefaultDonutConfig(this.title);
             chartData.tooltip = {
-                contents: d => '<span class="donut-tooltip-pf" style="white-space: nowrap;">' + this.tooltipText(d) + '</span>'
+                contents: d => '<span class="donut-tooltip-pf">' + this.tooltipText(d) + '</span>'
             };
         } else if (this.type === 'bar') {
             chartData = c3ChartDefaults().getDefaultBarConfig(this.categories);
         }
+
         chartData.bindto = this.$el;
         chartData.data = this.data;
         chartData.data.type = this.type;
-
         if (this.title) {
             chartData[this.type].title = this.title;
         }
