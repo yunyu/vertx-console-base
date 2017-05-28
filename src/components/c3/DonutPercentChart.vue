@@ -22,6 +22,13 @@ export default {
             return 'donut';
         },
         getC3Data() {
+            if (!this.data.available) {
+                if (this.data.total) {
+                    this.data.available = this.data.total - this.data.used;
+                } else {
+                    throw 'Missing available column'
+                }
+            }
             return {
                 columns: [
                     ['used', this.data.used],
