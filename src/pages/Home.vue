@@ -8,6 +8,7 @@
                 <pf-card :title="card.title" :accented="false" :showTitlesSeparator="false">
                     <component :is="card.component" :items="card.items"></component>
                     <pf-donut-util ref="donut" centerLabelType="used" :data="donutReactivityTest"></pf-donut-util>
+                    <pf-sparkline :data="{units: 'MB used', values: [10, 14, 12, 20, 31, 27, 44, 36, 52, 55, 62, 68, 69, 88, 74, 88, 91]}"></pf-sparkline>
                 </pf-card>
     
             </div>
@@ -67,7 +68,7 @@ export default {
     mounted() {
         setInterval(() => {
             this.donutReactivityTest.used = getRandomInt(100, 150);
-            this.donutReactivityTest.available = getRandomInt(50, 80);
+            this.donutReactivityTest.available = 200 - this.donutReactivityTest.used;
             this.issueDeepUpdates();
         }, 1000);
     },

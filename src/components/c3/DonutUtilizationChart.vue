@@ -10,15 +10,15 @@ export default {
         }
     },
     extends: C3Wrapper,
-    mounted() {
-        this.defaultTooltipContents = this.patternfly.pfGetUtilizationDonutTooltipContentsFn('');
-    },
     methods: {
         getDefaults(chartDefaults) {
             let chartData = chartDefaults().getDefaultDonutConfig('');
-            chartData.tooltip = {
-                contents: d => this.tooltipContents ? this.tooltipContents(d) : this.defaultTooltipContents(d)
-            };
+            chartData.tooltip = {};
+            if (this.tooltipContents) {
+                chartData.tooltip.contents = this.tooltipContents;
+            } else {
+                chartData.tooltip.contents = this.patternfly.pfGetUtilizationDonutTooltipContentsFn('');
+            }
             return chartData;
         },
         getC3Data() {
