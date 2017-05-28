@@ -17,9 +17,11 @@ Vue.use(VueRouter);
 
 import DonutUtilizationChart from './components/c3/DonutUtilizationChart.vue';
 import SparklineChart from './components/c3/SparklineChart.vue';
+import UtilizationTrendChart from './components/c3/UtilizationTrendChart.vue';
 
 Vue.component(DonutUtilizationChart.name, DonutUtilizationChart);
 Vue.component(SparklineChart.name, SparklineChart);
+Vue.component(UtilizationTrendChart.name, UtilizationTrendChart);
 
 const router = new VueRouter({
   routes: [

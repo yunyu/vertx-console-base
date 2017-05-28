@@ -7,8 +7,7 @@
             <div :class="getColumnClass(card)" v-for="card in cards">
                 <pf-card :title="card.title" :accented="false" :showTitlesSeparator="false">
                     <component :is="card.component" :items="card.items"></component>
-                    <pf-donut-util ref="donut" centerLabelType="used" :data="donutReactivityTest"></pf-donut-util>
-                    <pf-sparkline :data="{units: 'MB used', values: [10, 14, 12, 20, 31, 27, 44, 36, 52, 55, 62, 68, 69, 88, 74, 88, 91]}"></pf-sparkline>
+                    <pf-util-trend labelType="used" :data="donutReactivityTest"></pf-util-trend>
                 </pf-card>
     
             </div>
