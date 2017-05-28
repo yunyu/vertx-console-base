@@ -18,9 +18,6 @@ export default {
             };
             return chartData;
         },
-        getC3Type() {
-            return 'donut';
-        },
         getC3Data() {
             if (!this.data.available) {
                 if (this.data.total) {
@@ -33,7 +30,8 @@ export default {
                 columns: [
                     ['used', this.data.used],
                     ['available', this.data.available]
-                ]
+                ],
+                type: 'donut'
             };
         },
         onGenerated() {
