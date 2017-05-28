@@ -5,7 +5,7 @@ require('./pf-settings/patternfly-settings-colors.js');
 
 import Vue from 'vue'
 
-import C3Wrapper from './components/C3Wrapper.vue';
+import DonutPercentChart from './components/c3/DonutPercentChart.vue';
 
 import VuePatternFly from 'vue-patternfly'
 import VueRouter from 'vue-router';
@@ -14,7 +14,7 @@ import App from './App.vue'
 import Home from './pages/Home.vue'
 
 Vue.use(VuePatternFly);
-Vue.component(C3Wrapper.name, C3Wrapper);
+Vue.component(DonutPercentChart.name, DonutPercentChart);
 Vue.use(VueRouter);
 
 const router = new VueRouter({
