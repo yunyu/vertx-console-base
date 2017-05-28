@@ -2,7 +2,7 @@
 import C3Wrapper from './C3Wrapper.vue';
 
 export default {
-    name: 'pf-donut-pct',
+    name: 'pf-donut-util',
     props: {
         centerLabelType: String,
     },
