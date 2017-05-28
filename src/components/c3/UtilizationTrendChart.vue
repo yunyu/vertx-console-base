@@ -1,5 +1,12 @@
 <template>
     <div>
+        <p class="card-pf-utilization-details">
+            <span class="card-pf-utilization-card-details-count">{{ labelType === 'available' ? filledData.used : filledData.available }}</span>
+            <span class="card-pf-utilization-card-details-description">
+                <span class="card-pf-utilization-card-details-line-1">{{ labelType === 'available' ? 'Used' : 'Available' }}</span>
+                <span class="card-pf-utilization-card-details-line-2">of {{ filledData.total + ' ' + filledData.units }}</span>
+            </span>
+        </p>
         <pf-donut-util ref="donut" :centerLabelType="labelType" :data="data">
         </pf-donut-util>
         <pf-sparkline ref="donut" :tooltipContents="sparklineTooltipContents" :data="c3SparklineData"></pf-sparkline>
@@ -44,6 +51,15 @@ export default {
     computed: {
         c3SparklineData() {
             return { values: ['used'].concat(this.timeSeriesData) };
+        },
+        filledData() {
+            const filledData = Object.assign({}, this.data);
+            if (!this.data.available && this.data.total) {
+                filledData.available = this.data.total - this.data.used;
+            } else if (!this.data.total && this.data.available) {
+                filledData.total = this.data.used + this.data.available;
+            }
+            return filledData;
         }
     },
     watch: {

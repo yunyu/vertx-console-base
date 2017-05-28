@@ -50,8 +50,8 @@ export default {
                 }
             ],
             donutReactivityTest: {
-                used: 150,
-                available: 75,
+                used: 0,
+                available: 0,
                 units: 'MB'
             }
         }
@@ -65,11 +65,13 @@ export default {
     },
     */
     mounted() {
-        setInterval(() => {
+        var updateTestData = () => {
             this.donutReactivityTest.used = getRandomInt(100, 150);
             this.donutReactivityTest.available = 200 - this.donutReactivityTest.used;
             this.issueDeepUpdates();
-        }, 1000);
+        };
+        updateTestData();
+        setInterval(updateTestData, 1000);
     },
     methods: {
         getColumnClass(card) {
