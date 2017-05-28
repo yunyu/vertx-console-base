@@ -28,14 +28,13 @@ export default {
     methods: {
         makeTooltipContents() {
             const units = ' ' + this.data.units;
-            console.log(this.labelType);
+            let tooltipFn = null;
             if (this.labelType === 'used' || this.labelType === 'available') {
-                return d => '<span class="c3-tooltip-sparkline">' + d[0] + units + ' Used' + '</span>';
+                tooltipFn = d => '<span class="c3-tooltip-sparkline">' + d[0].value + units + ' Used' + '</span>';
             } else if (this.labelType === 'none') {
-                return d => '';
-            } else {
-                return undefined;
+                tooltipFn = d => '';
             }
+            return { contents: tooltipFn };
         }
     },
     watch: {

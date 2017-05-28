@@ -5,7 +5,7 @@ export default {
     name: 'pf-sparkline',
     props: {
         tooltipContents: {
-            type: Function
+            type: Object
         }
     },
     extends: C3Wrapper,
@@ -18,8 +18,6 @@ export default {
             return chartData;
         },
         getC3Data() {
-            console.log(JSON.stringify(this.data));
-
             return {
                 columns: [
                     this.data.units ? [this.data.units].concat(this.data.values) : this.data.values
