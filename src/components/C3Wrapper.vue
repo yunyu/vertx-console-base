@@ -52,9 +52,7 @@ export default {
     },
     watch: {
         data() {
-            // console.log('updating chartdata')
             this.updateData();
-            // console.log(JSON.stringify(this.chartData.data))
             this.chart.load(this.chartData.data);
         }
     },

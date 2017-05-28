@@ -13,8 +13,6 @@ import App from './App.vue'
 
 import Home from './pages/Home.vue'
 
-console.log(window);
-
 Vue.use(VuePatternFly);
 Vue.component(C3Wrapper.name, C3Wrapper);
 Vue.use(VueRouter);
