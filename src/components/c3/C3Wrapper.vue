@@ -34,17 +34,19 @@ export default {
         data() {
             this.bindData();
             this.chart.load(this.chartData.data);
+            this.onDataUpdated()
         }
     },
     methods: {
-        getC3Type() { },
-        getC3Data() { },
-        getDefaults(chartDefaults) { },
         bindData() {
             this.chartData.data = this.getC3Data();
             this.chartData.data.type = this.getC3Type();
         },
-        onGenerated() { }
+        getC3Type() { },
+        getC3Data() { },
+        getDefaults(chartDefaults) { },
+        onGenerated() { },
+        onDataUpdated() { }
     }
 };
 </script>

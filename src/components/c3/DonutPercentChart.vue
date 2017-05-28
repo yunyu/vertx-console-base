@@ -45,6 +45,9 @@ export default {
                 centerLabelText.big = Math.round(this.data.used / (this.data.used + this.data.available) * 100.0) + '%';
                 centerLabelText.smText = 'of ' + (this.data.used + this.data.available) + ' ' + this.data.units;
             }
+        },
+        onDataUpdated() {
+            
         }
     }
 }
