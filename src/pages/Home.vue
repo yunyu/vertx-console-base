@@ -75,7 +75,7 @@ export default {
     },
     methods: {
         getColumnClass(card) {
-            return 'col-md-' + 3 * card.width;
+            return 'col-md-' + 2 * card.width;
         },
         issueDeepUpdates() {
             // JS limitation: https://github.com/vuejs/vue/issues/2649#issuecomment-266968941
