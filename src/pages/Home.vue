@@ -42,7 +42,7 @@ export default {
         return {
             cards: [
                 {
-                    title: 'Graph Card',
+                    title: 'Java Heap',
                     width: 2,
                     component: UtilizationBarCard,
                     items: [
@@ -59,21 +59,21 @@ export default {
     created() {
         Util.addGreyBackground();
     },
-    destroyed() {
+    beforeDestroy() {
         Util.removeGreyBackground();
     },
     mounted() {
         setInterval(() => {
             this.donutReactivityTest.used = getRandomInt(100, 150);
             this.donutReactivityTest.available = getRandomInt(50, 80);
-            this.runDeepUpdates();
+            this.issueDeepUpdates();
         }, 1000);
     },
     methods: {
         getColumnClass(card) {
             return 'col-md-' + 3 * card.width;
         },
-        runDeepUpdates() {
+        issueDeepUpdates() {
             // JS limitation: https://github.com/vuejs/vue/issues/2649#issuecomment-266968941
             this.donutReactivityTest = Object.assign({}, this.donutReactivityTest);
         }
