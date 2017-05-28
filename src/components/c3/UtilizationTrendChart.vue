@@ -2,7 +2,7 @@
     <div>
         <pf-donut-util ref="donut" :centerLabelType="labelType" :data="data">
         </pf-donut-util>
-        <pf-sparkline ref="donut" :tooltipContents="sparklineTooltipContents" :data="timeSeriesData"></pf-sparkline>
+        <pf-sparkline ref="donut" :tooltipContents="sparklineTooltipContents" :data="c3SparklineData"></pf-sparkline>
     </div>
 </template>
 
@@ -17,11 +17,15 @@ export default {
         data: {
             type: Object,
             default: () => { }
+        },
+        historySize: {
+            type: Number,
+            default: 20
         }
     },
     data() {
         return {
-            timeSeriesData: { units: 'MB used', values: [10, 14, 12, 20, 31, 27, 44, 36, 52, 55, 62, 68, 69, 88, 74, 88, 91] },
+            timeSeriesData: Array(3).fill(this.data.used),
             sparklineTooltipContents: this.makeTooltipContents()
         }
     },
@@ -37,9 +41,18 @@ export default {
             return { contents: tooltipFn };
         }
     },
+    computed: {
+        c3SparklineData() {
+            return { values: ['used'].concat(this.timeSeriesData) };
+        }
+    },
     watch: {
         data() {
-
+            const prev = this.timeSeriesData;
+            prev.push(this.data.used);
+            if (prev.length > this.historySize) {
+                prev.shift();
+            }
         }
     }
 }
