@@ -43,7 +43,7 @@ export default {
             cards: [
                 {
                     title: 'Java Heap',
-                    width: 2,
+                    width: 1,
                     component: UtilizationBarCard,
                     items: [
                     ]
@@ -56,12 +56,14 @@ export default {
             }
         }
     },
+    /*
     created() {
         Util.addGreyBackground();
     },
     beforeDestroy() {
         Util.removeGreyBackground();
     },
+    */
     mounted() {
         setInterval(() => {
             this.donutReactivityTest.used = getRandomInt(100, 150);
