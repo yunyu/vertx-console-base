@@ -7,16 +7,7 @@
             <div :class="getColumnClass(card)" v-for="card in cards">
                 <pf-card :title="card.title" :accented="false" :showTitlesSeparator="false">
                     <component :is="card.component" :items="card.items"></component>
-                    <pf-c3chart ref="donut" type="donut" title="used" :data="{
-                    type: 'donut',
-                      columns: [
-                        ['Used', 123],
-                        ['Available', 74]
-                      ],
-                      groups: [
-                        ['used', 'available']
-                      ]
-                    }"></pf-c3chart>
+                    <pf-c3chart ref="donut" type="donut" title="used" :data="donutReactivityTest"></pf-c3chart>
                 </pf-card>
     
             </div>
@@ -42,6 +33,10 @@ function toFixedNumber(x, base) {
     return Math.round(x * base) / base;
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 export default {
     data() {
         return {
@@ -54,6 +49,16 @@ export default {
                     ]
                 }
             ],
+            donutReactivityTest: {
+                type: 'donut',
+                columns: [
+                    ['Used', 123],
+                    ['Available', 74]
+                ],
+                groups: [
+                    ['used', 'available']
+                ]
+            }
         }
     },
     created() {
@@ -61,6 +66,14 @@ export default {
     },
     destroyed() {
         Util.removeGreyBackground();
+    },
+    mounted() {
+        setInterval(() => {
+            this.donutReactivityTest.columns[0][1] = getRandomInt(100, 150);
+            this.donutReactivityTest.columns[1][1] = getRandomInt(50, 80);
+            // console.log(JSON.stringify(this.donutReactivityTest.columns));
+            // console.log('updated donut data');
+        }, 1000);
     },
     methods: {
         getColumnClass(card) {

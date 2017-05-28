@@ -55,6 +55,11 @@ export default {
         this.chart = c3.generate(chartData);
         this.chartCallback(this.chart);
     },
+    watch: {
+        data() {
+            console.log("data updated")
+        }
+    }
 };
 </script>
 
