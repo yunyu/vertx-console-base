@@ -30,6 +30,7 @@ export default {
             };
         },
         onDataUpdated() {
+            // TODO: Implement workaround for https://github.com/c3js/c3/issues/1097
             this.chart.flow(this.chartData.data);
         }
     }
