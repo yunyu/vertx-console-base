@@ -71,6 +71,7 @@ export default {
         setInterval(() => {
             this.donutReactivityTest.columns[0][1] = getRandomInt(100, 150);
             this.donutReactivityTest.columns[1][1] = getRandomInt(50, 80);
+            this.donutReactivityTest = Object.assign({}, this.donutReactivityTest);
             // console.log(JSON.stringify(this.donutReactivityTest.columns));
             // console.log('updated donut data');
         }, 1000);
