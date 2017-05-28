@@ -7,7 +7,7 @@
             <div :class="getColumnClass(card)" v-for="card in cards">
                 <pf-card :title="card.title" :accented="false" :showTitlesSeparator="false">
                     <component :is="card.component" :items="card.items"></component>
-                    <pf-util-trend labelType="used" :data="donutReactivityTest"></pf-util-trend>
+                    <pf-util-trend labelType="used" donutColor="#EC7A08" :data="donutReactivityTest"></pf-util-trend>
                 </pf-card>
     
             </div>

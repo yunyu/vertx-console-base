@@ -20,6 +20,9 @@ export default {
             } else {
                 chartData.tooltip.contents = this.patternfly.pfGetUtilizationDonutTooltipContentsFn('');
             }
+            if (this.usedColor) {
+                chartData.color.pattern[0] = this.usedColor;
+            }
             return chartData;
         },
         getC3Data() {

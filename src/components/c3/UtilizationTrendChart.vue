@@ -7,7 +7,7 @@
                 <span class="card-pf-utilization-card-details-line-2">of {{ filledData.total + ' ' + filledData.units }}</span>
             </span>
         </p>
-        <pf-donut-util ref="donut" :centerLabelType="labelType" :data="data">
+        <pf-donut-util ref="donut" :centerLabelType="labelType" :usedColor="donutColor" :data="data">
         </pf-donut-util>
         <pf-sparkline ref="donut" :tooltipContents="sparklineTooltipContents" :data="c3SparklineData"></pf-sparkline>
     </div>
@@ -28,7 +28,8 @@ export default {
         historySize: {
             type: Number,
             default: 20
-        }
+        },
+        donutColor: String
     },
     data() {
         return {
