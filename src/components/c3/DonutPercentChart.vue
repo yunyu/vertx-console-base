@@ -8,7 +8,7 @@ export default {
     },
     extends: C3Wrapper,
     mounted() {
-        this.tooltipContents = this.patternfly.pfGetUtilizationDonutTooltipContentsFn(this.data.units);
+        this.tooltipContents = this.patternfly.pfGetUtilizationDonutTooltipContentsFn('');
     },
     methods: {
         getDefaults(chartDefaults) {
@@ -30,13 +30,13 @@ export default {
             };
         },
         onGenerated() {
-            
+            this.updateCenterLabelText();
         },
         onDataUpdated() {
-
+            this.updateCenterLabelText();
         },
-        getCenterLabelText() {
-            let centerLabelText = {};
+        updateCenterLabelText() {
+            let centerLabelText = { big: '', small: '' };
             if (this.centerLabelType === 'used') {
                 centerLabelText.big = this.data.used;
                 centerLabelText.small = this.data.units + ' Used';
@@ -45,9 +45,9 @@ export default {
                 centerLabelText.small = this.data.units + ' Available';
             } else if (this.centerLabelType === 'percent') {
                 centerLabelText.big = Math.round(this.data.used / (this.data.used + this.data.available) * 100.0) + '%';
-                centerLabelText.smText = 'of ' + (this.data.used + this.data.available) + ' ' + this.data.units;
+                centerLabelText.small = 'of ' + (this.data.used + this.data.available) + ' ' + this.data.units;
             }
-            return centerLabelText;
+            this.patternfly.pfSetDonutChartTitle(this.$el, centerLabelText.big, centerLabelText.small);
         }
     }
 }
