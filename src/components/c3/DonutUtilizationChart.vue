@@ -12,7 +12,7 @@ export default {
     },
     methods: {
         getDefaults(chartDefaults) {
-            let chartData = chartDefaults().getDefaultDonutConfig(this.title);
+            let chartData = chartDefaults().getDefaultDonutConfig('');
             chartData.tooltip = {
                 contents: d => this.tooltipContents(d)
             };

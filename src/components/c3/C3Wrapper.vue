@@ -8,7 +8,6 @@ import c3 from 'c3';
 
 export default {
     props: {
-        title: String,
         width: Number,
         height: Number,
         data: {
@@ -24,6 +23,12 @@ export default {
         this.patternfly = window.patternfly;
         this.chartData = this.getDefaults(this.patternfly.c3ChartDefaults);
         this.chartData.bindto = this.$el;
+        if (this.width || this.height) {
+            let size = {};
+            if (this.width) size.width = this.width;
+            if (this.height) size.height = this.height;
+            this.chartData.size = size;
+        }
         this.bindData();
         this.chart = c3.generate(this.chartData);
         this.onGenerated();
