@@ -34,7 +34,7 @@ export default {
         return {
             currentIndex: 0,
             sparklineTooltipContents: this.makeTooltipContents(),
-            c3SparklineData: { indices: [0], values: [0] }
+            c3SparklineData: { indices: [0], values: [this.data.used] }
         }
     },
     methods: {
