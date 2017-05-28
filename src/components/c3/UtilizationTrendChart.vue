@@ -32,7 +32,7 @@ export default {
     },
     data() {
         return {
-            timeSeriesData: Array(3).fill(this.data.used),
+            timeSeriesData: Array(2).fill(this.data.used),
             sparklineTooltipContents: this.makeTooltipContents()
         }
     },
