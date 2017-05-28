@@ -35,29 +35,33 @@ export default {
     },
     mounted() {
         const c3ChartDefaults = window.patternfly.c3ChartDefaults;
-        let chartData = {};
+        this.chartData = {};
         if (this.type === 'donut') {
-            chartData = c3ChartDefaults().getDefaultDonutConfig(this.title);
-            chartData.tooltip = {
+            this.chartData = c3ChartDefaults().getDefaultDonutConfig(this.title);
+            this.chartData.tooltip = {
                 contents: d => '<span class="donut-tooltip-pf">' + this.tooltipText(d) + '</span>'
             };
         } else if (this.type === 'bar') {
-            chartData = c3ChartDefaults().getDefaultBarConfig(this.categories);
+            this.chartData = c3ChartDefaults().getDefaultBarConfig(this.categories);
         }
 
-        chartData.bindto = this.$el;
-        chartData.data = this.data;
-        chartData.data.type = this.type;
-        if (this.title) {
-            chartData[this.type].title = this.title;
-        }
-
-        this.chart = c3.generate(chartData);
+        this.chartData.bindto = this.$el;
+        this.updateData();
+        this.chart = c3.generate(this.chartData);
         this.chartCallback(this.chart);
     },
     watch: {
         data() {
-            console.log("data updated")
+            // console.log('updating chartdata')
+            this.updateData();
+            // console.log(JSON.stringify(this.chartData.data))
+            this.chart.load(this.chartData.data);
+        }
+    },
+    methods: {
+        updateData() {
+            this.chartData.data = this.data;
+            this.chartData.data.type = this.type;
         }
     }
 };
