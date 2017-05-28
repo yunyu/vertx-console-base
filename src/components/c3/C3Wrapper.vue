@@ -8,7 +8,6 @@ import c3 from 'c3';
 
 export default {
     props: {
-        type: String,
         title: String,
         width: Number,
         height: Number,
@@ -35,14 +34,13 @@ export default {
         }
     },
     methods: {
-        getDefaults(chartDefaults) {
-            throw 'Not implemented';
-        },
+        getC3Type() { },
+        getDefaults(chartDefaults) { },
         updateData() {
             this.chartData.data = this.data;
-            this.chartData.data.type = this.type;
+            this.chartData.data.type = this.getC3Type();
         },
-        onGenerated(chart) {}
+        onGenerated(chart) { }
     }
 };
 </script>

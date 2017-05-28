@@ -17,6 +17,9 @@ export default {
                 contents: d => '<span class="donut-tooltip-pf">' + this.tooltipText(d) + '</span>'
             };
             return chartData;
+        },
+        getC3Type() {
+            return 'donut';
         }
     }
 }
