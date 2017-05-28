@@ -18,8 +18,6 @@ export default {
             return chartData;
         },
         getC3Data() {
-            // No support for shifting data, unfortunately
-            // See https://stackoverflow.com/questions/37255628/how-to-have-smooth-horizontal-transition-on-a-c3js-dynamic-chart
             return {
                 x: 'x_',
                 columns: [
@@ -27,7 +25,8 @@ export default {
                     ['y_'].concat(this.data.values)
                 ],
                 type: 'area',
-                length: this.data.retainLength ? 1 : 0
+                length: this.data.retainLength ? 1 : 0,
+                duration: 100
             };
         },
         onDataUpdated() {

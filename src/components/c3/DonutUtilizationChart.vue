@@ -7,7 +7,8 @@ export default {
         centerLabelType: String,
         tooltipContents: {
             type: Function
-        }
+        },
+        usedColor: String
     },
     extends: C3Wrapper,
     methods: {
