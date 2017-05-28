@@ -21,7 +21,8 @@ export default {
         }
     },
     mounted() {
-        this.chartData = this.getDefaults(window.patternfly.c3ChartDefaults);
+        this.patternfly = window.patternfly;
+        this.chartData = this.getDefaults(this.patternfly.c3ChartDefaults);
         this.chartData.bindto = this.$el;
         this.bindData();
         this.chart = c3.generate(this.chartData);

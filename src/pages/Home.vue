@@ -7,7 +7,7 @@
             <div :class="getColumnClass(card)" v-for="card in cards">
                 <pf-card :title="card.title" :accented="false" :showTitlesSeparator="false">
                     <component :is="card.component" :items="card.items"></component>
-                    <pf-donut-pct ref="donut" :data="donutReactivityTest"></pf-donut-pct>
+                    <pf-donut-pct ref="donut" centerLabelType="used" :data="donutReactivityTest"></pf-donut-pct>
                 </pf-card>
     
             </div>

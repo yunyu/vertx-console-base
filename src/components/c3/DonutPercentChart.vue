@@ -4,18 +4,17 @@ import C3Wrapper from './C3Wrapper.vue';
 export default {
     name: 'pf-donut-pct',
     props: {
-        tooltipText: {
-            type: Function,
-            default: (d, units) => Math.round(d[0].ratio * 100) + (units ? ' ' + units : '%') + ' ' + d[0].name
-        },
         centerLabelType: String,
     },
     extends: C3Wrapper,
+    mounted() {
+        this.tooltipContents = this.patternfly.pfGetUtilizationDonutTooltipContentsFn(this.data.units);
+    },
     methods: {
         getDefaults(chartDefaults) {
             let chartData = chartDefaults().getDefaultDonutConfig(this.title);
             chartData.tooltip = {
-                contents: d => '<span class="donut-tooltip-pf">' + this.tooltipText(d, this.data.units) + '</span>'
+                contents: d => this.tooltipContents(d)
             };
             return chartData;
         },
@@ -31,6 +30,7 @@ export default {
             };
         },
         onGenerated() {
+            
         },
         onDataUpdated() {
 
