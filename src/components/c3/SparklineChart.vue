@@ -27,7 +27,7 @@ export default {
                     ['y_'].concat(this.data.values)
                 ],
                 type: 'area',
-                length: 0
+                length: this.data.retainLength ? 1 : 0
             };
         },
         onDataUpdated() {

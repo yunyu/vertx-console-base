@@ -62,7 +62,8 @@ export default {
     },
     watch: {
         data() {
-            this.c3SparklineData = { indices: [++this.currentIndex], values: [this.data.used] };
+            ++this.currentIndex;
+            this.c3SparklineData = { indices: [this.currentIndex], values: [this.data.used], retainLength: this.currentIndex > this.historySize };
         }
     }
 }
