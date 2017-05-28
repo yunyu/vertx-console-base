@@ -50,13 +50,9 @@ export default {
                 }
             ],
             donutReactivityTest: {
-                columns: [
-                    ['Used', 123],
-                    ['Available', 74]
-                ],
-                groups: [
-                    ['used', 'available']
-                ]
+                used: 150,
+                available: 75,
+                units: 'MB'
             }
         }
     },
@@ -68,8 +64,8 @@ export default {
     },
     mounted() {
         setInterval(() => {
-            this.donutReactivityTest.columns[0][1] = getRandomInt(100, 150);
-            this.donutReactivityTest.columns[1][1] = getRandomInt(50, 80);
+            this.donutReactivityTest.used = getRandomInt(100, 150);
+            this.donutReactivityTest.available = getRandomInt(50, 80);
             this.runDeepUpdates();
         }, 1000);
     },

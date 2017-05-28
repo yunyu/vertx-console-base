@@ -27,6 +27,9 @@ export default {
         this.chart = c3.generate(this.chartData);
         this.onGenerated(this.chart);
     },
+    beforeDestroy() {
+        this.chart.destroy();
+    },
     watch: {
         data() {
             this.updateData();
@@ -35,9 +38,10 @@ export default {
     },
     methods: {
         getC3Type() { },
+        getC3DataFor(data) { },
         getDefaults(chartDefaults) { },
         updateData() {
-            this.chartData.data = this.data;
+            this.chartData.data = this.getC3DataFor(this.data);
             this.chartData.data.type = this.getC3Type();
         },
         onGenerated(chart) { }
