@@ -26,6 +26,9 @@ export default {
                 ],
                 type: 'area'
             };
+        },
+        onDataUpdated() {
+            this.chart.load(this.chartData.data);
         }
     }
 }

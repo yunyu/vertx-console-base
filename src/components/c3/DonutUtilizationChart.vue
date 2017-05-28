@@ -39,6 +39,7 @@ export default {
             this.updateCenterLabelText();
         },
         onDataUpdated() {
+            this.chart.load(this.chartData.data);
             this.updateCenterLabelText();
         },
         updateCenterLabelText() {

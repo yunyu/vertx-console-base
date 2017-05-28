@@ -41,7 +41,6 @@ export default {
     watch: {
         data() {
             this.bindData();
-            this.chart.load(this.chartData.data);
             this.onDataUpdated()
         }
     },
