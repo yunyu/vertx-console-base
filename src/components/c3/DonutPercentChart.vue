@@ -22,18 +22,18 @@ export default {
         getC3Type() {
             return 'donut';
         },
-        getC3DataFor(data) {
+        getC3Data() {
             return {
                 columns: [
-                    ['Used', data.used],
-                    ['Available', data.available]
+                    ['Used', this.data.used],
+                    ['Available', this.data.available]
                 ],
                 groups: [
                     ['used', 'available']
                 ]
             };
         },
-        onGenerated(chart) {
+        onGenerated() {
             let centerLabelText = {};
             if (this.centerLabelType === 'used') {
                 centerLabelText.big = this.data.used;

@@ -23,28 +23,28 @@ export default {
     mounted() {
         this.chartData = this.getDefaults(window.patternfly.c3ChartDefaults);
         this.chartData.bindto = this.$el;
-        this.updateData();
+        this.bindData();
         this.chart = c3.generate(this.chartData);
-        this.onGenerated(this.chart);
+        this.onGenerated();
     },
     beforeDestroy() {
         this.chart.destroy();
     },
     watch: {
         data() {
-            this.updateData();
+            this.bindData();
             this.chart.load(this.chartData.data);
         }
     },
     methods: {
         getC3Type() { },
-        getC3DataFor(data) { },
+        getC3Data() { },
         getDefaults(chartDefaults) { },
-        updateData() {
-            this.chartData.data = this.getC3DataFor(this.data);
+        bindData() {
+            this.chartData.data = this.getC3Data();
             this.chartData.data.type = this.getC3Type();
         },
-        onGenerated(chart) { }
+        onGenerated() { }
     }
 };
 </script>
