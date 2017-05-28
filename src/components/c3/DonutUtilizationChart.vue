@@ -5,16 +5,19 @@ export default {
     name: 'pf-donut-util',
     props: {
         centerLabelType: String,
+        tooltipContents: {
+            type: Function
+        }
     },
     extends: C3Wrapper,
     mounted() {
-        this.tooltipContents = this.patternfly.pfGetUtilizationDonutTooltipContentsFn('');
+        this.defaultTooltipContents = this.patternfly.pfGetUtilizationDonutTooltipContentsFn('');
     },
     methods: {
         getDefaults(chartDefaults) {
             let chartData = chartDefaults().getDefaultDonutConfig('');
             chartData.tooltip = {
-                contents: d => this.tooltipContents(d)
+                contents: d => this.tooltipContents ? this.tooltipContents(d) : this.defaultTooltipContents(d)
             };
             return chartData;
         },

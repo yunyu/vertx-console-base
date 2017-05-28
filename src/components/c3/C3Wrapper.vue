@@ -19,8 +19,10 @@ export default {
             default: () => { }
         }
     },
-    mounted() {
+    beforeCreate() {
         this.patternfly = window.patternfly;
+    },
+    mounted() {
         this.chartData = this.getDefaults(this.patternfly.c3ChartDefaults);
         this.chartData.bindto = this.$el;
         if (this.width || this.height) {
