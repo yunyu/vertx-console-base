@@ -71,14 +71,16 @@ export default {
         setInterval(() => {
             this.donutReactivityTest.columns[0][1] = getRandomInt(100, 150);
             this.donutReactivityTest.columns[1][1] = getRandomInt(50, 80);
-            this.donutReactivityTest = Object.assign({}, this.donutReactivityTest);
-            // console.log(JSON.stringify(this.donutReactivityTest.columns));
-            // console.log('updated donut data');
+            this.runDeepUpdates();
         }, 1000);
     },
     methods: {
         getColumnClass(card) {
             return 'col-md-' + 3 * card.width;
+        },
+        runDeepUpdates() {
+            // JS limitation: https://github.com/vuejs/vue/issues/2649#issuecomment-266968941
+            this.donutReactivityTest = Object.assign({}, this.donutReactivityTest);
         }
     }
 }
