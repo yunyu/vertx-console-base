@@ -6,7 +6,7 @@ export default {
     props: {
         tooltipText: {
             type: Function,
-            default: d => Math.round(d[0].ratio * 100) + '% ' + d[0].name
+            default: (d, units) => Math.round(d[0].ratio * 100) + (units ? ' ' + units : '%') + ' ' + d[0].name
         },
         centerLabelType: String,
     },
@@ -15,7 +15,7 @@ export default {
         getDefaults(chartDefaults) {
             let chartData = chartDefaults().getDefaultDonutConfig(this.title);
             chartData.tooltip = {
-                contents: d => '<span class="donut-tooltip-pf">' + this.tooltipText(d) + '</span>'
+                contents: d => '<span class="donut-tooltip-pf">' + this.tooltipText(d, this.data.units) + '</span>'
             };
             return chartData;
         },
@@ -25,15 +25,17 @@ export default {
         getC3Data() {
             return {
                 columns: [
-                    ['Used', this.data.used],
-                    ['Available', this.data.available]
-                ],
-                groups: [
-                    ['used', 'available']
+                    ['used', this.data.used],
+                    ['available', this.data.available]
                 ]
             };
         },
         onGenerated() {
+        },
+        onDataUpdated() {
+
+        },
+        getCenterLabelText() {
             let centerLabelText = {};
             if (this.centerLabelType === 'used') {
                 centerLabelText.big = this.data.used;
@@ -45,9 +47,7 @@ export default {
                 centerLabelText.big = Math.round(this.data.used / (this.data.used + this.data.available) * 100.0) + '%';
                 centerLabelText.smText = 'of ' + (this.data.used + this.data.available) + ' ' + this.data.units;
             }
-        },
-        onDataUpdated() {
-            
+            return centerLabelText;
         }
     }
 }

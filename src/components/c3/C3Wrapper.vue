@@ -42,9 +42,9 @@ export default {
             this.chartData.data = this.getC3Data();
             this.chartData.data.type = this.getC3Type();
         },
+        getDefaults(chartDefaults) { },
         getC3Type() { },
         getC3Data() { },
-        getDefaults(chartDefaults) { },
         onGenerated() { },
         onDataUpdated() { }
     }
