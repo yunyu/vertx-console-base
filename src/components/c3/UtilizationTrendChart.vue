@@ -32,8 +32,9 @@ export default {
     },
     data() {
         return {
-            timeSeriesData: Array(2).fill(this.data.used),
-            sparklineTooltipContents: this.makeTooltipContents()
+            currentIndex: 0,
+            sparklineTooltipContents: this.makeTooltipContents(),
+            c3SparklineData: { indices: [0], values: [0] }
         }
     },
     methods: {
@@ -49,9 +50,6 @@ export default {
         }
     },
     computed: {
-        c3SparklineData() {
-            return { values: ['used'].concat(this.timeSeriesData) };
-        },
         filledData() {
             const filledData = Object.assign({}, this.data);
             if (!this.data.available && this.data.total) {
@@ -64,11 +62,7 @@ export default {
     },
     watch: {
         data() {
-            const prev = this.timeSeriesData;
-            prev.push(this.data.used);
-            if (prev.length > this.historySize) {
-                prev.shift();
-            }
+            this.c3SparklineData = { indices: [++this.currentIndex], values: [this.data.used] };
         }
     }
 }

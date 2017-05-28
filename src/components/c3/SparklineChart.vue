@@ -21,14 +21,17 @@ export default {
             // No support for shifting data, unfortunately
             // See https://stackoverflow.com/questions/37255628/how-to-have-smooth-horizontal-transition-on-a-c3js-dynamic-chart
             return {
+                x: 'x_',
                 columns: [
-                    this.data.units ? [this.data.units].concat(this.data.values) : this.data.values
+                    ['x_'].concat(this.data.indices),
+                    ['y_'].concat(this.data.values)
                 ],
-                type: 'area'
+                type: 'area',
+                length: 0
             };
         },
         onDataUpdated() {
-            this.chart.load(this.chartData.data);
+            this.chart.flow(this.chartData.data);
         }
     }
 }
