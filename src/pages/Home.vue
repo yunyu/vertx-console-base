@@ -50,16 +50,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
 /* Ugly hack */
 
 .match-util-trend .card-pf-body {
@@ -93,7 +83,11 @@ export default {
     data() {
         return {
             requestedMetrics: [],
-            mappedMetrics: null
+            mappedMetrics: null,
+            testSentMetrics: {
+                indices: [1, 2, 3, 4, 5, 6],
+                values: [30, 100, 150, 200, 250, 400]
+            }
         }
     },
     mounted() {
