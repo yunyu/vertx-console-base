@@ -1,3 +1,8 @@
+<template>
+    <div class="line-chart-pf">
+    </div>
+</template>
+
 <script>
 import C3Wrapper from './C3Wrapper.vue';
 
