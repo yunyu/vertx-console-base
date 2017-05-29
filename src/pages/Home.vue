@@ -5,16 +5,16 @@
         </div>
         <div v-if="mappedMetrics">
             <div class="row row-eq-height row-cards-pf">
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticle" :count="parseInt(mappedMetrics.vertx_verticles.metrics.value)" iconClass="fa fa-cubes">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticle" :count="parseInt(getSimpleMetricValue('vertx_verticles'))" iconClass="fa fa-cubes">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" :count="parseInt(mappedMetrics.os_avail_processors.metrics.value)" iconClass="fa fa-microchip">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" :count="parseInt(getSimpleMetricValue('os_avail_processors'))" iconClass="fa fa-microchip">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="parseInt(mappedMetrics['vertx_http_servers_0_0_0_0:8080_open_connections_127_0_0_1'].metrics.value)" iconClass="fa fa-exchange">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="parseInt(getSimpleMetricValue('vertx_http_servers_0_0_0_0:8080_open_connections_127_0_0_1'))" iconClass="fa fa-exchange">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Load Average" :count="mappedMetrics.os_load_average.metrics.value" iconClass="fa fa-hourglass">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Load Average" :count="getSimpleMetricValue('os_load_average')" iconClass="fa fa-hourglass">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
             </div>
@@ -26,9 +26,10 @@
                 </div>
                 <div :class="getColumnClass(1)">
                     <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
-                        <pf-utilization-bar-chart title='Disk I/O' units='I/Ops' :value="450" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
-                        <pf-utilization-bar-chart title='CPU Usage' units='MHz' :value="420" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
-                        <pf-utilization-bar-chart title='Memory' units='GBs' :value="25" :total="100" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <pf-utilization-bar-chart title='Workers' units='threads' 
+                        :value="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_in_use'))" 
+                        :total="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_max_pool_size'))" 
+                        inline :warning="60" :error="85"></pf-utilization-bar-chart>
                     </pf-card>
                 </div>
                 <div :class="getColumnClass(2)">
@@ -38,7 +39,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </template>
 
@@ -51,6 +51,12 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+
+
+
+
+
 
 
 
@@ -138,6 +144,9 @@ export default {
     methods: {
         getColumnClass(width) {
             return 'col-md-' + 3 * width;
+        },
+        getSimpleMetricValue(name) {
+            return this.mappedMetrics[name].metrics.value;
         }
     },
     // TODO switch to configurable computed props
