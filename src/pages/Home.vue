@@ -32,7 +32,7 @@
             </div>
             <div :class="getColumnClass(2)">
                 <pf-card class="match-util-trend" title="Event Bus Messages Sent" :accented="false" :showTitlesSeparator="false">
-                    <pf-single-line :data="testSentMetrics"></pf-single-line>
+                    <pf-single-line height="288" :data="testSentMetrics"></pf-single-line>
                 </pf-card>
             </div>    
         </div>
