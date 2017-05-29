@@ -3,37 +3,39 @@
         <div class="page-header">
             <h1>Overview</h1>
         </div>
-        <div class="row row-eq-height row-cards-pf">
-            <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticle" count="1" iconClass="fa fa-cubes">
-                <span class="pficon pficon-ok"></span>
-            </pf-aggregate-status-card>
-            <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" count="4" iconClass="fa fa-microchip">
-                <span class="pficon pficon-ok"></span>
-            </pf-aggregate-status-card>
-            <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" count="2" iconClass="fa fa-exchange">
-                <span class="pficon pficon-ok"></span>
-            </pf-aggregate-status-card>
-            <pf-aggregate-status-card :class="getColumnClass(1)" title="Pending Messages" count="0" iconClass="fa fa-hourglass">
-                <span class="pficon pficon-ok"></span>
-            </pf-aggregate-status-card>
-        </div>
-        <div class="row row-eq-height row-cards-pf">
-            <div :class="getColumnClass(1)">
-                <pf-card title="Java Heap" :accented="false" :showTitlesSeparator="false">
-                    <pf-util-trend labelType="used" donutColor="#EC7A08" :data="donutReactivityTest"></pf-util-trend>
-                </pf-card>
+        <div v-if="mappedMetrics">
+            <div class="row row-eq-height row-cards-pf">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticle" count="1" iconClass="fa fa-cubes">
+                    <span class="pficon pficon-ok"></span>
+                </pf-aggregate-status-card>
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" count="4" iconClass="fa fa-microchip">
+                    <span class="pficon pficon-ok"></span>
+                </pf-aggregate-status-card>
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" count="2" iconClass="fa fa-exchange">
+                    <span class="pficon pficon-ok"></span>
+                </pf-aggregate-status-card>
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Pending Messages" count="0" iconClass="fa fa-hourglass">
+                    <span class="pficon pficon-ok"></span>
+                </pf-aggregate-status-card>
             </div>
-            <div :class="getColumnClass(1)">
-                <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
-                    <pf-utilization-bar-chart title='Disk I/O' units='I/Ops' :value="450" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
-                    <pf-utilization-bar-chart title='CPU Usage' units='MHz' :value="420" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
-                    <pf-utilization-bar-chart title='Memory' units='GBs' :value="25" :total="100" inline :warning="60" :error="85"></pf-utilization-bar-chart>
-                </pf-card>
-            </div>
-            <div :class="getColumnClass(2)">
-                <pf-card class="match-util-trend" title="Event Bus Messages Sent" :accented="false" :showTitlesSeparator="false">
-                    <pf-single-line :height="288" :data="testSentMetrics"></pf-single-line>
-                </pf-card>
+            <div class="row row-eq-height row-cards-pf">
+                <div :class="getColumnClass(1)">
+                    <pf-card title="Java Heap" :accented="false" :showTitlesSeparator="false">
+                        <pf-util-trend labelType="used" donutColor="#EC7A08" :data="javaHeapUsage"></pf-util-trend>
+                    </pf-card>
+                </div>
+                <div :class="getColumnClass(1)">
+                    <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
+                        <pf-utilization-bar-chart title='Disk I/O' units='I/Ops' :value="450" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <pf-utilization-bar-chart title='CPU Usage' units='MHz' :value="420" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <pf-utilization-bar-chart title='Memory' units='GBs' :value="25" :total="100" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                    </pf-card>
+                </div>
+                <div :class="getColumnClass(2)">
+                    <pf-card class="match-util-trend" title="Event Bus Messages Sent" :accented="false" :showTitlesSeparator="false">
+                        <pf-single-line :height="288" :data="testSentMetrics"></pf-single-line>
+                    </pf-card>
+                </div>
             </div>
         </div>
     </div>
@@ -49,6 +51,8 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+
 
 
 
@@ -68,10 +72,9 @@ import Metrics from '../metrics.js';
 function formatBytes(bytes, decimals) {
     if (bytes == 0) return '0 Bytes';
     var k = 1000,
-        dm = decimals || 2,
         sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
         i = Math.floor(Math.log(bytes) / Math.log(k));
-    return { value: parseFloat((bytes / Math.pow(k, i)).toFixed(dm)), unit: sizes[i] };
+    return { value: parseFloat((bytes / Math.pow(k, i))), unit: sizes[i] };
 }
 
 function toFixedNumber(x, base) {
@@ -86,7 +89,7 @@ export default {
     data() {
         return {
             requestedMetrics: [],
-            mappedMetrics: {}
+            mappedMetrics: null
         }
     },
     mounted() {
@@ -129,16 +132,25 @@ export default {
                 delete mappedMetrics[elName].name;
             }
             this.mappedMetrics = mappedMetrics;
-            console.log(JSON.stringify(this.mappedMetrics, null, 4));
+            // console.log(JSON.stringify(this.mappedMetrics, null, 4));
         });
     },
     methods: {
         getColumnClass(width) {
             return 'col-md-' + 3 * width;
-        },
-        issueDeepUpdates() {
-            // JS limitation: https://github.com/vuejs/vue/issues/2649#issuecomment-266968941
-            this.donutReactivityTest = Object.assign({}, this.donutReactivityTest);
+        }
+    },
+    // TODO switch to configurable computed props
+    computed: {
+        javaHeapUsage() {
+            const heapUsed = parseFloat(this.mappedMetrics['jvm_memory_bytes_used'].metrics.area.heap.value);
+            const heapMax = parseFloat(this.mappedMetrics['jvm_memory_bytes_max'].metrics.area.heap.value);
+            let formatted = formatBytes(heapUsed);
+            return {
+                used: toFixedNumber(formatted.value, 1e2),
+                available: toFixedNumber(heapMax / heapUsed * formatted.value, 1e2),
+                units: formatted.unit
+            }
         }
     }
 }
