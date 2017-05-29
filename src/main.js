@@ -16,10 +16,12 @@ Vue.use(VuePatternFly);
 Vue.use(VueRouter);
 
 import DonutUtilizationChart from './components/c3/DonutUtilizationChart.vue';
+import SingleLineChart from './components/c3/SingleLineChart.vue';
 import SparklineChart from './components/c3/SparklineChart.vue';
 import UtilizationTrendChart from './components/c3/UtilizationTrendChart.vue';
 
 Vue.component(DonutUtilizationChart.name, DonutUtilizationChart);
+Vue.component(SingleLineChart.name, SingleLineChart);
 Vue.component(SparklineChart.name, SparklineChart);
 Vue.component(UtilizationTrendChart.name, UtilizationTrendChart);
 

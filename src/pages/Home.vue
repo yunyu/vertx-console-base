@@ -24,12 +24,17 @@
                 </pf-card>
             </div>
             <div :class="getColumnClass(1)">
-                <pf-card title="Other Statistics" :accented="false" :showTitlesSeparator="false">
+                <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
                     <pf-utilization-bar-chart title='Disk I/O' units='I/Ops' :value="450" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                     <pf-utilization-bar-chart title='CPU Usage' units='MHz' :value="420" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                     <pf-utilization-bar-chart title='Memory' units='GBs' :value="25" :total="100" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                 </pf-card>
             </div>
+            <div :class="getColumnClass(2)">
+                <pf-card class="match-util-trend" title="Event Bus Messages Sent" :accented="false" :showTitlesSeparator="false">
+                    <pf-single-line :data="testSentMetrics"></pf-single-line>
+                </pf-card>
+            </div>    
         </div>
     </div>
     </div>
@@ -40,9 +45,16 @@
     display: flex;
 }
 
-.row-eq-height > .card-pf {
+.row-eq-height>.card-pf {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+
+/* Ugly hack */
+
+.match-util-trend .card-pf-body {
+    height: 308px;
 }
 </style>
 
@@ -84,6 +96,10 @@ export default {
                 used: 0,
                 available: 0,
                 units: 'MB'
+            },
+            testSentMetrics: {
+                indices: [0, 1, 2, 3, 4, 5],
+                values: [30, 100, 150, 200, 250, 400]
             }
         }
     },
