@@ -17,10 +17,17 @@
                 <span class="pficon pficon-ok"></span>
             </pf-aggregate-status-card>
         </div>
-        <div class="row row-cards-pf">
+        <div class="row row-eq-height row-cards-pf">
             <div :class="getColumnClass(1)">
                 <pf-card title="Java Heap" :accented="false" :showTitlesSeparator="false">
                     <pf-util-trend labelType="used" donutColor="#EC7A08" :data="donutReactivityTest"></pf-util-trend>
+                </pf-card>
+            </div>
+            <div :class="getColumnClass(1)">
+                <pf-card title="Other Statistics" :accented="false" :showTitlesSeparator="false">
+                    <pf-utilization-bar-chart title='Disk I/O' units='I/Ops' :value="450" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                    <pf-utilization-bar-chart title='CPU Usage' units='MHz' :value="420" :total="500" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                    <pf-utilization-bar-chart title='Memory' units='GBs' :value="25" :total="100" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                 </pf-card>
             </div>
         </div>
@@ -33,7 +40,7 @@
     display: flex;
 }
 
-.row-eq-height .card-pf {
+.row-eq-height > .card-pf {
     margin-left: 10px;
     margin-right: 10px;
 }
