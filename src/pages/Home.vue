@@ -3,7 +3,7 @@
         <div class="page-header">
             <h1>Overview</h1>
         </div>
-        <div class="row row-cards-pf">
+        <div class="row row-eq-height row-cards-pf">
             <div :class="getColumnClass(1)">
                 <pf-aggregate-status-card title="Deployed Verticle" count="1" iconClass="fa fa-cubes">
                     <span class="pficon pficon-ok"></span>
@@ -37,9 +37,9 @@
 </template>
 
 <style lang="scss">
-    .row-cards-pf .card-pf-aggregate-status {
-        height: 102px;
-    }
+.row-eq-height {
+    display: flex;
+}
 </style>
 
 <script>
