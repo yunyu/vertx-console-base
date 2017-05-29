@@ -38,4 +38,11 @@ Metrics.initialize('/metrics');
 .c3 svg {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
 }
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
 </style>

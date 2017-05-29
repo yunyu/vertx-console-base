@@ -4,16 +4,43 @@
             <h1>Overview</h1>
         </div>
         <div class="row row-cards-pf">
-            <div :class="getColumnClass(card)" v-for="card in cards">
-                <pf-card :title="card.title" :accented="false" :showTitlesSeparator="false">
-                    <component :is="card.component" :items="card.items"></component>
+            <div :class="getColumnClass(1)">
+                <pf-aggregate-status-card title="Deployed Verticle" count="1" iconClass="fa fa-cubes">
+                    <span class="pficon pficon-ok"></span>
+                </pf-aggregate-status-card>
+            </div>
+            <div :class="getColumnClass(1)">
+                <pf-aggregate-status-card title="Available Processors" count="4" iconClass="fa fa-microchip">
+                    <span class="pficon pficon-ok"></span>
+                </pf-aggregate-status-card>
+            </div>
+            <div :class="getColumnClass(1)">
+                <pf-aggregate-status-card title="Open Connections" count="2" iconClass="fa fa-exchange">
+                    <span class="pficon pficon-ok"></span>
+                </pf-aggregate-status-card>
+            </div>
+            <div :class="getColumnClass(1)">
+                <pf-aggregate-status-card title="Pending Messages" count="0" iconClass="fa fa-hourglass">
+                    <span class="pficon pficon-ok"></span>
+                </pf-aggregate-status-card>
+            </div>
+        </div>
+        <div class="row row-cards-pf">
+            <div :class="getColumnClass(1)">
+                <pf-card title="Java Heap" :accented="false" :showTitlesSeparator="false">
                     <pf-util-trend labelType="used" donutColor="#EC7A08" :data="donutReactivityTest"></pf-util-trend>
                 </pf-card>
-    
             </div>
         </div>
     </div>
+    </div>
 </template>
+
+<style lang="scss">
+    .row-cards-pf .card-pf-aggregate-status {
+        height: 102px;
+    }
+</style>
 
 <script>
 import Card from 'vue-patternfly';
@@ -74,8 +101,8 @@ export default {
         setInterval(updateTestData, 1000);
     },
     methods: {
-        getColumnClass(card) {
-            return 'col-md-' + 2 * card.width;
+        getColumnClass(width) {
+            return 'col-md-' + 3 * width;
         },
         issueDeepUpdates() {
             // JS limitation: https://github.com/vuejs/vue/issues/2649#issuecomment-266968941
@@ -84,3 +111,4 @@ export default {
     }
 }
 </script>
+
