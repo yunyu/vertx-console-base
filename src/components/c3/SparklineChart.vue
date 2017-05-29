@@ -3,12 +3,21 @@ import C3Wrapper from './C3Wrapper.vue';
 
 export default {
     name: 'pf-sparkline',
+    extends: C3Wrapper,
     props: {
         tooltipContents: {
             type: Object
+        },
+        maxDisplayed: {
+            type: Number,
+            default: 20
         }
     },
-    extends: C3Wrapper,
+    data() {
+        return {
+            totalDisplayed: 0
+        }
+    },
     methods: {
         getDefaults(chartDefaults) {
             var chartData = chartDefaults().getDefaultSparklineConfig();
@@ -25,7 +34,7 @@ export default {
                     ['y_'].concat(this.data.values)
                 ],
                 type: 'area',
-                length: this.data.retainLength ? 1 : 0,
+                length: ++this.totalDisplayed > this.maxDisplayed ? 1 : 0,
                 duration: 100
             };
         },

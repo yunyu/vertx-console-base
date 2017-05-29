@@ -9,7 +9,7 @@
         </p>
         <pf-donut-util ref="donut" :centerLabelType="labelType" :usedColor="donutColor" :data="data">
         </pf-donut-util>
-        <pf-sparkline ref="donut" :tooltipContents="sparklineTooltipContents" :data="c3SparklineData"></pf-sparkline>
+        <pf-sparkline ref="donut" :tooltipContents="sparklineTooltipContents" :maxDisplayed="historySize" :data="c3SparklineData"></pf-sparkline>
     </div>
 </template>
 
@@ -26,8 +26,7 @@ export default {
             default: () => { }
         },
         historySize: {
-            type: Number,
-            default: 20
+            type: Number
         },
         donutColor: String
     },
@@ -64,7 +63,7 @@ export default {
     watch: {
         data() {
             ++this.currentIndex;
-            this.c3SparklineData = { indices: [this.currentIndex], values: [this.data.used], retainLength: this.currentIndex > this.historySize };
+            this.c3SparklineData = { indices: [this.currentIndex], values: [this.data.used] };
         }
     }
 }

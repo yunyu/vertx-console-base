@@ -14,7 +14,7 @@ export default {
         },
         maxDisplayed: {
             type: Number,
-            default: 60
+            default: 30
         }
     },
     extends: C3Wrapper,

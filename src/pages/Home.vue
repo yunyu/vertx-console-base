@@ -115,7 +115,8 @@ export default {
                             mappedSubMetrics[subMetricKey] = metric;
                             delete mappedSubMetrics[subMetricKey].labels;
                         }
-                        el.metrics = { sharedLblKey: mappedSubMetrics };
+                        el.metrics = {};
+                        el.metrics[sharedLblKey] = mappedSubMetrics;
                     }
                 }
                 let elName = el.name;
