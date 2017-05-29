@@ -5,16 +5,16 @@
         </div>
         <div v-if="mappedMetrics">
             <div class="row row-eq-height row-cards-pf">
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticle" count="1" iconClass="fa fa-cubes">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticle" :count="parseInt(mappedMetrics.vertx_verticles.metrics.value)" iconClass="fa fa-cubes">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" :count="mappedMetrics.os_avail_processors.metrics.value" iconClass="fa fa-microchip">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" :count="parseInt(mappedMetrics.os_avail_processors.metrics.value)" iconClass="fa fa-microchip">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" count="2" iconClass="fa fa-exchange">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="parseInt(mappedMetrics['vertx_http_servers_0_0_0_0:8080_open_connections_127_0_0_1'].metrics.value)" iconClass="fa fa-exchange">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Pending Messages" count="0" iconClass="fa fa-hourglass">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Load Average" :count="mappedMetrics.os_load_average.metrics.value" iconClass="fa fa-hourglass">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
             </div>
