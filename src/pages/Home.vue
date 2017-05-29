@@ -8,7 +8,7 @@
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticle" count="1" iconClass="fa fa-cubes">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" count="4" iconClass="fa fa-microchip">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" :count="mappedMetrics.os_avail_processors.metrics.value" iconClass="fa fa-microchip">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" count="2" iconClass="fa fa-exchange">
@@ -143,12 +143,12 @@ export default {
     // TODO switch to configurable computed props
     computed: {
         javaHeapUsage() {
-            const heapUsed = parseFloat(this.mappedMetrics['jvm_memory_bytes_used'].metrics.area.heap.value);
-            const heapMax = parseFloat(this.mappedMetrics['jvm_memory_bytes_max'].metrics.area.heap.value);
+            const heapUsed = parseFloat(this.mappedMetrics.jvm_memory_bytes_used.metrics.area.heap.value);
+            const heapMax = parseFloat(this.mappedMetrics.jvm_memory_bytes_max.metrics.area.heap.value);
             let formatted = formatBytes(heapUsed);
             return {
                 used: toFixedNumber(formatted.value, 1e2),
-                available: toFixedNumber(heapMax / heapUsed * formatted.value, 1e2),
+                total: toFixedNumber(heapMax / heapUsed * formatted.value, 1e2),
                 units: formatted.unit
             }
         }

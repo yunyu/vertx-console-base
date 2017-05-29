@@ -27,7 +27,7 @@ export default {
   }
 }
 
-Metrics.initialize('/metrics');
+Metrics.initialize('http://twitterwall.yunyul.in/metrics');
 </script>
 
 <style lang="scss">
