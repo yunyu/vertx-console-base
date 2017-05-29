@@ -15,7 +15,8 @@ export default {
     },
     data() {
         return {
-            totalDisplayed: 0
+            totalDisplayed: 0,
+            flowBuffer: []
         }
     },
     methods: {
@@ -39,8 +40,17 @@ export default {
             };
         },
         onDataUpdated() {
-            // TODO: Implement workaround for https://github.com/c3js/c3/issues/1097
-            this.chart.flow(this.chartData.data);
+            if (document.hidden) {
+                this.flowBuffer.push(this.chartData.data);
+                while (this.flowBuffer.length > this.maxDisplayed) {
+                    this.flowBuffer.shift();
+                }
+            } else {
+                while (this.flowBuffer.length > 0) {
+                    this.chart.flow(this.flowBuffer.shift());
+                }
+                this.chart.flow(this.chartData.data);
+            }
         }
     }
 }
