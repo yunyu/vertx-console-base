@@ -11,9 +11,18 @@ export default {
     props: {
         tooltipContents: {
             type: Object
+        },
+        maxDisplayed: {
+            type: Number,
+            default: 60
         }
     },
     extends: C3Wrapper,
+    data() {
+        return {
+            totalDisplayed: 0
+        }
+    },
     methods: {
         getDefaults(chartDefaults) {
             var chartData = chartDefaults().getDefaultSingleLineConfig();
@@ -38,7 +47,7 @@ export default {
                     ['y_'].concat(this.data.values)
                 ],
                 type: 'line',
-                length: this.data.retainLength ? 1 : 0,
+                length: ++this.totalDisplayed > this.maxDisplayed ? 1 : 0,
                 duration: 100
             };
         },
