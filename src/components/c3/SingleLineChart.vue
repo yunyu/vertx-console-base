@@ -20,6 +20,14 @@ export default {
             if (this.tooltipContents) {
                 chartData.tooltip = this.tooltipContents;
             }
+            chartData.axis = {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%H:%M:%S'
+                    }
+                }
+            };
             return chartData;
         },
         getC3Data() {

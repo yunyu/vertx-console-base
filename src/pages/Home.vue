@@ -30,8 +30,8 @@
                     </pf-card>
                 </div>
                 <div :class="getColumnClass(2)">
-                    <pf-card class="match-util-trend" title="Event Bus Messages Sent" :accented="false" :showTitlesSeparator="false">
-                        <pf-single-line :height="288" :data="testSentMetrics"></pf-single-line>
+                    <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
+                        <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
                     </pf-card>
                 </div>
             </div>
@@ -48,6 +48,7 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
 
 
 /* Ugly hack */
@@ -83,11 +84,7 @@ export default {
     data() {
         return {
             requestedMetrics: [],
-            mappedMetrics: null,
-            testSentMetrics: {
-                indices: [1, 2, 3, 4, 5, 6],
-                values: [30, 100, 150, 200, 250, 400]
-            }
+            mappedMetrics: null
         }
     },
     mounted() {
@@ -138,6 +135,7 @@ export default {
             return 'col-md-' + 3 * width;
         },
         getSimpleMetricValue(name) {
+            // console.log(name);
             return this.mappedMetrics[name].metrics.value;
         }
     },
@@ -151,6 +149,12 @@ export default {
                 used: toFixedNumber(formatted.value, 1e2),
                 total: toFixedNumber(heapMax / heapUsed * formatted.value, 1e2),
                 units: formatted.unit
+            }
+        },
+        eventBusMessages() {
+            return {
+                indices: [new Date()],
+                values: [parseInt(this.getSimpleMetricValue('vertx_eventbus_messages_published_total'))]
             }
         }
     }
