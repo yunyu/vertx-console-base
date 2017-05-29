@@ -34,7 +34,7 @@
                 <pf-card class="match-util-trend" title="Event Bus Messages Sent" :accented="false" :showTitlesSeparator="false">
                     <pf-single-line :height="288" :data="testSentMetrics"></pf-single-line>
                 </pf-card>
-            </div>    
+            </div>
         </div>
     </div>
     </div>
@@ -51,6 +51,7 @@
 }
 
 
+
 /* Ugly hack */
 
 .match-util-trend .card-pf-body {
@@ -62,6 +63,7 @@
 import Card from 'vue-patternfly';
 import UtilizationBarCard from '../cards/UtilizationBarCard.vue'
 import Util from '../util.js';
+import Metrics from '../metrics.js';
 
 function formatBytes(bytes, decimals) {
     if (bytes == 0) return '0 Bytes';
@@ -83,42 +85,52 @@ function getRandomInt(min, max) {
 export default {
     data() {
         return {
-            cards: [
-                {
-                    title: 'Java Heap',
-                    width: 1,
-                    component: UtilizationBarCard,
-                    items: [
-                    ]
-                }
-            ],
-            donutReactivityTest: {
-                used: 0,
-                available: 0,
-                units: 'MB'
-            },
-            testSentMetrics: {
-                indices: [0, 1, 2, 3, 4, 5],
-                values: [30, 100, 150, 200, 250, 400]
-            }
+            requestedMetrics: [],
+            mappedMetrics: {}
         }
     },
-    /*
-    created() {
-        Util.addGreyBackground();
-    },
-    beforeDestroy() {
-        Util.removeGreyBackground();
-    },
-    */
     mounted() {
-        var updateTestData = () => {
-            this.donutReactivityTest.used = getRandomInt(100, 150);
-            this.donutReactivityTest.available = 200 - this.donutReactivityTest.used;
-            this.issueDeepUpdates();
-        };
-        updateTestData();
-        setInterval(updateTestData, 1000);
+        Metrics.addCallback(metrics => {
+            let mappedMetrics = {};
+            for (let el of metrics) {
+                if (el.metrics.length === 1) {
+                    el.metrics = el.metrics[0];
+                } else if (el.metrics.length > 1) {
+                    let sharedLblKey = null;
+                    for (let metric of el.metrics) {
+                        if (!metric.labels) {
+                            sharedLblKey = null;
+                            break;
+                        }
+                        let lblKeys = Object.keys(metric.labels);
+                        if (lblKeys.length !== 1) {
+                            sharedLblKey = null;
+                            break;
+                        } else if (sharedLblKey === null) {
+                            sharedLblKey = lblKeys[0];
+                        } else if (sharedLblKey != lblKeys[0]) {
+                            sharedLblKey = null;
+                            break;
+                        }
+                    }
+                    if (sharedLblKey !== null) {
+                        let mappedSubMetrics = {};
+                        for (let metric of el.metrics) {
+                            let subMetricKey = metric.labels[sharedLblKey];
+                            mappedSubMetrics[subMetricKey] = metric;
+                            delete mappedSubMetrics[subMetricKey].labels;
+                        }
+                        el.metrics = {};
+                        el.metrics[sharedLblKey] = mappedSubMetrics;
+                    }
+                }
+                let elName = el.name
+                mappedMetrics[elName] = el;
+                delete mappedMetrics[elName].name;
+            }
+            this.mappedMetrics = mappedMetrics;
+            console.log(JSON.stringify(this.mappedMetrics, null, 4));
+        });
     },
     methods: {
         getColumnClass(width) {

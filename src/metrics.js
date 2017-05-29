@@ -3,6 +3,7 @@ import parsePrometheusTextFormat from 'parse-prometheus-text-format';
 const subscribed = new Set();
 let url = null;
 let metrics = {};
+let callbacks = [];
 
 function updateMetrics() {
     var params = '?' + Array.from(subscribed).map(el => 'name[]=' + el).join('&');
@@ -11,7 +12,9 @@ function updateMetrics() {
     xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             metrics = parsePrometheusTextFormat(xhr.responseText);
-            // console.log(JSON.stringify(metrics, null, 4));
+            for (let cb of callbacks) {
+                cb(metrics.map(el => Object.assign({}, el)));
+            }
         }
     };
     xhr.send();
@@ -30,7 +33,11 @@ export default {
     },
     initialize(endpoint) {
         url = endpoint;
+        console.log(endpoint);
         updateMetrics();
         setInterval(updateMetrics, 1000);
+    },
+    addCallback(cb) {
+        callbacks.push(cb);
     }
 }
