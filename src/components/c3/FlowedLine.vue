@@ -23,8 +23,13 @@ export default {
             if (!this.chart || !this.chartData) {
                 return;
             }
-            this.chart.internal.fn.isTabVisible = () => true;
+            const origDuration = this.chart.internal.config.transition_duration;
+            if (document.hidden) {
+                this.chart.internal.config.transition_duration = 0;
+                this.chartData.data.duration = 0;
+            }
             this.chart.flow(this.chartData.data);
+            this.chart.internal.config.transition_duration = origDuration;
         }
     }
 }
