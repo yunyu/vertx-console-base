@@ -26,8 +26,10 @@ export default {
                 this.chart.destroy();
                 this.chart = null;
             } else if (!hidden && this.prevHidden) {
-                console.log('RESUMING')
+                this.chartData.data = Object.assign({}, this.chartData.data);
                 this.chartData.data.columns = [];
+                console.log('RESUMING ' + JSON.stringify(this.chartData.data));
+
                 this.chart = c3.generate(this.chartData);
 
                 const origDuration = this.chart.internal.config.transition_duration;
@@ -39,6 +41,7 @@ export default {
                     bufItem.length = 0;
                     bufItem.duration = 0;
                     this.chart.flow(bufItem);
+                    console.log(JSON.stringify(bufItem));
                 }
 
                 this.chart.internal.config.transition_duration = origDuration;
