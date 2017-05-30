@@ -38,7 +38,7 @@ export default {
                     if (!existingKey) {
                         byLength.set(itemLen, bufItem);
                     } else {
-                        for (let i = 0; i < existingKey.columns.length; i++) {
+                        for (let i = 0; i < existingKey.columns.length; ++i) {
                             existingKey.columns[i] = existingKey.columns[i].concat(bufItem.columns[i].slice(-1));
                         }
                         existingKey.length += bufItem.length;
