@@ -32,7 +32,7 @@ export default {
                 const byLength = new Map();
                 while (this.flowBuffer.length > 0) {
                     let bufItem = this.flowBuffer.shift();
-                    let itemLen = bufItem['length']; // Babel messes this up a bit
+                    let itemLen = bufItem.length; 
                     let existingKey = byLength.get(itemLen);
                     if (!existingKey) {
                         byLength.set(itemLen, bufItem);
