@@ -35,7 +35,7 @@ export default {
                     ['y_'].concat(this.data.values)
                 ],
                 type: 'area',
-                length: this.totalDisplayed++ > this.maxDisplayed ? 1 : 0,
+                length: ++this.totalDisplayed > this.maxDisplayed ? 1 : 0,
                 duration: 100
             };
         },

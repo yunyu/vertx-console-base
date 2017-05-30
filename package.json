@@ -9,6 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress"
   },
   "dependencies": {
+    "c3": "0.4.12",
     "dot-access": "^1.0.0",
     "parse-prometheus-text-format": "^1.0.4",
     "vue": "^2.2.1",

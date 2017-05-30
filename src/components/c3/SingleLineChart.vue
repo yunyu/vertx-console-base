@@ -53,16 +53,24 @@ export default {
             };
         },
         onDataUpdated() {
-            if (document.hidden) {
-                this.flowBuffer.push(this.chartData.data);
-                while (this.flowBuffer.length > this.maxDisplayed) {
-                    this.flowBuffer.shift();
+            if (this.chart && this.chartData) {
+                if (document.hidden) {
+                    this.flowBuffer.push(this.chartData.data);
+                    while (this.flowBuffer.length > this.maxDisplayed) {
+                        this.flowBuffer.shift();
+                    }
+                } else {
+                    let i = 0;
+                    while (this.flowBuffer.length > 0) {
+                        var dataToFlow = this.flowBuffer.shift();
+                        dataToFlow.duration = 0;
+                        console.log(i);
+                        console.log(JSON.stringify(dataToFlow));
+                        this.chart.flow(dataToFlow);
+                        ++i;
+                    }
+                    this.chart.flow(this.chartData.data);
                 }
-            } else {
-                while (this.flowBuffer.length > 0) {
-                    this.chart.flow(this.flowBuffer.shift());
-                }
-                this.chart.flow(this.chartData.data);
             }
         }
     }

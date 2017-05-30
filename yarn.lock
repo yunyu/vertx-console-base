@@ -839,6 +839,12 @@ bytes@2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.3.0.tgz#d5b680a165b6201739acb611542aabc2d8ceb070"
 
+c3@0.4.12:
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/c3/-/c3-0.4.12.tgz#58f6250c2b5925b61a930a7b7b383fb8f58f623f"
+  dependencies:
+    d3 "~3.5.0"
+
 c3@^0.4.11, c3@~0.4.11:
   version "0.4.11"
   resolved "https://registry.yarnpkg.com/c3/-/c3-0.4.11.tgz#3f2b6c7bd33577a3473dd61176735565b4d0f3ce"
