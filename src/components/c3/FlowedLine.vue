@@ -1,5 +1,6 @@
 <script>
 import C3Wrapper from './C3Wrapper.vue';
+const msBetweenFlows = 50;
 
 export default {
     extends: C3Wrapper,
@@ -33,7 +34,7 @@ export default {
                 const byLength = new Map();
                 while (this.flowBuffer.length > 0) {
                     let bufItem = this.flowBuffer.shift();
-                    let itemLen = bufItem.length; 
+                    let itemLen = bufItem.length;
                     let existingKey = byLength.get(itemLen);
                     if (!existingKey) {
                         byLength.set(itemLen, bufItem);
@@ -47,7 +48,8 @@ export default {
                 // console.log(JSON.stringify([...byLength], null, 4));
                 let i = 0;
                 for (let [key, toFlow] of byLength) {
-                    setTimeout(() => this.chart.flow(toFlow), i * 320);
+                    setTimeout(() => this.chart.flow(toFlow), i * msBetweenFlows);
+                    ++i;
                 }
             } else {
                 // console.log('hitting standard flow codepath')
