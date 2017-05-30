@@ -27,14 +27,21 @@ export default {
                 this.chart = null;
             } else if (!hidden && this.prevHidden) {
                 console.log('RESUMING')
-                const tmpBuffer = this.buffer.slice();
                 this.chartData.data.columns = [];
                 this.chart = c3.generate(this.chartData);
+
+                const origDuration = this.chart.internal.config.transition_duration;
+                this.chart.internal.config.transition_duration = 0;
+
+                const tmpBuffer = this.buffer.slice();
                 while (tmpBuffer.length > 0) {
                     let bufItem = tmpBuffer.shift();
                     bufItem.length = 0;
+                    bufItem.duration = 0;
                     this.chart.flow(bufItem);
                 }
+
+                this.chart.internal.config.transition_duration = origDuration;
             } else if (this.chart) {
                 this.chart.flow(this.chartData.data);
             }
