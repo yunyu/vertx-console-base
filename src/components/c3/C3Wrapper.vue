@@ -25,6 +25,8 @@ export default {
     mounted() {
         this.totalDisplayed = 0;
         this.buffer = [];
+        this.prevHidden = false;
+        
         this.chartData = this.getDefaults(this.patternfly.c3ChartDefaults);
         this.chartData.bindto = this.$el;
         if (this.width || this.height) {
