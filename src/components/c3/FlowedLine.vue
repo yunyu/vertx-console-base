@@ -12,7 +12,6 @@ export default {
     data() {
         return {
             totalDisplayed: 0,
-            prevHidden: false,
             buffer: []
         }
     },
@@ -31,11 +30,9 @@ export default {
             }
 
             // Workaround for https://github.com/c3js/c3/issues/1097
-            const hidden = document.hidden;
-            if (hidden || this.prevHidden) {
-                this.prevHidden = hidden;
+            if (document.hidden) {
                 let tmpBuffer = this.buffer.slice();
-                let firstEl = tmpBuffer.shift();
+                let firstEl = { columns: tmpBuffer.shift().columns };
                 while (tmpBuffer.length > 0) {
                     let bufItem = tmpBuffer.shift();
                     for (let i = 0; i < firstEl.columns.length; ++i) {

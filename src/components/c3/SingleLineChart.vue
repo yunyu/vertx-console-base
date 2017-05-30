@@ -13,7 +13,7 @@ export default {
             type: Object
         },
         maxDisplayed: {
-            default: 30
+            default: 10
         }
     },
     extends: FlowedLine,
