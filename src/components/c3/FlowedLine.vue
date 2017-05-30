@@ -21,10 +21,7 @@ export default {
 
             var hidden = document.hidden;
 
-            if (true || !hidden && this.prevHidden) {
-                const origDuration = this.chart.internal.config.transition_duration;
-                this.chart.internal.config.transition_duration = 0;
-
+            if (!hidden && this.buffer.length > 0) {
                 let tmpBuffer = this.buffer.slice();
                 let firstEl = { columns: tmpBuffer.shift().columns };
                 while (tmpBuffer.length > 0) {
@@ -33,11 +30,11 @@ export default {
                         firstEl.columns[i] = firstEl.columns[i].concat(bufItem.columns[i].slice(-1));
                     }
                 }
-                this.chart.load(firstEl);
 
+                const origDuration = this.chart.internal.config.transition_duration;
+                this.chart.internal.config.transition_duration = 0;
+                this.chart.load(firstEl);
                 this.chart.internal.config.transition_duration = origDuration;
-            } else if (this.chart) {
-                this.chart.flow(this.chartData.data);
             }
 
             this.prevHidden = hidden;
