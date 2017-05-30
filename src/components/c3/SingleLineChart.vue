@@ -13,7 +13,7 @@ export default {
             type: Object
         },
         maxDisplayed: {
-            default: 10
+            default: 15
         }
     },
     extends: FlowedLine,
@@ -31,6 +31,7 @@ export default {
                     }
                 }
             };
+            chartData.transition = { duration: 100 };
             return chartData;
         },
         getC3Data() {

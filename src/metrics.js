@@ -33,7 +33,6 @@ export default {
     },
     initialize(endpoint) {
         url = endpoint;
-        console.log(endpoint);
         updateMetrics();
         setInterval(updateMetrics, 1000);
     },

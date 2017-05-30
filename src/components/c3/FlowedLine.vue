@@ -30,7 +30,8 @@ export default {
             }
 
             // Workaround for https://github.com/c3js/c3/issues/1097
-            if (document.hidden) {
+            const hidden = document.hidden;
+            if (hidden) {
                 let tmpBuffer = this.buffer.slice();
                 let firstEl = { columns: tmpBuffer.shift().columns };
                 while (tmpBuffer.length > 0) {

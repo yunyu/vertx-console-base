@@ -18,6 +18,7 @@ export default {
             if (this.tooltipContents) {
                 chartData.tooltip = this.tooltipContents;
             }
+            chartData.transition = { duration: 100 };
             return chartData;
         },
         getC3Data() {
