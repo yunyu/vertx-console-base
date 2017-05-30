@@ -32,7 +32,6 @@ export default {
     },
     data() {
         return {
-            currentIndex: 0,
             sparklineTooltipContents: this.makeTooltipContents(),
             c3SparklineData: { indices: [0], values: [this.data.used] }
         }
@@ -62,8 +61,7 @@ export default {
     },
     watch: {
         data() {
-            ++this.currentIndex;
-            this.c3SparklineData = { indices: [this.currentIndex], values: [this.data.used] };
+            this.c3SparklineData = { indices: [new Date()], values: [this.data.used] };
         }
     }
 }

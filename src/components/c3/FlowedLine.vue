@@ -40,8 +40,10 @@ export default {
                         for (let i = 0; i < existingKey.columns.length; i++) {
                             existingKey.columns[i] = existingKey.columns[i].concat(bufItem.columns[i].slice(-1));
                         }
+                        existingKey.length += bufItem.length;
                     }
                 }
+                console.log(JSON.stringify(byLength, null, 4));
                 for (let toFlow of byLength) {
                     this.chart.flow(toFlow);
                 }
