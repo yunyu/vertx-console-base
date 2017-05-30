@@ -9,12 +9,6 @@ export default {
             type: Number
         }
     },
-    data() {
-        return {
-            totalDisplayed: 0,
-            buffer: []
-        }
-    },
     methods: {
         getC3FlowLength() {
             return ++this.totalDisplayed > this.maxDisplayed ? 1 : 0;

@@ -23,6 +23,8 @@ export default {
         this.patternfly = window.patternfly;
     },
     mounted() {
+        this.totalDisplayed = 0;
+        this.buffer = [];
         this.chartData = this.getDefaults(this.patternfly.c3ChartDefaults);
         this.chartData.bindto = this.$el;
         if (this.width || this.height) {
