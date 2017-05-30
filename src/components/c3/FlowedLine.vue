@@ -22,6 +22,7 @@ export default {
             if (!this.chart || !this.chartData) {
                 return;
             }
+            // Workaround for https://github.com/c3js/c3/issues/1097
             if (document.hidden) {
                 this.chartData.data.duration = 0;
                 this.flowBuffer.push(this.chartData.data);
