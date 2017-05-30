@@ -21,28 +21,19 @@ export default {
 
             var hidden = document.hidden;
 
-            if (hidden && !this.prevHidden) {
-                // console.log('DESTROYING')
-                this.chart.destroy();
-                this.chart = null;
-            } else if (!hidden && this.prevHidden) {
-                this.chartData.data = Object.assign({}, this.chartData.data);
-                this.chartData.data.columns = [];
-                // console.log('RESUMING ' + JSON.stringify(this.chartData.data));
-
-                this.chart = c3.generate(this.chartData);
-
+            if (true || !hidden && this.prevHidden) {
                 const origDuration = this.chart.internal.config.transition_duration;
                 this.chart.internal.config.transition_duration = 0;
 
-                const tmpBuffer = this.buffer.slice();
+                let tmpBuffer = this.buffer.slice();
+                let firstEl = { columns: tmpBuffer.shift().columns };
                 while (tmpBuffer.length > 0) {
                     let bufItem = tmpBuffer.shift();
-                    bufItem.length = 0;
-                    bufItem.duration = 0;
-                    this.chart.flow(bufItem);
-                    // console.log(JSON.stringify(bufItem));
+                    for (let i = 0; i < firstEl.columns.length; ++i) {
+                        firstEl.columns[i] = firstEl.columns[i].concat(bufItem.columns[i].slice(-1));
+                    }
                 }
+                this.chart.load(firstEl);
 
                 this.chart.internal.config.transition_duration = origDuration;
             } else if (this.chart) {
