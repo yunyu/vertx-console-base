@@ -29,22 +29,22 @@ export default {
                     this.flowBuffer.shift();
                 }
             } else if (this.flowBuffer.length > 0) {
-                const byLength = [];
+                const byLength = new Map();
                 while (this.flowBuffer.length > 0) {
                     let bufItem = this.flowBuffer.shift();
-                    let itemLen = bufItem.length;
-                    if (byLength.length <= itemLen) {
-                        byLength.push(bufItem);
+                    let itemLen = bufItem['length']; // Babel messes this up a bit
+                    let existingKey = byLength.get(itemLen);
+                    if (!existingKey) {
+                        byLength.set(itemLen, bufItem);
                     } else {
-                        let existingKey = byLength[itemLen];
                         for (let i = 0; i < existingKey.columns.length; i++) {
                             existingKey.columns[i] = existingKey.columns[i].concat(bufItem.columns[i].slice(-1));
                         }
                         existingKey.length += bufItem.length;
                     }
                 }
-                console.log(JSON.stringify(byLength, null, 4));
-                for (let toFlow of byLength) {
+                // console.log(JSON.stringify([...byLength], null, 4));
+                for (let [key, toFlow] of byLength) {
                     this.chart.flow(toFlow);
                 }
             } else {
