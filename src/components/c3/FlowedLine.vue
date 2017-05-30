@@ -12,61 +12,35 @@ export default {
     data() {
         return {
             totalDisplayed: 0,
-            flowBuffer: []
+            buffer: []
         }
     },
     methods: {
         getC3FlowLength() {
-            return ++this.totalDisplayed > this.maxDisplayed ? 1 : 0
+            return ++this.totalDisplayed > this.maxDisplayed ? 1 : 0;
         },
         onDataUpdated() {
             if (!this.chart || !this.chartData) {
                 return;
             }
+
+            this.buffer.push(this.chartData.data);
+            while (this.buffer.length > this.maxDisplayed) {
+                this.buffer.shift();
+            }
+
             // Workaround for https://github.com/c3js/c3/issues/1097
-            if (document.hidden) {
-                this.chartData.data.duration = 0;
-                this.flowBuffer.push(this.chartData.data);
-                while (this.flowBuffer.length > this.maxDisplayed) {
-                    this.flowBuffer.shift();
-                }
-            } else if (this.flowBuffer.length > 0) {
-                if (this.flowBuffer.length === this.maxDisplayed) {
-                    console.log('hitting load path')
-                    let firstEl = this.flowBuffer.shift();
-                    while (this.flowBuffer.length > 0) {
-                        let bufItem = this.flowBuffer.shift();
-                        for (let i = 0; i < firstEl.columns.length; ++i) {
-                            firstEl.columns[i] = firstEl.columns[i].concat(bufItem.columns[i].slice(-1));
-                        }
-                    }
-                    delete firstEl.length;
-                    this.chart.load(firstEl);
-                } else {
-                    console.log('hitting batched flow path')
-                    const byLength = new Map();
-                    while (this.flowBuffer.length > 0) {
-                        let bufItem = this.flowBuffer.shift();
-                        let itemLen = bufItem.length;
-                        let existingKey = byLength.get(itemLen);
-                        if (!existingKey) {
-                            byLength.set(itemLen, bufItem);
-                        } else {
-                            for (let i = 0; i < existingKey.columns.length; ++i) {
-                                existingKey.columns[i] = existingKey.columns[i].concat(bufItem.columns[i].slice(-1));
-                            }
-                            existingKey.length += bufItem.length;
-                        }
-                    }
-                    // console.log(JSON.stringify([...byLength], null, 4));
-                    let j = 0;
-                    for (let [key, toFlow] of byLength) {
-                        setTimeout(() => this.chart.flow(toFlow), j * msBetweenFlows);
-                        ++j;
+            if (true || document.hidden) {
+                let tmpBuffer = this.buffer.slice();
+                let firstEl = tmpBuffer.shift();
+                while (tmpBuffer.length > 0) {
+                    let bufItem = tmpBuffer.shift();
+                    for (let i = 0; i < firstEl.columns.length; ++i) {
+                        firstEl.columns[i] = firstEl.columns[i].concat(bufItem.columns[i].slice(-1));
                     }
                 }
+                this.chart.load(firstEl);
             } else {
-                // console.log('hitting standard flow codepath')
                 this.chart.flow(this.chartData.data);
             }
         }
