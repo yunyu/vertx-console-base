@@ -45,10 +45,12 @@ export default {
                     }
                 }
                 // console.log(JSON.stringify([...byLength], null, 4));
+                let i = 0;
                 for (let [key, toFlow] of byLength) {
-                    this.chart.flow(toFlow);
+                    setTimeout(() => this.chart.flow(toFlow), i * 320);
                 }
             } else {
+                // console.log('hitting standard flow codepath')
                 this.chart.flow(this.chartData.data);
             }
         }
