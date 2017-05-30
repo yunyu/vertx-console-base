@@ -9,7 +9,7 @@ export default {
             type: Object
         },
         maxDisplayed: {
-            default: 15
+            default: 20
         }
     },
     methods: {

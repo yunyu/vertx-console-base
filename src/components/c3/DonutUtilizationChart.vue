@@ -1,5 +1,6 @@
 <script>
 import C3Wrapper from './C3Wrapper.vue';
+import c3 from 'c3';
 
 export default {
     name: 'pf-donut-util',
@@ -43,8 +44,10 @@ export default {
             this.updateCenterLabelText();
         },
         onDataUpdated() {
-            this.chart.load(this.chartData.data);
-            this.updateCenterLabelText();
+            if (!document.hidden) {
+                this.chart.load(this.chartData.data);
+                this.updateCenterLabelText();
+            }
         },
         updateCenterLabelText() {
             let centerLabelText = { big: '', small: '' };
