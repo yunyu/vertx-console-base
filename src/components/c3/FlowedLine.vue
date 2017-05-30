@@ -31,25 +31,39 @@ export default {
                     this.flowBuffer.shift();
                 }
             } else if (this.flowBuffer.length > 0) {
-                const byLength = new Map();
-                while (this.flowBuffer.length > 0) {
-                    let bufItem = this.flowBuffer.shift();
-                    let itemLen = bufItem.length;
-                    let existingKey = byLength.get(itemLen);
-                    if (!existingKey) {
-                        byLength.set(itemLen, bufItem);
-                    } else {
-                        for (let i = 0; i < existingKey.columns.length; ++i) {
-                            existingKey.columns[i] = existingKey.columns[i].concat(bufItem.columns[i].slice(-1));
+                if (this.flowBuffer.length === this.maxDisplayed) {
+                    console.log('hitting load path')
+                    let firstEl = this.flowBuffer.shift();
+                    while (this.flowBuffer.length > 0) {
+                        let bufItem = this.flowBuffer.shift();
+                        for (let i = 0; i < firstEl.columns.length; ++i) {
+                            firstEl.columns[i] = firstEl.columns[i].concat(bufItem.columns[i].slice(-1));
                         }
-                        existingKey.length += bufItem.length;
                     }
-                }
-                // console.log(JSON.stringify([...byLength], null, 4));
-                let i = 0;
-                for (let [key, toFlow] of byLength) {
-                    setTimeout(() => this.chart.flow(toFlow), i * msBetweenFlows);
-                    ++i;
+                    delete firstEl.length;
+                    this.chart.load(firstEl);
+                } else {
+                    console.log('hitting batched flow path')
+                    const byLength = new Map();
+                    while (this.flowBuffer.length > 0) {
+                        let bufItem = this.flowBuffer.shift();
+                        let itemLen = bufItem.length;
+                        let existingKey = byLength.get(itemLen);
+                        if (!existingKey) {
+                            byLength.set(itemLen, bufItem);
+                        } else {
+                            for (let i = 0; i < existingKey.columns.length; ++i) {
+                                existingKey.columns[i] = existingKey.columns[i].concat(bufItem.columns[i].slice(-1));
+                            }
+                            existingKey.length += bufItem.length;
+                        }
+                    }
+                    // console.log(JSON.stringify([...byLength], null, 4));
+                    let j = 0;
+                    for (let [key, toFlow] of byLength) {
+                        setTimeout(() => this.chart.flow(toFlow), j * msBetweenFlows);
+                        ++j;
+                    }
                 }
             } else {
                 // console.log('hitting standard flow codepath')
