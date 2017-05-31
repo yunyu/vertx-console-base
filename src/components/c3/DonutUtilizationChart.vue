@@ -24,12 +24,13 @@ export default {
             if (this.usedColor) {
                 chartData.color.pattern[0] = this.usedColor;
             }
+            chartData.transition = { duration: 0 };
             return chartData;
         },
         getC3Data() {
             if (!this.data.available) {
                 if (this.data.total) {
-                    this.data.available = this.data.total - this.data.used;
+                    this.data.available = this.data.total - this.data.used; 
                 }
             }
             return {

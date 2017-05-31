@@ -31,10 +31,10 @@ export default {
                     }
                 }
 
-                const origDuration = this.chart.internal.config.transition_duration;
-                this.chart.internal.config.transition_duration = 0;
+                // const origDuration = this.chart.internal.config.transition_duration;
+                // this.chart.internal.config.transition_duration = 0;
                 this.chart.load(firstEl);
-                this.chart.internal.config.transition_duration = origDuration;
+                // this.chart.internal.config.transition_duration = origDuration;
             }
 
             this.prevHidden = hidden;

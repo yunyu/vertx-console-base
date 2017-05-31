@@ -31,7 +31,7 @@ export default {
                     }
                 }
             };
-            chartData.transition = { duration: 100 };
+            chartData.transition = { duration: 0 };
             return chartData;
         },
         getC3Data() {
