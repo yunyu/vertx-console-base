@@ -19,7 +19,7 @@ export default {
     extends: FlowedLine,
     methods: {
         getDefaults(chartDefaults) {
-            var chartData = chartDefaults().getDefaultSingleLineConfig();
+            var chartData = chartDefaults().getDefaultLineConfig();
             if (this.tooltipContents) {
                 chartData.tooltip = this.tooltipContents;
             }

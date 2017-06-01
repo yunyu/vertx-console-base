@@ -35,6 +35,11 @@
                         <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
                     </pf-card>
                 </div>
+                <div :class="getColumnClass(2)">
+                    <pf-card class="match-util-trend" title="HTTP Requests" :accented="false" :showTitlesSeparator="false">
+                        <pf-multi-line :height="288" :data="httpRequests"></pf-multi-line>
+                    </pf-card>
+                </div>
             </div>
         </div>
     </div>
@@ -151,8 +156,8 @@ export default {
     // TODO switch to configurable computed props
     computed: {
         javaHeapUsage() {
-            const heapUsed = parseFloat(this.mappedMetrics.jvm_memory_bytes_used.metrics.area.heap.value);
-            const heapMax = parseFloat(this.mappedMetrics.jvm_memory_bytes_max.metrics.area.heap.value);
+            const heapUsed = parseFloat(this.getMetricByName('jvm_memory_bytes_used').metrics.area.heap.value);
+            const heapMax = parseFloat(this.getMetricByName('jvm_memory_bytes_max').metrics.area.heap.value);
             let formatted = formatBytes(heapUsed);
             return {
                 used: toFixedNumber(formatted.value, 1e2),
@@ -161,13 +166,17 @@ export default {
             }
         },
         httpRequests() {
-            const heapUsed = parseFloat(this.mappedMetrics.jvm_memory_bytes_used.metrics.area.heap.value);
-            const heapMax = parseFloat(this.mappedMetrics.jvm_memory_bytes_max.metrics.area.heap.value);
-            let formatted = formatBytes(heapUsed);
+            const requestsMetric = this.getMetricByName('vertx_http_servers_*_connections');
+            const perc50 = parseFloat(requestsMetric.metrics.quantiles['0.5']);
+            const perc95 = parseFloat(requestsMetric.metrics.quantiles['0.95']);
+            const perc99 = parseFloat(requestsMetric.metrics.quantiles['0.99']);
             return {
-                used: toFixedNumber(formatted.value, 1e2),
-                total: toFixedNumber(heapMax / heapUsed * formatted.value, 1e2),
-                units: formatted.unit
+                indices: [new Date()],
+                values: {
+                    '50th': toFixedNumber(perc50, 1e3),
+                    '95th': toFixedNumber(perc95, 1e3),
+                    '99th': toFixedNumber(perc99, 1e3)
+                }
             }
         },
         eventBusMessages() {
