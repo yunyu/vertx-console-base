@@ -13,6 +13,7 @@
     "dot-access": "^1.0.0",
     "matcher": "^1.0.0",
     "parse-prometheus-text-format": "^1.0.5",
+    "pretty-ms": "^2.1.0",
     "vue": "^2.2.1",
     "vue-patternfly": "^0.0.12",
     "vue-router": "^2.5.3"

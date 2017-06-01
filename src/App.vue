@@ -1,7 +1,7 @@
 <template>
   <pf-layout id="app">
     <div slot="brand" class="navbar-brand">
-      <span class="navbar-brand-name">Vert.x Metrics</span>
+      <span class="navbar-brand-name">Vert.x Console</span>
     </div>
     <template slot="vertical-menu">
       <router-link tag="li" class="list-group-item" active-class="active" to="/" :exact="true">

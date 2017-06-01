@@ -8,8 +8,8 @@
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticles" :count="parseInt(getSimpleMetricValue('vertx_verticles'))" iconClass="fa fa-cubes">
                     <a href="#" class="add"><span class="pficon pficon-add-circle-o"></span></a>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" :count="parseInt(getSimpleMetricValue('os_avail_processors'))" iconClass="fa fa-microchip">
-                    <span class="pficon pficon-ok"></span>
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Uptime" iconClass="fa fa-clock-o">
+                    <span>{{ uptime }}</span>
                 </pf-aggregate-status-card>
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="parseInt(getSimpleMetricValue('.*_open_connections_.*', true))" iconClass="fa fa-exchange">
                     <span class="pficon pficon-ok"></span>
@@ -104,6 +104,7 @@ import Card from 'vue-patternfly';
 import UtilizationBarCard from '../cards/UtilizationBarCard.vue'
 import Util from '../util.js';
 import Metrics from '../metrics.js';
+import prettyMs from 'pretty-ms';
 
 function formatBytes(bytes, decimals) {
     if (bytes == 0) return { value: 0, unit: 'Bytes' };
@@ -257,7 +258,7 @@ export default {
             }
         },
         uptime() {
-            return Math.floor(Date.now() / 1000 - parseFloat(this.getSimpleMetricValue('process_start_time_seconds')));
+            return prettyMs(Math.floor(Date.now() / 1e3 - parseFloat(this.getSimpleMetricValue('process_start_time_seconds'))) * 1e3);
         },
         avgRequestsPerSecond() {
             const totalReqs = this.getMetricByName('vertx_http_servers_.*:\\d+_requests', true).metrics.count;
