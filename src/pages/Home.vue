@@ -6,7 +6,7 @@
         <div v-if="mappedMetrics">
             <div class="row row-eq-height row-cards-pf">
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticles" :count="parseInt(getSimpleMetricValue('vertx_verticles'))" iconClass="fa fa-cubes">
-                    <span class="pficon pficon-ok"></span>
+                    <a href="#" class="add"><span class="pficon pficon-add-circle-o"></span></a>
                 </pf-aggregate-status-card>
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" :count="parseInt(getSimpleMetricValue('os_avail_processors'))" iconClass="fa fa-microchip">
                     <span class="pficon pficon-ok"></span>
