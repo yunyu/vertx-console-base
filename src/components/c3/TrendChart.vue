@@ -64,7 +64,7 @@ export default {
     watch: {
         data() {
             this.c3SparklineData = { indices: [new Date()], values: [this.data.used] };
-            console.log(JSON.stringify(this.c3SparklineData));
+            // console.log(JSON.stringify(this.c3SparklineData));
         }
     }
 }

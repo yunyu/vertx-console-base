@@ -45,13 +45,6 @@
                         </div>
                     </pf-card>
                 </div>
-                <!--
-                                            <div :class="getColumnClass(2)">
-                                                <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
-                                                    <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
-                                                </pf-card>
-                                            </div>
-                                            -->
                 <div :class="getColumnClass(2)">
                     <pf-card class="match-util-trend" title="HTTP Response Times (seconds) " :accented="false" :showTitlesSeparator="false">
                         <pf-multi-line :height="288" :data="httpRequests"></pf-multi-line>
@@ -86,7 +79,36 @@
                             </div>
                             <div class="col-sm-4 col-md-4">
                                 <pf-trend-details title="Unloaded Classes" :used="parseInt(getSimpleMetricValue('jvm_classes_unloaded_total'))"></pf-trend-details>
+                            </div>
+                        </div>
+                    </pf-card>
+                </div>
+                <div :class="getColumnClass(1)">
+                    <pf-card class="match-util-trend" title="Event Bus" :accented="false" :showTitlesSeparator="false">
+                        <pf-trend labelType="used" title="Published/sec" :data="eventBusMessagesPublishedPerSecond"></pf-trend>
+                        <div class="pf-body-separator"></div>
+                        <div class="pf-card-section">
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Msgs Delivered" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_delivered_total'))"></pf-trend-details>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Msgs Published" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_published_total'))"></pf-trend-details>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Reply Failures" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_reply_failures_total'))"></pf-trend-details>
+                            </div>
+                        </div>
+                        <div class="pf-body-separator noline"></div>
+                        <div class="pf-card-section">
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Pending (Local)" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_pending_local'))"></pf-trend-details>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Pending (Remote)" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_pending_remote'))"></pf-trend-details>
                             </div>    
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Active Handlers" :used="parseInt(getSimpleMetricValue('vertx_eventbus_handlers'))"></pf-trend-details>
+                            </div>
                         </div>
                     </pf-card>
                 </div>
@@ -310,10 +332,18 @@ export default {
                 units: ''
             };
         },
-        eventBusMessages() {
+        eventBusMessagesPublishedPerSecond() {
+            const totalPublished = parseInt(this.getSimpleMetricValue('vertx_eventbus_messages_published_total'));
+            let mpps;
+            if (this.lastTotalPublished === undefined) {
+                mpps = 0;
+            } else {
+                mpps = totalPublished - this.lastTotalPublished;
+            }
+            this.lastTotalPublished = totalPublished;
             return {
-                indices: [new Date()],
-                values: [parseInt(this.getSimpleMetricValue('vertx_eventbus_messages_published_total'))]
+                used: mpps,
+                units: 'Msgs'
             }
         }
     }
