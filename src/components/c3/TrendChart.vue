@@ -1,21 +1,23 @@
 <template>
     <div>
-        <p class="card-pf-utilization-details">
-            <span class="card-pf-utilization-card-details-count">{{ labelType === 'available' ? filledData.used.toFixed(2) : filledData.available.toFixed(2) }}</span>
-            <span class="card-pf-utilization-card-details-description">
-                <span class="card-pf-utilization-card-details-line-1">{{ labelType === 'available' ? 'Used' : 'Available' }}</span>
-                <span class="card-pf-utilization-card-details-line-2">of {{ filledData.total + ' ' + filledData.units }}</span>
-            </span>
-        </p>
-        <pf-donut-util ref="donut" :centerLabelType="labelType" :usedColor="donutColor" :data="data">
-        </pf-donut-util>
-        <pf-sparkline :tooltipContents="sparklineTooltipContents" :maxDisplayed="historySize" :data="c3SparklineData"></pf-sparkline>
+        <div class="col-sm-4 col-md-4">
+            <div class="trend-compact-details">
+                <span v-if="showActualValue">
+                    <span class="trend-title-compact-big-pf"> {{ data.used }}</span>
+                    <span class="trend-title-compact-small-pf">{{ data.units }}</span>
+                </span>
+                <span class="trend-header-compact-pf" v-if="title">{{ title }}</span>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-8">
+            <pf-sparkline :tooltipContents="sparklineTooltipContents" :maxDisplayed="historySize" :data="c3SparklineData"></pf-sparkline>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'pf-util-trend',
+    name: 'pf-trend',
     props: {
         labelType: {
             type: String,
@@ -28,20 +30,23 @@ export default {
         historySize: {
             type: Number
         },
-        donutColor: String
+        showActualValue: {
+            type: Boolean,
+            default: true
+        },
+        title: String
     },
     data() {
         return {
             sparklineTooltipContents: this.makeTooltipContents(),
-            c3SparklineData: { indices: [0], values: [this.data.used] }
+            c3SparklineData: { indices: [0], values: [0] }
         }
     },
     methods: {
         makeTooltipContents() {
-            const units = ' ' + this.data.units;
             let tooltipFn = null;
             if (this.labelType === 'used' || this.labelType === 'available') {
-                tooltipFn = d => '<span class="c3-tooltip-sparkline">' + d[0].value + units + ' Used' + '</span>';
+                tooltipFn = d => '<span class="c3-tooltip-sparkline">' + Math.floor(d[0].value * 100) + '%' + '</span>';
             } else if (this.labelType === 'none') {
                 tooltipFn = d => '';
             }
@@ -49,6 +54,9 @@ export default {
         }
     },
     computed: {
+        ratio() {
+            return this.filledData.used / this.filledData.total;
+        },
         filledData() {
             const filledData = Object.assign({}, this.data);
             if (!this.data.available && this.data.total) {
@@ -62,6 +70,7 @@ export default {
     watch: {
         data() {
             this.c3SparklineData = { indices: [new Date()], values: [this.data.used] };
+            console.log(JSON.stringify(this.c3SparklineData));
         }
     }
 }

@@ -5,13 +5,13 @@
         </div>
         <div v-if="mappedMetrics">
             <div class="row row-eq-height row-cards-pf">
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticle" :count="parseInt(getSimpleMetricValue('vertx_verticles'))" iconClass="fa fa-cubes">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticles" :count="parseInt(getSimpleMetricValue('vertx_verticles'))" iconClass="fa fa-cubes">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" :count="parseInt(getSimpleMetricValue('os_avail_processors'))" iconClass="fa fa-microchip">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="parseInt(getSimpleMetricValue('*_open_connections_*'))" iconClass="fa fa-exchange">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="parseInt(getSimpleMetricValue('.*_open_connections_.*', true))" iconClass="fa fa-exchange">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Load Average" :count="getSimpleMetricValue('os_load_average')" iconClass="fa fa-hourglass">
@@ -30,13 +30,21 @@
                         <pf-utilization-bar-chart title='Open Files' units='FDs' :value="parseInt(getSimpleMetricValue('process_open_fds'))" :total="parseInt(getSimpleMetricValue('process_max_fds'))" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                     </pf-card>
                 </div>
-                <div :class="getColumnClass(2)">
-                    <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
-                        <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
+                <div :class="getColumnClass(1)">
+                    <pf-card class="match-util-trend-title" title="Other statistics" :accented="false">
+                        <pf-trend labelType="used" title="CPU Usage" :data="cpuUsage"></pf-trend>
+                        <pf-trend labelType="used" title="Avg Reqs/second" :data="cpuUsage"></pf-trend>    
                     </pf-card>
                 </div>
-                <div :class="getColumnClass(2)">
-                    <pf-card class="match-util-trend" title="HTTP Requests" :accented="false" :showTitlesSeparator="false">
+                <!--
+                                <div :class="getColumnClass(2)">
+                                    <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
+                                        <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
+                                    </pf-card>
+                                </div>
+                                -->
+                <div :class="getColumnClass(1)">
+                    <pf-card class="match-util-trend" title="HTTP Response Times (seconds) " :accented="false" :showTitlesSeparator="false">
                         <pf-multi-line :height="288" :data="httpRequests"></pf-multi-line>
                     </pf-card>
                 </div>
@@ -58,6 +66,10 @@
 .match-util-trend .card-pf-body {
     height: 308px;
 }
+
+.match-util-trend-title .card-pf-body {
+    height: 287px;
+}
 </style>
 
 <script>
@@ -65,7 +77,6 @@ import Card from 'vue-patternfly';
 import UtilizationBarCard from '../cards/UtilizationBarCard.vue'
 import Util from '../util.js';
 import Metrics from '../metrics.js';
-import Matcher from 'matcher';
 
 function formatBytes(bytes, decimals) {
     if (bytes == 0) return '0 Bytes';
@@ -137,10 +148,11 @@ export default {
         getColumnClass(width) {
             return 'col-md-' + 3 * width;
         },
-        getMetricByName(name) {
-            if (name.startsWith('!') || name.includes('*')) {
+        getMetricByName(name, isRegex) {
+            if (isRegex) {
+                let regex = new RegExp(name);
                 for (let [k, v] of Object.entries(this.mappedMetrics)) {
-                    if (Matcher.isMatch(k, name)) {
+                    if (regex.test(k)) {
                         return v;
                     }
                 }
@@ -149,8 +161,8 @@ export default {
                 return this.mappedMetrics[name]
             }
         },
-        getSimpleMetricValue(name) {
-            return this.getMetricByName(name).metrics.value;
+        getSimpleMetricValue(name, isRegex) {
+            return this.getMetricByName(name, isRegex).metrics.value;
         }
     },
     // TODO switch to configurable computed props
@@ -165,8 +177,16 @@ export default {
                 units: formatted.unit
             }
         },
+        cpuUsage() {
+            return {
+                used: Math.floor(parseFloat(this.getSimpleMetricValue('os_system_cpu_load')) * 100),
+                total: 100,
+                units: '%'
+            }
+        },
         httpRequests() {
-            const requestsMetric = this.getMetricByName('vertx_http_servers_*_connections');
+            const requestsMetric = this.getMetricByName('vertx_http_servers_.*:\\d+_requests', true);
+            // console.log(JSON.stringify(requestsMetric, null, 4));
             const perc50 = parseFloat(requestsMetric.metrics.quantiles['0.5']);
             const perc95 = parseFloat(requestsMetric.metrics.quantiles['0.95']);
             const perc99 = parseFloat(requestsMetric.metrics.quantiles['0.99']);
@@ -179,6 +199,12 @@ export default {
                 }
             }
         },
+        uptime() {
+            return Math.floor(Date.now() / 1000 - parseFloat(this.getSimpleMetricValue('process_start_time_seconds')));
+        },
+        overallRequestsPerSecond() {
+            return parseInt(this.getMetricByName('vertx_http_servers_.*:\\d+_requests', true).metrics.count) / this.uptime;
+        },
         eventBusMessages() {
             return {
                 indices: [new Date()],
@@ -188,4 +214,3 @@ export default {
     }
 }
 </script>
-
