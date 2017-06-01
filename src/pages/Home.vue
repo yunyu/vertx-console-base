@@ -343,7 +343,7 @@ export default {
             this.lastTotalPublished = totalPublished;
             return {
                 used: mpps,
-                units: 'Msgs'
+                units: ' Msgs'
             }
         }
     }
