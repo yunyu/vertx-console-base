@@ -9,12 +9,6 @@
     </div>
 </template>
 
-<style lang="scss">
-    .pf-trend-section {
-        overflow: hidden;
-    }
-</style>
-
 <script>
 export default {
     name: 'pf-trend',

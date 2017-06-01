@@ -6,7 +6,9 @@
         <div v-if="mappedMetrics">
             <div class="row row-eq-height row-cards-pf">
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticles" :count="parseInt(getSimpleMetricValue('vertx_verticles'))" iconClass="fa fa-cubes">
-                    <a href="#" class="add"><span class="pficon pficon-add-circle-o"></span></a>
+                    <a href="#" class="add">
+                        <span class="pficon pficon-add-circle-o"></span>
+                    </a>
                 </pf-aggregate-status-card>
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Uptime" iconClass="fa fa-clock-o">
                     <span>{{ uptime }}</span>
@@ -35,7 +37,7 @@
                                 <pf-trend-details title="Non-Heap Usage" :used="nonHeapUsage.value" :units="nonHeapUsage.units"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Collections Run" :used="gcStats.count" units=""></pf-trend-details>
+                                <pf-trend-details title="Total Collections" :used="gcStats.count"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
                                 <pf-trend-details title="Time Spent in GCs" :used="gcStats.sum" units="sec"></pf-trend-details>
@@ -44,12 +46,12 @@
                     </pf-card>
                 </div>
                 <!--
-                            <div :class="getColumnClass(2)">
-                                <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
-                                    <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
-                                </pf-card>
-                            </div>
-                            -->
+                                            <div :class="getColumnClass(2)">
+                                                <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
+                                                    <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
+                                                </pf-card>
+                                            </div>
+                                            -->
                 <div :class="getColumnClass(2)">
                     <pf-card class="match-util-trend" title="HTTP Response Times (seconds) " :accented="false" :showTitlesSeparator="false">
                         <pf-multi-line :height="288" :data="httpRequests"></pf-multi-line>
@@ -58,12 +60,36 @@
             </div>
             <div class="row row-eq-height row-cards-pf">
                 <div :class="getColumnClass(1)">
-                    <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
+                    <pf-card class="match-util-trend" title="Resources" :accented="false" :showTitlesSeparator="false">
                         <pf-utilization-bar-chart title='Workers' units='threads' :value="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_in_use'))" :total="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_max_pool_size'))" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                         <!-- <pf-utilization-bar-chart title='Open Files' units='FDs' :value="parseInt(getSimpleMetricValue('process_open_fds'))" :total="parseInt(getSimpleMetricValue('process_max_fds'))" inline :warning="60" :error="85"></pf-utilization-bar-chart> -->
                         <pf-utilization-bar-chart title='Storage' :units='diskUsage.units' :value="diskUsage.used" :total="diskUsage.total" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <div class="pf-body-separator"></div>
+                        <div class="pf-card-section">
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Threads Started" :used="parseInt(getSimpleMetricValue('jvm_threads_started_total'))"></pf-trend-details>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Active Threads" :used="parseInt(getSimpleMetricValue('jvm_threads_current'))"></pf-trend-details>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Deadlocked Threads" :used="parseInt(getSimpleMetricValue('jvm_threads_deadlocked'))"></pf-trend-details>
+                            </div>
+                        </div>
+                        <div class="pf-body-separator noline"></div>
+                        <div class="pf-card-section">
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Available CPUs" :used="parseInt(getSimpleMetricValue('os_avail_processors'))"></pf-trend-details>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Loaded Classes" :used="parseInt(getSimpleMetricValue('jvm_classes_loaded_total'))"></pf-trend-details>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Unloaded Classes" :used="parseInt(getSimpleMetricValue('jvm_classes_unloaded_total'))"></pf-trend-details>
+                            </div>    
+                        </div>
                     </pf-card>
-                </div>    
+                </div>
             </div>
         </div>
     </div>
@@ -92,6 +118,16 @@
     background: #d1d1d1;
     margin-top: 25px;
     margin-bottom: 25px;
+}
+
+.pf-body-separator.noline {
+    background: transparent;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.pf-card-section {
+    overflow: hidden;
 }
 
 .pf-card-section>div {
