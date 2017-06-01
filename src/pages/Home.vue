@@ -28,23 +28,35 @@
                     <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
                         <pf-utilization-bar-chart title='Workers' units='threads' :value="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_in_use'))" :total="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_max_pool_size'))" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                         <!-- <pf-utilization-bar-chart title='Open Files' units='FDs' :value="parseInt(getSimpleMetricValue('process_open_fds'))" :total="parseInt(getSimpleMetricValue('process_max_fds'))" inline :warning="60" :error="85"></pf-utilization-bar-chart> -->
-                        <pf-utilization-bar-chart title='Disk Usage' :units='diskUsage.units' :value="diskUsage.used" :total="diskUsage.total" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <pf-utilization-bar-chart title='Storage' :units='diskUsage.units' :value="diskUsage.used" :total="diskUsage.total" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                     </pf-card>
                 </div>
                 <div :class="getColumnClass(1)">
-                    <pf-card class="match-util-trend" title="Other statistics" :accented="false" :showTitlesSeparator="false">
+                    <pf-card class="match-util-trend" title="System Load" :accented="false" :showTitlesSeparator="false">
                         <pf-trend labelType="used" title="CPU Usage" :data="cpuUsage"></pf-trend>
                         <div class="pf-body-separator"></div>
                         <pf-trend labelType="used" title="Requests/sec" :data="avgRequestsPerSecond"></pf-trend>
+                        <div class="pf-body-separator"></div>
+                        <div class="pf-card-section">
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Non-Heap Usage" :used="nonHeapUsage.value" :units="nonHeapUsage.units"></pf-trend-details>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Collections Run" :used="gcStats.count" units=""></pf-trend-details>
+                            </div>
+                            <div class="col-sm-4 col-md-4">
+                                <pf-trend-details title="Time Spent in GCs" :used="gcStats.sum" units="sec"></pf-trend-details>
+                            </div>
+                        </div>
                     </pf-card>
                 </div>
                 <!--
-                                                <div :class="getColumnClass(2)">
-                                                    <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
-                                                        <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
-                                                    </pf-card>
-                                                </div>
-                                                -->
+                        <div :class="getColumnClass(2)">
+                            <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
+                                <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
+                            </pf-card>
+                        </div>
+                        -->
                 <div :class="getColumnClass(1)">
                     <pf-card class="match-util-trend" title="HTTP Response Times (seconds) " :accented="false" :showTitlesSeparator="false">
                         <pf-multi-line :height="288" :data="httpRequests"></pf-multi-line>
@@ -79,6 +91,10 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.pf-card-section>div {
+    padding: 0;
+}
 </style>
 
 <script>
@@ -88,7 +104,7 @@ import Util from '../util.js';
 import Metrics from '../metrics.js';
 
 function formatBytes(bytes, decimals) {
-    if (bytes == 0) return '0 Bytes';
+    if (bytes == 0) return { value: 0, unit: 'Bytes' };
     var k = 1000,
         sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
         i = Math.floor(Math.log(bytes) / Math.log(k));
@@ -179,28 +195,48 @@ export default {
         diskUsage() {
             const diskUsed = parseFloat(this.getMetricByName('disk_space_bytes_used').metrics.value);
             const diskMax = parseFloat(this.getMetricByName('disk_space_bytes_max').metrics.value);
-            let formatted = formatBytes(diskUsed);
+            const formatted = formatBytes(diskUsed);
             return {
                 used: toFixedNumber(formatted.value, 1e2),
                 total: toFixedNumber(diskMax / diskUsed * formatted.value, 1e2),
                 units: formatted.unit
-            } 
+            }
         },
         javaHeapUsage() {
             const heapUsed = parseFloat(this.getMetricByName('jvm_memory_bytes_used').metrics.area.heap.value);
             const heapMax = parseFloat(this.getMetricByName('jvm_memory_bytes_max').metrics.area.heap.value);
-            let formatted = formatBytes(heapUsed);
+            const formatted = formatBytes(heapUsed);
             return {
                 used: toFixedNumber(formatted.value, 1e2),
                 total: toFixedNumber(heapMax / heapUsed * formatted.value, 1e2),
                 units: formatted.unit
             }
         },
+        gcStats() {
+            const gcMetrics = this.getMetricByName('jvm_gc_collection_seconds').metrics.gc;
+            let count = 0;
+            let sum = 0;
+            for (let [k, v] of Object.entries(gcMetrics)) {
+                if (v.count) {
+                    count += parseFloat(v.count);
+                }
+                if (v.sum) {
+                    sum += parseFloat(v.sum);
+                }
+            }
+            return { count: count, sum: toFixedNumber(sum, 1e1) };
+        },
         cpuUsage() {
             return {
                 used: toFixedNumber(parseFloat(this.getSimpleMetricValue('os_system_cpu_load')) * 100, 1e1),
-                total: 100,
                 units: '%'
+            }
+        },
+        nonHeapUsage() {
+            const formatted = formatBytes(parseFloat(this.getMetricByName('jvm_memory_bytes_used').metrics.area.nonheap.value));
+            return {
+                value: Math.floor(formatted.value),
+                units: formatted.unit
             }
         },
         httpRequests() {

@@ -1,13 +1,7 @@
 <template>
-    <div class="pf-trend-section">
+    <div class="pf-trend-section pf-card-section">
         <div class="col-sm-4 col-md-4">
-            <div class="trend-compact-details">
-                <span v-if="showActualValue">
-                    <span class="trend-title-compact-big-pf"> {{ data.used }}</span>
-                    <span class="trend-title-compact-small-pf">{{ data.units.trim() }}</span>
-                </span>
-                <span class="trend-header-compact-pf" v-if="title">{{ title }}</span>
-            </div>
+            <pf-trend-details :used="data.used" :units="data.units.trim()" :title="title" :showActualValue="showActualValue"></pf-trend-details>
         </div>
         <div class="col-sm-8 col-md-8">
             <pf-sparkline :tooltipContents="sparklineTooltipContents" :maxDisplayed="historySize" :data="c3SparklineData"></pf-sparkline>
@@ -18,10 +12,6 @@
 <style lang="scss">
     .pf-trend-section {
         overflow: hidden;
-    }
-
-    .pf-trend-section > div {
-        padding: 0;
     }
 </style>
 
