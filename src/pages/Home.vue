@@ -27,7 +27,7 @@
                 <div :class="getColumnClass(1)">
                     <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
                         <pf-utilization-bar-chart title='Workers' units='threads' :value="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_in_use'))" :total="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_max_pool_size'))" inline :warning="60" :error="85"></pf-utilization-bar-chart>
-                        <pf-utilization-bar-chart title='Open Files' units='FDs' :value="parseInt(getSimpleMetricValue('process_open_fds'))" :total="parseInt(getSimpleMetricValue('process_max_fds'))" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <!-- <pf-utilization-bar-chart title='Open Files' units='FDs' :value="parseInt(getSimpleMetricValue('process_open_fds'))" :total="parseInt(getSimpleMetricValue('process_max_fds'))" inline :warning="60" :error="85"></pf-utilization-bar-chart> -->
                         <pf-utilization-bar-chart title='Disk Usage' :units='diskUsage.units' :value="diskUsage.used" :total="diskUsage.total" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                     </pf-card>
                 </div>
@@ -198,7 +198,7 @@ export default {
         },
         cpuUsage() {
             return {
-                used: Math.floor(parseFloat(this.getSimpleMetricValue('os_system_cpu_load')) * 100),
+                used: toFixedNumber(parseFloat(this.getSimpleMetricValue('os_system_cpu_load')) * 100, 1e1),
                 total: 100,
                 units: '%'
             }

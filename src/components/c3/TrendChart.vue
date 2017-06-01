@@ -1,5 +1,5 @@
 <template>
-    <div style="overflow: hidden">
+    <div class="pf-trend-section">
         <div class="col-sm-4 col-md-4">
             <div class="trend-compact-details">
                 <span v-if="showActualValue">
@@ -14,6 +14,16 @@
         </div>
     </div>
 </template>
+
+<style lang="scss">
+    .pf-trend-section {
+        overflow: hidden;
+    }
+
+    .pf-trend-section > div {
+        padding: 0;
+    }
+</style>
 
 <script>
 export default {
