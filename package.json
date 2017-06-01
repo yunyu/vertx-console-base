@@ -11,6 +11,7 @@
   "dependencies": {
     "c3": "0.4.12",
     "dot-access": "^1.0.0",
+    "matcher": "^1.0.0",
     "parse-prometheus-text-format": "^1.0.4",
     "vue": "^2.2.1",
     "vue-patternfly": "^0.0.12",
@@ -23,7 +24,7 @@
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.3",
     "file-loader": "^0.11.1",
-    "node-sass": "^4.5.0",
+    "node-sass": "^4.5.3",
     "sass-loader": "^6.0.5",
     "vue-loader": "^12.1.0",
     "vue-template-compiler": "^2.2.1",

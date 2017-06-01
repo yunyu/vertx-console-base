@@ -11,7 +11,7 @@
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Available Processors" :count="parseInt(getSimpleMetricValue('os_avail_processors'))" iconClass="fa fa-microchip">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="parseInt(getSimpleMetricValue('vertx_http_servers_0_0_0_0:8080_open_connections_127_0_0_1'))" iconClass="fa fa-exchange">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="parseInt(getSimpleMetricValue('*_open_connections_*'))" iconClass="fa fa-exchange">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Load Average" :count="getSimpleMetricValue('os_load_average')" iconClass="fa fa-hourglass">
@@ -60,6 +60,7 @@ import Card from 'vue-patternfly';
 import UtilizationBarCard from '../cards/UtilizationBarCard.vue'
 import Util from '../util.js';
 import Metrics from '../metrics.js';
+import Matcher from 'matcher';
 
 function formatBytes(bytes, decimals) {
     if (bytes == 0) return '0 Bytes';
@@ -132,13 +133,35 @@ export default {
             return 'col-md-' + 3 * width;
         },
         getSimpleMetricValue(name) {
-            // console.log(name);
-            return this.mappedMetrics[name].metrics.value;
+            if (name.startsWith('!') || name.includes('*')) {
+                for (let [k, v] of Object.entries(this.mappedMetrics)) {
+                    if (Matcher.isMatch(k, name)) {
+                        return v.metrics.value;
+                    }
+                }
+                return null;
+            } else {
+                let metricByName = this.mappedMetrics[name];
+                if (metricByName) {
+                    return this.mappedMetrics[name].metrics.value;
+                }
+                return null;
+            }
         }
     },
     // TODO switch to configurable computed props
     computed: {
         javaHeapUsage() {
+            const heapUsed = parseFloat(this.mappedMetrics.jvm_memory_bytes_used.metrics.area.heap.value);
+            const heapMax = parseFloat(this.mappedMetrics.jvm_memory_bytes_max.metrics.area.heap.value);
+            let formatted = formatBytes(heapUsed);
+            return {
+                used: toFixedNumber(formatted.value, 1e2),
+                total: toFixedNumber(heapMax / heapUsed * formatted.value, 1e2),
+                units: formatted.unit
+            }
+        },
+        httpRequests() {
             const heapUsed = parseFloat(this.mappedMetrics.jvm_memory_bytes_used.metrics.area.heap.value);
             const heapMax = parseFloat(this.mappedMetrics.jvm_memory_bytes_max.metrics.area.heap.value);
             let formatted = formatBytes(heapUsed);
