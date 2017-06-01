@@ -28,21 +28,23 @@
                     <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
                         <pf-utilization-bar-chart title='Workers' units='threads' :value="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_in_use'))" :total="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_max_pool_size'))" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                         <pf-utilization-bar-chart title='Open Files' units='FDs' :value="parseInt(getSimpleMetricValue('process_open_fds'))" :total="parseInt(getSimpleMetricValue('process_max_fds'))" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <pf-utilization-bar-chart title='Disk Usage' :units='diskUsage.units' :value="diskUsage.used" :total="diskUsage.total" inline :warning="60" :error="85"></pf-utilization-bar-chart>
                     </pf-card>
                 </div>
                 <div :class="getColumnClass(1)">
-                    <pf-card class="match-util-trend-title" title="Other statistics" :accented="false">
+                    <pf-card class="match-util-trend" title="Other statistics" :accented="false" :showTitlesSeparator="false">
                         <pf-trend labelType="used" title="CPU Usage" :data="cpuUsage"></pf-trend>
-                        <pf-trend labelType="used" title="Avg Reqs/second" :data="cpuUsage"></pf-trend>    
+                        <div class="pf-body-separator"></div>
+                        <pf-trend labelType="used" title="Requests/sec" :data="avgRequestsPerSecond"></pf-trend>
                     </pf-card>
                 </div>
                 <!--
-                                <div :class="getColumnClass(2)">
-                                    <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
-                                        <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
-                                    </pf-card>
-                                </div>
-                                -->
+                                                <div :class="getColumnClass(2)">
+                                                    <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
+                                                        <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
+                                                    </pf-card>
+                                                </div>
+                                                -->
                 <div :class="getColumnClass(1)">
                     <pf-card class="match-util-trend" title="HTTP Response Times (seconds) " :accented="false" :showTitlesSeparator="false">
                         <pf-multi-line :height="288" :data="httpRequests"></pf-multi-line>
@@ -69,6 +71,13 @@
 
 .match-util-trend-title .card-pf-body {
     height: 287px;
+}
+
+.card-pf-body .pf-body-separator {
+    height: 1px;
+    background: #d1d1d1;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 </style>
 
@@ -167,6 +176,16 @@ export default {
     },
     // TODO switch to configurable computed props
     computed: {
+        diskUsage() {
+            const diskUsed = parseFloat(this.getMetricByName('disk_space_bytes_used').metrics.value);
+            const diskMax = parseFloat(this.getMetricByName('disk_space_bytes_max').metrics.value);
+            let formatted = formatBytes(diskUsed);
+            return {
+                used: toFixedNumber(formatted.value, 1e2),
+                total: toFixedNumber(diskMax / diskUsed * formatted.value, 1e2),
+                units: formatted.unit
+            } 
+        },
         javaHeapUsage() {
             const heapUsed = parseFloat(this.getMetricByName('jvm_memory_bytes_used').metrics.area.heap.value);
             const heapMax = parseFloat(this.getMetricByName('jvm_memory_bytes_max').metrics.area.heap.value);
@@ -202,8 +221,19 @@ export default {
         uptime() {
             return Math.floor(Date.now() / 1000 - parseFloat(this.getSimpleMetricValue('process_start_time_seconds')));
         },
-        overallRequestsPerSecond() {
-            return parseInt(this.getMetricByName('vertx_http_servers_.*:\\d+_requests', true).metrics.count) / this.uptime;
+        avgRequestsPerSecond() {
+            const totalReqs = this.getMetricByName('vertx_http_servers_.*:\\d+_requests', true).metrics.count;
+            let rps;
+            if (this.lastTotalReqs === undefined) {
+                rps = 0;
+            } else {
+                rps = totalReqs - this.lastTotalReqs;
+            }
+            this.lastTotalReqs = totalReqs;
+            return {
+                used: rps,
+                units: ''
+            };
         },
         eventBusMessages() {
             return {

@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div style="overflow: hidden">
         <div class="col-sm-4 col-md-4">
             <div class="trend-compact-details">
                 <span v-if="showActualValue">
                     <span class="trend-title-compact-big-pf"> {{ data.used }}</span>
-                    <span class="trend-title-compact-small-pf">{{ data.units }}</span>
+                    <span class="trend-title-compact-small-pf">{{ data.units.trim() }}</span>
                 </span>
                 <span class="trend-header-compact-pf" v-if="title">{{ title }}</span>
             </div>
@@ -46,7 +46,7 @@ export default {
         makeTooltipContents() {
             let tooltipFn = null;
             if (this.labelType === 'used' || this.labelType === 'available') {
-                tooltipFn = d => '<span class="c3-tooltip-sparkline">' + Math.floor(d[0].value * 100) + '%' + '</span>';
+                tooltipFn = d => '<span class="c3-tooltip-sparkline">' + d[0].value + this.data.units + '</span>';
             } else if (this.labelType === 'none') {
                 tooltipFn = d => '';
             }
