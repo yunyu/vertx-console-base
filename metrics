@@ -1,90 +1,91 @@
-# HELP jvm_gc_collection_seconds Time spent in a given JVM garbage collector in seconds.
-# TYPE jvm_gc_collection_seconds summary
-jvm_gc_collection_seconds_count{gc="Copy",} 468.0
-jvm_gc_collection_seconds_sum{gc="Copy",} 0.829
-jvm_gc_collection_seconds_count{gc="MarkSweepCompact",} 1.0
-jvm_gc_collection_seconds_sum{gc="MarkSweepCompact",} 0.033
+
 # HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
 # TYPE process_cpu_seconds_total counter
-process_cpu_seconds_total 66.66
+process_cpu_seconds_total 180.65
 # HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
 # TYPE process_start_time_seconds gauge
-process_start_time_seconds 1.496025605424E9
+process_start_time_seconds 1.496323675594E9
 # HELP process_open_fds Number of open file descriptors.
 # TYPE process_open_fds gauge
-process_open_fds 51.0
+process_open_fds 52.0
 # HELP process_max_fds Maximum number of open file descriptors.
 # TYPE process_max_fds gauge
 process_max_fds 65536.0
 # HELP process_virtual_memory_bytes Virtual memory size in bytes.
 # TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 2.869518336E9
+process_virtual_memory_bytes 3.5301376E9
 # HELP process_resident_memory_bytes Resident memory size in bytes.
 # TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 9.472E7
-# HELP jvm_memory_bytes_used Used bytes of a given JVM memory area.
-# TYPE jvm_memory_bytes_used gauge
-jvm_memory_bytes_used{area="heap",} 1.2296264E7
-jvm_memory_bytes_used{area="nonheap",} 3.3965256E7
-# HELP jvm_memory_bytes_committed Committed (bytes) of a given JVM memory area.
-# TYPE jvm_memory_bytes_committed gauge
-jvm_memory_bytes_committed{area="heap",} 1.837056E7
-jvm_memory_bytes_committed{area="nonheap",} 3.5192832E7
-# HELP jvm_memory_bytes_max Max (bytes) of a given JVM memory area.
-# TYPE jvm_memory_bytes_max gauge
-jvm_memory_bytes_max{area="heap",} 2.5952256E8
-jvm_memory_bytes_max{area="nonheap",} -1.0
-# HELP jvm_memory_pool_bytes_used Used bytes of a given JVM memory pool.
-# TYPE jvm_memory_pool_bytes_used gauge
-jvm_memory_pool_bytes_used{pool="Code Cache",} 8095104.0
-jvm_memory_pool_bytes_used{pool="Metaspace",} 2.3250464E7
-jvm_memory_pool_bytes_used{pool="Compressed Class Space",} 2619688.0
-jvm_memory_pool_bytes_used{pool="Eden Space",} 2645744.0
-jvm_memory_pool_bytes_used{pool="Survivor Space",} 27184.0
-jvm_memory_pool_bytes_used{pool="Tenured Gen",} 9623336.0
-# HELP jvm_memory_pool_bytes_committed Committed bytes of a given JVM memory pool.
-# TYPE jvm_memory_pool_bytes_committed gauge
-jvm_memory_pool_bytes_committed{pool="Code Cache",} 8192000.0
-jvm_memory_pool_bytes_committed{pool="Metaspace",} 2.4117248E7
-jvm_memory_pool_bytes_committed{pool="Compressed Class Space",} 2883584.0
-jvm_memory_pool_bytes_committed{pool="Eden Space",} 5177344.0
-jvm_memory_pool_bytes_committed{pool="Survivor Space",} 589824.0
-jvm_memory_pool_bytes_committed{pool="Tenured Gen",} 1.2603392E7
-# HELP jvm_memory_pool_bytes_max Max bytes of a given JVM memory pool.
-# TYPE jvm_memory_pool_bytes_max gauge
-jvm_memory_pool_bytes_max{pool="Code Cache",} 2.5165824E8
-jvm_memory_pool_bytes_max{pool="Metaspace",} -1.0
-jvm_memory_pool_bytes_max{pool="Compressed Class Space",} 1.073741824E9
-jvm_memory_pool_bytes_max{pool="Eden Space",} 7.1630848E7
-jvm_memory_pool_bytes_max{pool="Survivor Space",} 8912896.0
-jvm_memory_pool_bytes_max{pool="Tenured Gen",} 1.78978816E8
-# HELP jvm_info JVM version info
-# TYPE jvm_info gauge
-jvm_info{version="1.8.0_131-b11",vendor="Oracle Corporation",} 1.0
+process_resident_memory_bytes 1.5579136E8
+# HELP jvm_gc_collection_seconds Time spent in a given JVM garbage collector in seconds.
+# TYPE jvm_gc_collection_seconds summary
+jvm_gc_collection_seconds_count{gc="ParNew",} 5801.0
+jvm_gc_collection_seconds_sum{gc="ParNew",} 11.898
+jvm_gc_collection_seconds_count{gc="ConcurrentMarkSweep",} 7.0
+jvm_gc_collection_seconds_sum{gc="ConcurrentMarkSweep",} 0.073
 # HELP os_load_average The system load average for the last minute
 # TYPE os_load_average gauge
 os_load_average 0.0
 # HELP os_avail_processors The number of processors available to the Java virtual machine
 # TYPE os_avail_processors gauge
 os_avail_processors 4.0
-# HELP jvm_threads_current Current thread count of a JVM
-# TYPE jvm_threads_current gauge
-jvm_threads_current 11.0
-# HELP jvm_threads_daemon Daemon thread count of a JVM
-# TYPE jvm_threads_daemon gauge
-jvm_threads_daemon 5.0
-# HELP jvm_threads_peak Peak thread count of a JVM
-# TYPE jvm_threads_peak gauge
-jvm_threads_peak 11.0
-# HELP jvm_threads_started_total Started thread count of a JVM
-# TYPE jvm_threads_started_total counter
-jvm_threads_started_total 13.0
-# HELP jvm_threads_deadlocked Cycles of JVM-threads that are in deadlock waiting to acquire object monitors or ownable synchronizers
-# TYPE jvm_threads_deadlocked gauge
-jvm_threads_deadlocked 0.0
-# HELP jvm_threads_deadlocked_monitor Cycles of JVM-threads that are in deadlock waiting to acquire object monitors
-# TYPE jvm_threads_deadlocked_monitor gauge
-jvm_threads_deadlocked_monitor 0.0
+# HELP os_system_cpu_load The system CPU load as a number between 0 and 1
+# TYPE os_system_cpu_load gauge
+os_system_cpu_load 0.014084507042253521
+# HELP disk_space_bytes_used The disk space used in bytes for all filesystems
+# TYPE disk_space_bytes_used gauge
+disk_space_bytes_used 7.233503232E9
+# HELP disk_space_bytes_max The total disk space in bytes for all filesystems
+# TYPE disk_space_bytes_max gauge
+disk_space_bytes_max 2.17974833152E11
+# HELP jvm_info JVM version info
+# TYPE jvm_info gauge
+jvm_info{version="1.8.0_131-b11",vendor="Oracle Corporation",} 1.0
+# HELP jvm_memory_bytes_used Used bytes of a given JVM memory area.
+# TYPE jvm_memory_bytes_used gauge
+jvm_memory_bytes_used{area="heap",} 1.8285792E7
+jvm_memory_bytes_used{area="nonheap",} 4.3130448E7
+# HELP jvm_memory_bytes_committed Committed (bytes) of a given JVM memory area.
+# TYPE jvm_memory_bytes_committed gauge
+jvm_memory_bytes_committed{area="heap",} 3.6298752E7
+jvm_memory_bytes_committed{area="nonheap",} 4.5088768E7
+# HELP jvm_memory_bytes_max Max (bytes) of a given JVM memory area.
+# TYPE jvm_memory_bytes_max gauge
+jvm_memory_bytes_max{area="heap",} 1.2976128E8
+jvm_memory_bytes_max{area="nonheap",} -1.0
+# HELP jvm_memory_pool_bytes_used Used bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_used gauge
+jvm_memory_pool_bytes_used{pool="Code Cache",} 1.4340288E7
+jvm_memory_pool_bytes_used{pool="Metaspace",} 2.5976056E7
+jvm_memory_pool_bytes_used{pool="Compressed Class Space",} 2814104.0
+jvm_memory_pool_bytes_used{pool="Par Eden Space",} 442184.0
+jvm_memory_pool_bytes_used{pool="Par Survivor Space",} 151488.0
+jvm_memory_pool_bytes_used{pool="CMS Old Gen",} 1.777684E7
+# HELP jvm_memory_pool_bytes_committed Committed bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_committed gauge
+jvm_memory_pool_bytes_committed{pool="Code Cache",} 1.5204352E7
+jvm_memory_pool_bytes_committed{pool="Metaspace",} 2.686976E7
+jvm_memory_pool_bytes_committed{pool="Compressed Class Space",} 3014656.0
+jvm_memory_pool_bytes_committed{pool="Par Eden Space",} 4521984.0
+jvm_memory_pool_bytes_committed{pool="Par Survivor Space",} 524288.0
+jvm_memory_pool_bytes_committed{pool="CMS Old Gen",} 3.125248E7
+# HELP jvm_memory_pool_bytes_max Max bytes of a given JVM memory pool.
+# TYPE jvm_memory_pool_bytes_max gauge
+jvm_memory_pool_bytes_max{pool="Code Cache",} 2.5165824E8
+jvm_memory_pool_bytes_max{pool="Metaspace",} -1.0
+jvm_memory_pool_bytes_max{pool="Compressed Class Space",} 1.073741824E9
+jvm_memory_pool_bytes_max{pool="Par Eden Space",} 3.5782656E7
+jvm_memory_pool_bytes_max{pool="Par Survivor Space",} 4456448.0
+jvm_memory_pool_bytes_max{pool="CMS Old Gen",} 8.9522176E7
+# HELP jvm_classes_loaded The number of classes that are currently loaded in the JVM
+# TYPE jvm_classes_loaded gauge
+jvm_classes_loaded 3961.0
+# HELP jvm_classes_loaded_total The total number of classes that have been loaded since the JVM has started execution
+# TYPE jvm_classes_loaded_total counter
+jvm_classes_loaded_total 3974.0
+# HELP jvm_classes_unloaded_total The total number of classes that have been unloaded since the JVM has started execution
+# TYPE jvm_classes_unloaded_total counter
+jvm_classes_unloaded_total 13.0
 # HELP vertx_event_loop_size Generated from Dropwizard metric import (metric=vertx.event-loop-size, type=io.vertx.ext.dropwizard.impl.VertxMetricsImpl$$Lambda$17/336484883)
 # TYPE vertx_event_loop_size gauge
 vertx_event_loop_size 8.0
@@ -117,7 +118,7 @@ vertx_eventbus_messages_pending_local 0.0
 vertx_eventbus_messages_pending_remote 0.0
 # HELP vertx_http_servers_0_0_0_0:8080_exceptions Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.exceptions, type=com.codahale.metrics.Counter)
 # TYPE vertx_http_servers_0_0_0_0:8080_exceptions gauge
-vertx_http_servers_0_0_0_0:8080_exceptions 2.0
+vertx_http_servers_0_0_0_0:8080_exceptions 1.0
 # HELP vertx_http_servers_0_0_0_0:8080_open_connections_127_0_0_1 Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.open-connections.127.0.0.1, type=com.codahale.metrics.Counter)
 # TYPE vertx_http_servers_0_0_0_0:8080_open_connections_127_0_0_1 gauge
 vertx_http_servers_0_0_0_0:8080_open_connections_127_0_0_1 1.0
@@ -156,16 +157,16 @@ vertx_http_servers_0_0_0_0:8080_bytes_read{quantile="0.95",} 0.0
 vertx_http_servers_0_0_0_0:8080_bytes_read{quantile="0.98",} 0.0
 vertx_http_servers_0_0_0_0:8080_bytes_read{quantile="0.99",} 0.0
 vertx_http_servers_0_0_0_0:8080_bytes_read{quantile="0.999",} 0.0
-vertx_http_servers_0_0_0_0:8080_bytes_read_count 167.0
+vertx_http_servers_0_0_0_0:8080_bytes_read_count 8208.0
 # HELP vertx_http_servers_0_0_0_0:8080_bytes_written Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.bytes-written, type=com.codahale.metrics.Histogram)
 # TYPE vertx_http_servers_0_0_0_0:8080_bytes_written summary
-vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.5",} 30353.0
-vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.75",} 30405.0
-vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.95",} 30443.0
-vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.98",} 30450.0
-vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.99",} 30450.0
-vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.999",} 30450.0
-vertx_http_servers_0_0_0_0:8080_bytes_written_count 167.0
+vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.5",} 31243.0
+vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.75",} 31252.0
+vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.95",} 31264.0
+vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.98",} 31272.0
+vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.99",} 31278.0
+vertx_http_servers_0_0_0_0:8080_bytes_written{quantile="0.999",} 31281.0
+vertx_http_servers_0_0_0_0:8080_bytes_written_count 8705.0
 # HELP vertx_http_servers_0_0_0_0:8080_connect_requests Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.connect-requests, type=io.vertx.ext.dropwizard.ThroughputTimer)
 # TYPE vertx_http_servers_0_0_0_0:8080_connect_requests summary
 vertx_http_servers_0_0_0_0:8080_connect_requests{quantile="0.5",} 0.0
@@ -177,13 +178,13 @@ vertx_http_servers_0_0_0_0:8080_connect_requests{quantile="0.999",} 0.0
 vertx_http_servers_0_0_0_0:8080_connect_requests_count 0.0
 # HELP vertx_http_servers_0_0_0_0:8080_connections Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.connections, type=com.codahale.metrics.Timer)
 # TYPE vertx_http_servers_0_0_0_0:8080_connections summary
-vertx_http_servers_0_0_0_0:8080_connections{quantile="0.5",} 0.007354599000000001
-vertx_http_servers_0_0_0_0:8080_connections{quantile="0.75",} 0.009054485000000001
-vertx_http_servers_0_0_0_0:8080_connections{quantile="0.95",} 0.009536296000000001
-vertx_http_servers_0_0_0_0:8080_connections{quantile="0.98",} 0.009979594000000001
-vertx_http_servers_0_0_0_0:8080_connections{quantile="0.99",} 0.009979594000000001
-vertx_http_servers_0_0_0_0:8080_connections{quantile="0.999",} 0.009979594000000001
-vertx_http_servers_0_0_0_0:8080_connections_count 167.0
+vertx_http_servers_0_0_0_0:8080_connections{quantile="0.5",} 0.011525193000000001
+vertx_http_servers_0_0_0_0:8080_connections{quantile="0.75",} 0.012702154
+vertx_http_servers_0_0_0_0:8080_connections{quantile="0.95",} 0.015445556000000001
+vertx_http_servers_0_0_0_0:8080_connections{quantile="0.98",} 0.01631349
+vertx_http_servers_0_0_0_0:8080_connections{quantile="0.99",} 0.017042221
+vertx_http_servers_0_0_0_0:8080_connections{quantile="0.999",} 0.051773273
+vertx_http_servers_0_0_0_0:8080_connections_count 7834.0
 # HELP vertx_http_servers_0_0_0_0:8080_delete_requests Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.delete-requests, type=io.vertx.ext.dropwizard.ThroughputTimer)
 # TYPE vertx_http_servers_0_0_0_0:8080_delete_requests summary
 vertx_http_servers_0_0_0_0:8080_delete_requests{quantile="0.5",} 0.0
@@ -195,13 +196,13 @@ vertx_http_servers_0_0_0_0:8080_delete_requests{quantile="0.999",} 0.0
 vertx_http_servers_0_0_0_0:8080_delete_requests_count 0.0
 # HELP vertx_http_servers_0_0_0_0:8080_get_requests Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.get-requests, type=io.vertx.ext.dropwizard.ThroughputTimer)
 # TYPE vertx_http_servers_0_0_0_0:8080_get_requests summary
-vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.5",} 0.006541008
-vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.75",} 0.008325959
-vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.95",} 0.009038682000000001
-vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.98",} 0.00904739
-vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.99",} 0.00904739
-vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.999",} 0.00904739
-vertx_http_servers_0_0_0_0:8080_get_requests_count 167.0
+vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.5",} 0.010953357
+vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.75",} 0.012165044000000002
+vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.95",} 0.015257924
+vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.98",} 0.015743203
+vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.99",} 0.016818712
+vertx_http_servers_0_0_0_0:8080_get_requests{quantile="0.999",} 0.051517780000000006
+vertx_http_servers_0_0_0_0:8080_get_requests_count 7831.0
 # HELP vertx_http_servers_0_0_0_0:8080_head_requests Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.head-requests, type=io.vertx.ext.dropwizard.ThroughputTimer)
 # TYPE vertx_http_servers_0_0_0_0:8080_head_requests summary
 vertx_http_servers_0_0_0_0:8080_head_requests{quantile="0.5",} 0.0
@@ -240,13 +241,13 @@ vertx_http_servers_0_0_0_0:8080_patch_requests{quantile="0.999",} 0.0
 vertx_http_servers_0_0_0_0:8080_patch_requests_count 0.0
 # HELP vertx_http_servers_0_0_0_0:8080_post_requests Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.post-requests, type=io.vertx.ext.dropwizard.ThroughputTimer)
 # TYPE vertx_http_servers_0_0_0_0:8080_post_requests summary
-vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.5",} 0.0
-vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.75",} 0.0
-vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.95",} 0.0
-vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.98",} 0.0
-vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.99",} 0.0
-vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.999",} 0.0
-vertx_http_servers_0_0_0_0:8080_post_requests_count 0.0
+vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.5",} 5.8035E-4
+vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.75",} 5.8035E-4
+vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.95",} 5.8035E-4
+vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.98",} 5.8035E-4
+vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.99",} 5.8035E-4
+vertx_http_servers_0_0_0_0:8080_post_requests{quantile="0.999",} 5.8035E-4
+vertx_http_servers_0_0_0_0:8080_post_requests_count 1.0
 # HELP vertx_http_servers_0_0_0_0:8080_put_requests Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.put-requests, type=io.vertx.ext.dropwizard.ThroughputTimer)
 # TYPE vertx_http_servers_0_0_0_0:8080_put_requests summary
 vertx_http_servers_0_0_0_0:8080_put_requests{quantile="0.5",} 0.0
@@ -258,13 +259,13 @@ vertx_http_servers_0_0_0_0:8080_put_requests{quantile="0.999",} 0.0
 vertx_http_servers_0_0_0_0:8080_put_requests_count 0.0
 # HELP vertx_http_servers_0_0_0_0:8080_requests Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.requests, type=io.vertx.ext.dropwizard.ThroughputTimer)
 # TYPE vertx_http_servers_0_0_0_0:8080_requests summary
-vertx_http_servers_0_0_0_0:8080_requests{quantile="0.5",} 0.006541008
-vertx_http_servers_0_0_0_0:8080_requests{quantile="0.75",} 0.008325959
-vertx_http_servers_0_0_0_0:8080_requests{quantile="0.95",} 0.009038682000000001
-vertx_http_servers_0_0_0_0:8080_requests{quantile="0.98",} 0.00904739
-vertx_http_servers_0_0_0_0:8080_requests{quantile="0.99",} 0.00904739
-vertx_http_servers_0_0_0_0:8080_requests{quantile="0.999",} 0.00904739
-vertx_http_servers_0_0_0_0:8080_requests_count 167.0
+vertx_http_servers_0_0_0_0:8080_requests{quantile="0.5",} 0.010953357
+vertx_http_servers_0_0_0_0:8080_requests{quantile="0.75",} 0.012165044000000002
+vertx_http_servers_0_0_0_0:8080_requests{quantile="0.95",} 0.015257924
+vertx_http_servers_0_0_0_0:8080_requests{quantile="0.98",} 0.015743203
+vertx_http_servers_0_0_0_0:8080_requests{quantile="0.99",} 0.016818712
+vertx_http_servers_0_0_0_0:8080_requests{quantile="0.999",} 0.051517780000000006
+vertx_http_servers_0_0_0_0:8080_requests_count 7832.0
 # HELP vertx_http_servers_0_0_0_0:8080_trace_requests Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.trace-requests, type=io.vertx.ext.dropwizard.ThroughputTimer)
 # TYPE vertx_http_servers_0_0_0_0:8080_trace_requests summary
 vertx_http_servers_0_0_0_0:8080_trace_requests{quantile="0.5",} 0.0
@@ -294,12 +295,12 @@ vertx_pools_worker_vert_x_internal_blocking_usage{quantile="0.999",} 0.0
 vertx_pools_worker_vert_x_internal_blocking_usage_count 0.0
 # HELP vertx_pools_worker_vert_x_worker_thread_queue_delay Generated from Dropwizard metric import (metric=vertx.pools.worker.vert.x-worker-thread.queue-delay, type=com.codahale.metrics.Timer)
 # TYPE vertx_pools_worker_vert_x_worker_thread_queue_delay summary
-vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.5",} 8.900970000000001E-4
-vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.75",} 8.900970000000001E-4
-vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.95",} 8.900970000000001E-4
-vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.98",} 8.900970000000001E-4
-vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.99",} 8.900970000000001E-4
-vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.999",} 8.900970000000001E-4
+vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.5",} 0.0024622240000000003
+vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.75",} 0.0024622240000000003
+vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.95",} 0.0024622240000000003
+vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.98",} 0.0024622240000000003
+vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.99",} 0.0024622240000000003
+vertx_pools_worker_vert_x_worker_thread_queue_delay{quantile="0.999",} 0.0024622240000000003
 vertx_pools_worker_vert_x_worker_thread_queue_delay_count 1.0
 # HELP vertx_pools_worker_vert_x_worker_thread_usage Generated from Dropwizard metric import (metric=vertx.pools.worker.vert.x-worker-thread.usage, type=com.codahale.metrics.Timer)
 # TYPE vertx_pools_worker_vert_x_worker_thread_usage summary
@@ -318,34 +319,37 @@ vertx_eventbus_messages_bytes_read_total 0.0
 vertx_eventbus_messages_bytes_written_total 0.0
 # HELP vertx_eventbus_messages_delivered_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.delivered, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_delivered_total counter
-vertx_eventbus_messages_delivered_total 0.0
+vertx_eventbus_messages_delivered_total 798.0
 # HELP vertx_eventbus_messages_delivered_local_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.delivered-local, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_delivered_local_total counter
-vertx_eventbus_messages_delivered_local_total 0.0
+vertx_eventbus_messages_delivered_local_total 798.0
 # HELP vertx_eventbus_messages_delivered_remote_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.delivered-remote, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_delivered_remote_total counter
 vertx_eventbus_messages_delivered_remote_total 0.0
 # HELP vertx_eventbus_messages_published_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.published, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_published_total counter
-vertx_eventbus_messages_published_total 0.0
+vertx_eventbus_messages_published_total 11689.0
 # HELP vertx_eventbus_messages_published_local_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.published-local, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_published_local_total counter
-vertx_eventbus_messages_published_local_total 0.0
+vertx_eventbus_messages_published_local_total 11689.0
 # HELP vertx_eventbus_messages_published_remote_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.published-remote, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_published_remote_total counter
 vertx_eventbus_messages_published_remote_total 0.0
 # HELP vertx_eventbus_messages_received_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.received, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_received_total counter
-vertx_eventbus_messages_received_total 0.0
+vertx_eventbus_messages_received_total 11689.0
 # HELP vertx_eventbus_messages_received_local_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.received-local, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_received_local_total counter
-vertx_eventbus_messages_received_local_total 0.0
+vertx_eventbus_messages_received_local_total 11689.0
 # HELP vertx_eventbus_messages_received_remote_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.received-remote, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_received_remote_total counter
 vertx_eventbus_messages_received_remote_total 0.0
 # HELP vertx_eventbus_messages_reply_failures_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.reply-failures, type=com.codahale.metrics.Meter)
 # TYPE vertx_eventbus_messages_reply_failures_total counter
-vertx_eventbus_messages_reply_failures_total 0.0
+vertx_eventbus_messages_reply_failures_total 10891.0
+# HELP vertx_eventbus_messages_reply_failures_NO_HANDLERS_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.reply-failures.NO_HANDLERS, type=com.codahale.metrics.Meter)
+# TYPE vertx_eventbus_messages_reply_failures_NO_HANDLERS_total counter
+vertx_eventbus_messages_reply_failures_NO_HANDLERS_total 10891.0
 # HELP vertx_eventbus_messages_sent_total Generated from Dropwizard metric import (metric=vertx.eventbus.messages.sent, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_eventbus_messages_sent_total counter
 vertx_eventbus_messages_sent_total 0.0
@@ -360,22 +364,31 @@ vertx_eventbus_messages_sent_remote_total 0.0
 vertx_http_servers_0_0_0_0:8080_responses_1xx_total 0.0
 # HELP vertx_http_servers_0_0_0_0:8080_responses_2xx_total Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.responses-2xx, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_http_servers_0_0_0_0:8080_responses_2xx_total counter
-vertx_http_servers_0_0_0_0:8080_responses_2xx_total 161.0
+vertx_http_servers_0_0_0_0:8080_responses_2xx_total 7827.0
 # HELP vertx_http_servers_0_0_0_0:8080_responses_3xx_total Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.responses-3xx, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_http_servers_0_0_0_0:8080_responses_3xx_total counter
-vertx_http_servers_0_0_0_0:8080_responses_3xx_total 0.0
+vertx_http_servers_0_0_0_0:8080_responses_3xx_total 1.0
 # HELP vertx_http_servers_0_0_0_0:8080_responses_4xx_total Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.responses-4xx, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_http_servers_0_0_0_0:8080_responses_4xx_total counter
-vertx_http_servers_0_0_0_0:8080_responses_4xx_total 6.0
+vertx_http_servers_0_0_0_0:8080_responses_4xx_total 4.0
 # HELP vertx_http_servers_0_0_0_0:8080_responses_5xx_total Generated from Dropwizard metric import (metric=vertx.http.servers.0.0.0.0:8080.responses-5xx, type=io.vertx.ext.dropwizard.ThroughputMeter)
 # TYPE vertx_http_servers_0_0_0_0:8080_responses_5xx_total counter
 vertx_http_servers_0_0_0_0:8080_responses_5xx_total 0.0
-# HELP jvm_classes_loaded The number of classes that are currently loaded in the JVM
-# TYPE jvm_classes_loaded gauge
-jvm_classes_loaded 3689.0
-# HELP jvm_classes_loaded_total The total number of classes that have been loaded since the JVM has started execution
-# TYPE jvm_classes_loaded_total counter
-jvm_classes_loaded_total 3689.0
-# HELP jvm_classes_unloaded_total The total number of classes that have been unloaded since the JVM has started execution
-# TYPE jvm_classes_unloaded_total counter
-jvm_classes_unloaded_total 0.0
+# HELP jvm_threads_current Current thread count of a JVM
+# TYPE jvm_threads_current gauge
+jvm_threads_current 15.0
+# HELP jvm_threads_daemon Daemon thread count of a JVM
+# TYPE jvm_threads_daemon gauge
+jvm_threads_daemon 6.0
+# HELP jvm_threads_peak Peak thread count of a JVM
+# TYPE jvm_threads_peak gauge
+jvm_threads_peak 16.0
+# HELP jvm_threads_started_total Started thread count of a JVM
+# TYPE jvm_threads_started_total counter
+jvm_threads_started_total 21.0
+# HELP jvm_threads_deadlocked Cycles of JVM-threads that are in deadlock waiting to acquire object monitors or ownable synchronizers
+# TYPE jvm_threads_deadlocked gauge
+jvm_threads_deadlocked 0.0
+# HELP jvm_threads_deadlocked_monitor Cycles of JVM-threads that are in deadlock waiting to acquire object monitors
+# TYPE jvm_threads_deadlocked_monitor gauge
+jvm_threads_deadlocked_monitor 0.0
