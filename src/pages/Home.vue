@@ -25,13 +25,6 @@
                     </pf-card>
                 </div>
                 <div :class="getColumnClass(1)">
-                    <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
-                        <pf-utilization-bar-chart title='Workers' units='threads' :value="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_in_use'))" :total="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_max_pool_size'))" inline :warning="60" :error="85"></pf-utilization-bar-chart>
-                        <!-- <pf-utilization-bar-chart title='Open Files' units='FDs' :value="parseInt(getSimpleMetricValue('process_open_fds'))" :total="parseInt(getSimpleMetricValue('process_max_fds'))" inline :warning="60" :error="85"></pf-utilization-bar-chart> -->
-                        <pf-utilization-bar-chart title='Storage' :units='diskUsage.units' :value="diskUsage.used" :total="diskUsage.total" inline :warning="60" :error="85"></pf-utilization-bar-chart>
-                    </pf-card>
-                </div>
-                <div :class="getColumnClass(1)">
                     <pf-card class="match-util-trend" title="System Load" :accented="false" :showTitlesSeparator="false">
                         <pf-trend labelType="used" title="CPU Usage" :data="cpuUsage"></pf-trend>
                         <div class="pf-body-separator"></div>
@@ -51,17 +44,26 @@
                     </pf-card>
                 </div>
                 <!--
-                        <div :class="getColumnClass(2)">
-                            <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
-                                <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
-                            </pf-card>
-                        </div>
-                        -->
-                <div :class="getColumnClass(1)">
+                            <div :class="getColumnClass(2)">
+                                <pf-card class="match-util-trend" title="Event Bus Messages Published" :accented="false" :showTitlesSeparator="false">
+                                    <pf-single-line :height="288" :data="eventBusMessages"></pf-single-line>
+                                </pf-card>
+                            </div>
+                            -->
+                <div :class="getColumnClass(2)">
                     <pf-card class="match-util-trend" title="HTTP Response Times (seconds) " :accented="false" :showTitlesSeparator="false">
                         <pf-multi-line :height="288" :data="httpRequests"></pf-multi-line>
                     </pf-card>
                 </div>
+            </div>
+            <div class="row row-eq-height row-cards-pf">
+                <div :class="getColumnClass(1)">
+                    <pf-card class="match-util-trend" title="Usage Statistics" :accented="false" :showTitlesSeparator="false">
+                        <pf-utilization-bar-chart title='Workers' units='threads' :value="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_in_use'))" :total="parseInt(getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_max_pool_size'))" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <!-- <pf-utilization-bar-chart title='Open Files' units='FDs' :value="parseInt(getSimpleMetricValue('process_open_fds'))" :total="parseInt(getSimpleMetricValue('process_max_fds'))" inline :warning="60" :error="85"></pf-utilization-bar-chart> -->
+                        <pf-utilization-bar-chart title='Storage' :units='diskUsage.units' :value="diskUsage.used" :total="diskUsage.total" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                    </pf-card>
+                </div>    
             </div>
         </div>
     </div>
@@ -88,8 +90,8 @@
 .card-pf-body .pf-body-separator {
     height: 1px;
     background: #d1d1d1;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .pf-card-section>div {
