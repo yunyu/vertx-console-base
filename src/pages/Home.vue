@@ -132,21 +132,20 @@ export default {
         getColumnClass(width) {
             return 'col-md-' + 3 * width;
         },
-        getSimpleMetricValue(name) {
+        getMetricByName(name) {
             if (name.startsWith('!') || name.includes('*')) {
                 for (let [k, v] of Object.entries(this.mappedMetrics)) {
                     if (Matcher.isMatch(k, name)) {
-                        return v.metrics.value;
+                        return v;
                     }
                 }
-                return null;
+                return undefined;
             } else {
-                let metricByName = this.mappedMetrics[name];
-                if (metricByName) {
-                    return this.mappedMetrics[name].metrics.value;
-                }
-                return null;
+                return this.mappedMetrics[name]
             }
+        },
+        getSimpleMetricValue(name) {
+            return this.getMetricByName(name).metrics.value;
         }
     },
     // TODO switch to configurable computed props
