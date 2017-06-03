@@ -12,6 +12,17 @@ export default {
         usedColor: String
     },
     extends: C3Wrapper,
+    computed: {
+        filledData() {
+            const filledData = Object.assign({}, this.data);
+            if (!this.data.available && this.data.total) {
+                filledData.available = this.data.total - this.data.used;
+            } else if (!this.data.total && this.data.available) {
+                filledData.total = this.data.used + this.data.available;
+            }
+            return filledData;
+        }
+    },
     methods: {
         getDefaults(chartDefaults) {
             let chartData = chartDefaults().getDefaultDonutConfig('');
@@ -28,15 +39,10 @@ export default {
             return chartData;
         },
         getC3Data() {
-            if (!this.data.available) {
-                if (this.data.total) {
-                    this.data.available = this.data.total - this.data.used; 
-                }
-            }
             return {
                 columns: [
-                    ['used', this.data.used],
-                    ['available', this.data.available]
+                    ['used', this.filledData.used],
+                    ['available', this.filledData.available]
                 ],
                 type: 'donut'
             };
@@ -53,8 +59,9 @@ export default {
         updateCenterLabelText() {
             let centerLabelText = { big: '', small: '' };
             if (this.centerLabelType === 'used') {
-                centerLabelText.big = this.data.used;
-                centerLabelText.small = this.data.units + ' Used';
+                const formatted = this.data.formatFn(this.data.used).split(' ');
+                centerLabelText.big = formatted[0];
+                centerLabelText.small = formatted[1] + ' Used';
             } else if (this.centerLabelType === 'available') {
                 centerLabelText.big = this.data.available;
                 centerLabelText.small = this.data.units + ' Available';
