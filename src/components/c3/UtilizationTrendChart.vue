@@ -1,10 +1,10 @@
 <template>
     <div>
         <p class="card-pf-utilization-details">
-            <span class="card-pf-utilization-card-details-count">{{ labelType === 'available' ? filledData.used.toFixed(2) : filledData.available.toFixed(2) }}</span>
+            <span class="card-pf-utilization-card-details-count">{{ labelType === 'available' ? data.formatFn(filledData.used) : data.formatFn(filledData.available) }}</span>
             <span class="card-pf-utilization-card-details-description">
                 <span class="card-pf-utilization-card-details-line-1">{{ labelType === 'available' ? 'Used' : 'Available' }}</span>
-                <span class="card-pf-utilization-card-details-line-2">of {{ filledData.total + ' ' + filledData.units }}</span>
+                <span class="card-pf-utilization-card-details-line-2">of {{ data.formatFn(filledData.total) }}</span>
             </span>
         </p>
         <pf-donut-util ref="donut" :centerLabelType="labelType" :usedColor="donutColor" :data="data">

@@ -163,6 +163,7 @@ import UtilizationBarCard from '../cards/UtilizationBarCard.vue'
 import Util from '../util.js';
 import Metrics from '../metrics.js';
 import prettyMs from 'pretty-ms';
+import numeral from 'numeral';
 
 function formatBytes(bytes, decimals) {
     if (bytes == 0) return { value: 0, unit: 'Bytes' };
@@ -266,11 +267,10 @@ export default {
         javaHeapUsage() {
             const heapUsed = parseFloat(this.getMetricByName('jvm_memory_bytes_used').metrics.area.heap.value);
             const heapMax = parseFloat(this.getMetricByName('jvm_memory_bytes_max').metrics.area.heap.value);
-            const formatted = formatBytes(heapUsed);
             return {
-                used: toFixedNumber(formatted.value, 1e2),
-                total: toFixedNumber(heapMax / heapUsed * formatted.value, 1e2),
-                units: formatted.unit
+                used: heapUsed,
+                total: heapMax,
+                formatFn: n => numeral(n).format('0.0 b')
             }
         },
         gcStats() {
