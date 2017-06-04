@@ -17,6 +17,10 @@ export default {
         axis: {
             type: Object,
             default: () => { }
+        },
+        splitFormattedFn: {
+            type: Function,
+            default: s => s.split(' ')
         }
     },
     beforeCreate() {
