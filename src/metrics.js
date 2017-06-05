@@ -50,7 +50,7 @@ function updateMetrics() {
                 delete mappedMetrics[elName].name;
             }
             for (let cb of callbacks) {
-                cb(mappedMetrics.map(el => Object.assign({}, el))); // Clone object
+                cb(Object.assign({}, mappedMetrics)); // Clone object
             }
         }
     };

@@ -3,7 +3,7 @@
         <div class="page-header">
             <h1>Overview</h1>
         </div>
-        <div v-if="mappedMetrics">
+        <div v-if="metrics">
             <div class="row row-eq-height row-cards-pf">
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticles" :count="parseInt(getSimpleMetricValue('vertx_verticles'))" iconClass="fa fa-cubes">
                     <a href="#" class="add">
@@ -185,13 +185,14 @@ export default {
     data() {
         return {
             requestedMetrics: [],
-            mappedMetrics: null
+            metrics: null
         }
     },
     mounted() {
+        // Necessary for reactivity
         Metrics.addCallback(metrics => {
             this.metrics = metrics;
-            // console.log(JSON.stringify(this.mappedMetrics, null, 4));
+            // console.log(JSON.stringify(this.metrics, null, 4));
         });
     },
     methods: {
@@ -201,14 +202,14 @@ export default {
         getMetricByName(name, isRegex) {
             if (isRegex) {
                 let regex = new RegExp(name);
-                for (let [k, v] of Object.entries(this.mappedMetrics)) {
+                for (let [k, v] of Object.entries(this.metrics)) {
                     if (regex.test(k)) {
                         return v;
                     }
                 }
                 return undefined;
             } else {
-                return this.mappedMetrics[name]
+                return this.metrics[name]
             }
         },
         getSimpleMetricValue(name, isRegex) {
