@@ -59,15 +59,15 @@ export default {
         updateCenterLabelText() {
             let centerLabelText = { big: '', small: '' };
             if (this.centerLabelType === 'used') {
-                const formatted = this.data.formatFn(this.filledData.used).split(' ');
+                const formatted = this.splitFormattedFn(this.data.formatFn(this.filledData.used));
                 centerLabelText.big = formatted[0];
                 centerLabelText.small = formatted[1] + ' Used';
             } else if (this.centerLabelType === 'available') {
-                const formatted = this.data.formatFn(this.filledData.available).split(' ');
+                const formatted = this.splitFormattedFn(this.data.formatFn(this.filledData.available));
                 centerLabelText.big = formatted[0];
                 centerLabelText.small = formatted[1] + ' Available';
             } else if (this.centerLabelType === 'percent') {
-                const formatted = this.data.formatFn(this.filledData.total).split(' ');
+                const formatted = this.splitFormattedFn(this.data.formatFn(this.filledData.total));
                 centerLabelText.big = Math.round(this.filledData.used / this.filledData.total * 100.0) + '%';
                 centerLabelText.small = 'of ' + formatted;
             }

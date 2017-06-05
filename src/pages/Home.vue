@@ -34,13 +34,13 @@
                         <div class="pf-body-separator"></div>
                         <div class="pf-card-section">
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Non-Heap Usage" :used="nonHeapUsage.value" :units="nonHeapUsage.units"></pf-trend-details>
+                                <pf-trend-details title="Non-Heap Usage" :data="nonHeapUsage"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Total Collections" :used="gcStats.count"></pf-trend-details>
+                                <pf-trend-details title="Total Collections" :data="gcCount"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Time Spent in GCs" :used="gcStats.sum" units="sec"></pf-trend-details>
+                                <pf-trend-details title="Time Spent in GCs" :data="gcTotal"></pf-trend-details>
                             </div>
                         </div>
                     </pf-card>
@@ -165,14 +165,6 @@ import Metrics from '../metrics.js';
 import prettyMs from 'pretty-ms';
 import numeral from 'numeral';
 
-function formatBytes(bytes, decimals) {
-    if (bytes == 0) return { value: 0, unit: 'Bytes' };
-    var k = 1000,
-        sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-        i = Math.floor(Math.log(bytes) / Math.log(k));
-    return { value: parseFloat((bytes / Math.pow(k, i))), unit: sizes[i] };
-}
-
 function toFixedNumber(x, base) {
     return Math.round(x * base) / base;
 }
@@ -221,11 +213,10 @@ export default {
         diskUsage() {
             const diskUsed = parseFloat(this.getMetricByName('disk_space_bytes_used').metrics.value);
             const diskMax = parseFloat(this.getMetricByName('disk_space_bytes_max').metrics.value);
-            const formatted = formatBytes(diskUsed);
             return {
-                used: toFixedNumber(formatted.value, 1e2),
-                total: toFixedNumber(diskMax / diskUsed * formatted.value, 1e2),
-                units: formatted.unit
+                used: diskUsed,
+                total: diskMax,
+                formatFn: n => numeral(n).format('0.0 b')
             }
         },
         javaHeapUsage() {
@@ -251,6 +242,12 @@ export default {
             }
             return { count: count, sum: toFixedNumber(sum, 1e1) };
         },
+        gcTotal() {
+            return { value: this.gcStats.sum, formatFn: n => n + ' sec' }
+        },
+        gcCount() {
+            return { value: this.gcStats.count };
+        },
         cpuUsage() {
             return {
                 used: toFixedNumber(parseFloat(this.getSimpleMetricValue('os_system_cpu_load')) * 100, 1e1),
@@ -258,10 +255,9 @@ export default {
             }
         },
         nonHeapUsage() {
-            const formatted = formatBytes(parseFloat(this.getMetricByName('jvm_memory_bytes_used').metrics.area.nonheap.value));
             return {
-                value: Math.floor(formatted.value),
-                units: formatted.unit
+                value: parseFloat(this.getMetricByName('jvm_memory_bytes_used').metrics.area.nonheap.value),
+                formatFn: n => numeral(n).format('0.0 b')
             }
         },
         httpRequests() {
