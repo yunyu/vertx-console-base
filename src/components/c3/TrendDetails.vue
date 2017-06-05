@@ -3,7 +3,7 @@
         <span v-if="showActualValue">
             <div v-if="data.formatFn">
                 <span class="trend-title-compact-big-pf"> {{ formatted[0] }}</span>
-                <span class="trend-title-compact-small-pf">{{ formatted[1] }}</span>
+                <span class="trend-title-compact-small-pf" v-if="formatted.length > 1">{{ formatted[1] }}</span>
             </div>
             <div v-else>
                 <span class="trend-title-compact-big-pf"> {{ data.value }}</span>
