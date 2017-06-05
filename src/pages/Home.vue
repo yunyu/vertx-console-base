@@ -246,7 +246,7 @@ export default {
             return { value: this.gcStats.sum, formatFn: n => n + ' sec' }
         },
         gcCount() {
-            return { value: this.gcStats.count, formatFn: n => numeral(n).format('0a') };
+            return { value: this.gcStats.count, formatFn: n => numeral(n).format('0[.]0a') };
         },
         cpuUsage() {
             return {
