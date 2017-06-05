@@ -59,15 +59,17 @@ export default {
         updateCenterLabelText() {
             let centerLabelText = { big: '', small: '' };
             if (this.centerLabelType === 'used') {
-                const formatted = this.data.formatFn(this.data.used).split(' ');
+                const formatted = this.data.formatFn(this.filledData.used).split(' ');
                 centerLabelText.big = formatted[0];
                 centerLabelText.small = formatted[1] + ' Used';
             } else if (this.centerLabelType === 'available') {
-                centerLabelText.big = this.data.available;
-                centerLabelText.small = this.data.units + ' Available';
+                const formatted = this.data.formatFn(this.filledData.available).split(' ');
+                centerLabelText.big = formatted[0];
+                centerLabelText.small = formatted[1] + ' Available';
             } else if (this.centerLabelType === 'percent') {
-                centerLabelText.big = Math.round(this.data.used / (this.data.used + this.data.available) * 100.0) + '%';
-                centerLabelText.small = 'of ' + (this.data.used + this.data.available) + ' ' + this.data.units;
+                const formatted = this.data.formatFn(this.filledData.total).split(' ');
+                centerLabelText.big = Math.round(this.filledData.used / this.filledData.total * 100.0) + '%';
+                centerLabelText.small = 'of ' + formatted;
             }
             this.patternfly.pfSetDonutChartTitle(this.$el, centerLabelText.big, centerLabelText.small);
         }
