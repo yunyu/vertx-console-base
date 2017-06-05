@@ -190,44 +190,7 @@ export default {
     },
     mounted() {
         Metrics.addCallback(metrics => {
-            let mappedMetrics = {};
-            for (let el of metrics) {
-                if (el.metrics.length === 1) {
-                    el.metrics = el.metrics[0];
-                } else if (el.metrics.length > 1) {
-                    let sharedLblKey = null;
-                    for (let metric of el.metrics) {
-                        if (!metric.labels) {
-                            sharedLblKey = null;
-                            break;
-                        }
-                        let lblKeys = Object.keys(metric.labels);
-                        if (lblKeys.length !== 1) {
-                            sharedLblKey = null;
-                            break;
-                        } else if (sharedLblKey === null) {
-                            sharedLblKey = lblKeys[0];
-                        } else if (sharedLblKey != lblKeys[0]) {
-                            sharedLblKey = null;
-                            break;
-                        }
-                    }
-                    if (sharedLblKey !== null) {
-                        let mappedSubMetrics = {};
-                        for (let metric of el.metrics) {
-                            let subMetricKey = metric.labels[sharedLblKey];
-                            mappedSubMetrics[subMetricKey] = metric;
-                            delete mappedSubMetrics[subMetricKey].labels;
-                        }
-                        el.metrics = {};
-                        el.metrics[sharedLblKey] = mappedSubMetrics;
-                    }
-                }
-                let elName = el.name;
-                mappedMetrics[elName] = el;
-                delete mappedMetrics[elName].name;
-            }
-            this.mappedMetrics = mappedMetrics;
+            this.metrics = metrics;
             // console.log(JSON.stringify(this.mappedMetrics, null, 4));
         });
     },
