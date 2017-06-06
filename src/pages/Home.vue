@@ -34,13 +34,13 @@
                         <div class="pf-body-separator"></div>
                         <div class="pf-card-section">
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Non-Heap Usage" :data="nonHeapUsage"></pf-trend-details>
+                                <pf-trend-details title="Non-Heap Used" :data="nonHeapUsage"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
                                 <pf-trend-details title="Total Collections" :data="gcCount"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Time Spent in GCs" :data="gcTotal"></pf-trend-details>
+                                <pf-trend-details title="Total GC Time" :data="gcTotal"></pf-trend-details>
                             </div>
                         </div>
                     </pf-card>
