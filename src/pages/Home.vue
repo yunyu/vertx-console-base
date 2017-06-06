@@ -54,10 +54,10 @@
             <div class="row row-eq-height row-cards-pf">
                 <div :class="getColumnClass(1)">
                     <pf-card class="match-util-trend" title="Resources" :accented="false" :showTitlesSeparator="false">
-                        <pf-utilization-bar-chart title='Worker Pool' :formatFn="n => n + ' threads'" :value="getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_in_use')" :total="getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_max_pool_size')" inline :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <pf-utilization-bar-chart title='Worker Pool' :formatFn="n => n + ' threads'" :value="getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_in_use')" :total="getSimpleMetricValue('vertx_pools_worker_vert_x_worker_thread_max_pool_size')" :warning="60" :error="85"></pf-utilization-bar-chart>
                         <!-- <pf-utilization-bar-chart title='Open Files' units='FDs' :value="parseInt(getSimpleMetricValue('process_open_fds'))" :total="parseInt(getSimpleMetricValue('process_max_fds'))" inline :warning="60" :error="85"></pf-utilization-bar-chart> -->
-                        <pf-utilization-bar-chart title='Disk Storage' :formatFn="diskUsage.formatFn" :value="diskUsage.used" :total="diskUsage.total" inline :warning="60" :error="85"></pf-utilization-bar-chart>
-                        <div class="pf-body-separator"></div>
+                        <pf-utilization-bar-chart title='Disk Storage' :formatFn="diskUsage.formatFn" :value="diskUsage.used" :total="diskUsage.total" :warning="60" :error="85"></pf-utilization-bar-chart>
+                        <div class="pf-body-separator noline"></div>
                         <div class="pf-card-section">
                             <div class="col-sm-4 col-md-4">
                                 <pf-trend-details title="Threads Started" :data="simpleFormattedData('jvm_threads_started_total', '0[.]0a')"></pf-trend-details>
@@ -138,14 +138,14 @@
 .card-pf-body .pf-body-separator {
     height: 1px;
     background: #d1d1d1;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    margin-top: 24px;
+    margin-bottom: 24px;
 }
 
 .pf-body-separator.noline {
     background: transparent;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .pf-card-section {
