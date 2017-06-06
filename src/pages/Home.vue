@@ -46,7 +46,7 @@
                     </pf-card>
                 </div>
                 <div :class="getColumnClass(2)">
-                    <pf-card class="match-util-trend" title="HTTP Response Times (seconds) " :accented="false" :showTitlesSeparator="false">
+                    <pf-card class="match-util-trend" title="HTTP Response Times (ms) " :accented="false" :showTitlesSeparator="false">
                         <pf-multi-line :height="288" :data="httpRequests"></pf-multi-line>
                     </pf-card>
                 </div>
@@ -165,10 +165,6 @@ import Metrics from '../metrics.js';
 import prettyMs from 'pretty-ms';
 import numeral from 'numeral';
 
-function toFixedNumber(x, base) {
-    return Math.round(x * base) / base;
-}
-
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -247,7 +243,7 @@ export default {
                     sum += parseFloat(v.sum);
                 }
             }
-            return { count: count, sum: toFixedNumber(sum, 1e1) };
+            return { count: count, sum: sum };
         },
         gcTotal() {
             return { 
@@ -282,9 +278,9 @@ export default {
             return {
                 indices: [new Date()],
                 values: {
-                    '50th': toFixedNumber(perc50, 1e3),
-                    '95th': toFixedNumber(perc95, 1e3),
-                    '99th': toFixedNumber(perc99, 1e3)
+                    '50th': numeral(perc50 * 1000).format('0.0'),
+                    '95th': numeral(perc95 * 1000).format('0.0'),
+                    '99th': numeral(perc99 * 1000).format('0.0')
                 }
             }
         },
