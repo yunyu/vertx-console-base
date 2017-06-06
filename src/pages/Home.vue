@@ -211,20 +211,16 @@ export default {
     // TODO switch to configurable computed props
     computed: {
         diskUsage() {
-            const diskUsed = parseFloat(this.getMetricByName('disk_space_bytes_used').metrics.value);
-            const diskMax = parseFloat(this.getMetricByName('disk_space_bytes_max').metrics.value);
             return {
-                used: diskUsed,
-                total: diskMax,
+                used: parseFloat(this.getMetricByName('disk_space_bytes_used').metrics.value),
+                total: parseFloat(this.getMetricByName('disk_space_bytes_max').metrics.value),
                 formatFn: n => numeral(n).format('0.0 b')
             }
         },
         javaHeapUsage() {
-            const heapUsed = parseFloat(this.getMetricByName('jvm_memory_bytes_used').metrics.area.heap.value);
-            const heapMax = parseFloat(this.getMetricByName('jvm_memory_bytes_max').metrics.area.heap.value);
             return {
-                used: heapUsed,
-                total: heapMax,
+                used: parseFloat(this.getMetricByName('jvm_memory_bytes_used').metrics.area.heap.value),
+                total: parseFloat(this.getMetricByName('jvm_memory_bytes_max').metrics.area.heap.value),
                 formatFn: n => numeral(n).format('0.0 b')
             }
         },
@@ -243,15 +239,21 @@ export default {
             return { count: count, sum: toFixedNumber(sum, 1e1) };
         },
         gcTotal() {
-            return { value: this.gcStats.sum, formatFn: n => n + ' sec' }
+            return { 
+                value: this.gcStats.sum, 
+                formatFn: n => numeral(n).format('0') + ' sec' 
+            };
         },
         gcCount() {
-            return { value: this.gcStats.count, formatFn: n => numeral(n).format('0[.]0a') };
+            return { 
+                value: this.gcStats.count, 
+                formatFn: n => numeral(n).format('0[.]0a') 
+            };
         },
         cpuUsage() {
             return {
-                used: toFixedNumber(parseFloat(this.getSimpleMetricValue('os_system_cpu_load')) * 100, 1e1),
-                units: '%'
+                value: parseFloat(this.getSimpleMetricValue('os_system_cpu_load')),
+                formatFn: n => numeral(n).format('0.0 %')
             }
         },
         nonHeapUsage() {
@@ -288,8 +290,7 @@ export default {
             }
             this.lastTotalReqs = totalReqs;
             return {
-                used: rps,
-                units: ''
+                value: rps
             };
         },
         eventBusMessagesPublishedPerSecond() {
@@ -302,8 +303,8 @@ export default {
             }
             this.lastTotalPublished = totalPublished;
             return {
-                used: mpps,
-                units: ' Msgs'
+                value: mpps,
+                formatFn: n => numeral(n).format('0[.]0a') + ' msgs'
             }
         }
     }

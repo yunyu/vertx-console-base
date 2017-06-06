@@ -1,7 +1,7 @@
 <template>
     <div class="pf-trend-section pf-card-section">
         <div class="col-sm-4 col-md-4">
-            <pf-trend-details :used="data.used" :units="data.units.trim()" :title="title" :showActualValue="showActualValue"></pf-trend-details>
+            <pf-trend-details :data="data" :title="title" :showActualValue="showActualValue"></pf-trend-details>
         </div>
         <div class="col-sm-8 col-md-8">
             <pf-sparkline :tooltipContents="sparklineTooltipContents" :maxDisplayed="historySize" :data="c3SparklineData"></pf-sparkline>
@@ -40,7 +40,7 @@ export default {
         makeTooltipContents() {
             let tooltipFn = null;
             if (this.labelType === 'used' || this.labelType === 'available') {
-                tooltipFn = d => '<span class="c3-tooltip-sparkline">' + d[0].value + this.data.units + '</span>';
+                tooltipFn = d => '<span class="c3-tooltip-sparkline">' + this.data.formatFn(d[0].value) + '</span>';
             } else if (this.labelType === 'none') {
                 tooltipFn = d => '';
             }
@@ -63,7 +63,7 @@ export default {
     },
     watch: {
         data() {
-            this.c3SparklineData = { indices: [new Date()], values: [this.data.used] };
+            this.c3SparklineData = { indices: [new Date()], values: [this.data.value] };
             // console.log(JSON.stringify(this.c3SparklineData));
         }
     }
