@@ -1,13 +1,13 @@
 <template>
     <div class="trend-compact-details">
         <span v-if="showActualValue">
-            <div v-if="data.formatFn">
+            <template v-if="data.formatFn">
                 <span class="trend-title-compact-big-pf"> {{ formatted[0] }}</span>
                 <span class="trend-title-compact-small-pf" v-if="formatted.length > 1">{{ formatted[1] }}</span>
-            </div>
-            <div v-else>
+            </template>
+            <template v-else>
                 <span class="trend-title-compact-big-pf"> {{ data.value }}</span>
-            </div>
+            </template>
         </span>
         <span class="trend-header-compact-pf" v-if="title">{{ title }}</span>
     </div>
