@@ -5,7 +5,7 @@
         </div>
         <div v-if="metrics">
             <div class="row row-eq-height row-cards-pf">
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticles" :count="parseInt(getSimpleMetricValue('vertx_verticles'))" iconClass="fa fa-cubes">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticles" :count="getSimpleMetricValue('vertx_verticles')" iconClass="fa fa-cubes">
                     <a href="#" class="add">
                         <span class="pficon pficon-add-circle-o"></span>
                     </a>
@@ -13,7 +13,7 @@
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Uptime" iconClass="fa fa-clock-o">
                     <span>{{ uptime }}</span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="parseInt(getSimpleMetricValue('.*_open_connections_.*', true))" iconClass="fa fa-exchange">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="getSimpleMetricValue('.*_open_connections_.*', true)" iconClass="fa fa-exchange">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Load Average" :count="getSimpleMetricValue('os_load_average')" iconClass="fa fa-hourglass">
@@ -60,25 +60,25 @@
                         <div class="pf-body-separator"></div>
                         <div class="pf-card-section">
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Threads Started" :used="parseInt(getSimpleMetricValue('jvm_threads_started_total'))"></pf-trend-details>
+                                <pf-trend-details title="Threads Started" :data="simpleFormattedData('jvm_threads_started_total', '0[.]0a')"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Active Threads" :used="parseInt(getSimpleMetricValue('jvm_threads_current'))"></pf-trend-details>
+                                <pf-trend-details title="Active Threads" :data="simpleFormattedData('jvm_threads_current', '0[.]0a')"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Deadlocked Threads" :used="parseInt(getSimpleMetricValue('jvm_threads_deadlocked'))"></pf-trend-details>
+                                <pf-trend-details title="Deadlocked Threads" :data="simpleFormattedData('jvm_threads_deadlocked')"></pf-trend-details>
                             </div>
                         </div>
                         <div class="pf-body-separator noline"></div>
                         <div class="pf-card-section">
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Available CPUs" :used="parseInt(getSimpleMetricValue('os_avail_processors'))"></pf-trend-details>
+                                <pf-trend-details title="Available CPUs" :data="simpleFormattedData('os_avail_processors')"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Loaded Classes" :used="parseInt(getSimpleMetricValue('jvm_classes_loaded_total'))"></pf-trend-details>
+                                <pf-trend-details title="Loaded Classes" :data="simpleFormattedData('jvm_classes_loaded_total', '0[.]0a')"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Unloaded Classes" :used="parseInt(getSimpleMetricValue('jvm_classes_unloaded_total'))"></pf-trend-details>
+                                <pf-trend-details title="Unloaded Classes" :data="simpleFormattedData('jvm_classes_unloaded_total')"></pf-trend-details>
                             </div>
                         </div>
                     </pf-card>
@@ -177,7 +177,8 @@ export default {
     data() {
         return {
             requestedMetrics: [],
-            metrics: null
+            metrics: null,
+            numeral: numeral // Allow use with inline fn
         }
     },
     mounted() {
@@ -205,15 +206,25 @@ export default {
             }
         },
         getSimpleMetricValue(name, isRegex) {
-            return this.getMetricByName(name, isRegex).metrics.value;
+            return parseFloat(this.getMetricByName(name, isRegex).metrics.value);
+        },
+        simpleFormattedData(key, format) {
+            let formatFn;
+            if (format) {
+                formatFn = n => numeral(n).format(format);
+            }
+            return {
+                value: this.getSimpleMetricValue(key),
+                formatFn: formatFn
+            }
         }
     },
     // TODO switch to configurable computed props
     computed: {
         diskUsage() {
             return {
-                used: parseFloat(this.getMetricByName('disk_space_bytes_used').metrics.value),
-                total: parseFloat(this.getMetricByName('disk_space_bytes_max').metrics.value),
+                used: this.getSimpleMetricValue('disk_space_bytes_used'),
+                total: this.getSimpleMetricValue('disk_space_bytes_max'),
                 formatFn: n => numeral(n).format('0.0 b')
             }
         },
@@ -252,7 +263,7 @@ export default {
         },
         cpuUsage() {
             return {
-                value: parseFloat(this.getSimpleMetricValue('os_system_cpu_load')),
+                value: this.getSimpleMetricValue('os_system_cpu_load'),
                 formatFn: n => numeral(n).format('0.0 %')
             }
         },
@@ -278,7 +289,7 @@ export default {
             }
         },
         uptime() {
-            return prettyMs(Math.floor(Date.now() / 1e3 - parseFloat(this.getSimpleMetricValue('process_start_time_seconds'))) * 1e3);
+            return prettyMs(Math.floor(Date.now() / 1e3 - this.getSimpleMetricValue('process_start_time_seconds')) * 1e3);
         },
         avgRequestsPerSecond() {
             const totalReqs = this.getMetricByName('vertx_http_servers_.*:\\d+_requests', true).metrics.count;
@@ -294,7 +305,7 @@ export default {
             };
         },
         eventBusMessagesPublishedPerSecond() {
-            const totalPublished = parseInt(this.getSimpleMetricValue('vertx_eventbus_messages_published_total'));
+            const totalPublished = this.getSimpleMetricValue('vertx_eventbus_messages_published_total');
             let mpps;
             if (this.lastTotalPublished === undefined) {
                 mpps = 0;
