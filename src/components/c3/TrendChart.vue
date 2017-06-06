@@ -39,8 +39,9 @@ export default {
     methods: {
         makeTooltipContents() {
             let tooltipFn = null;
+            let formatFn = this.data.formatFn ? this.data.formatFn : n => n;
             if (this.labelType === 'used' || this.labelType === 'available') {
-                tooltipFn = d => '<span class="c3-tooltip-sparkline">' + this.data.formatFn(d[0].value) + '</span>';
+                tooltipFn = d => '<span class="c3-tooltip-sparkline">' + formatFn(d[0].value) + '</span>';
             } else if (this.labelType === 'none') {
                 tooltipFn = d => '';
             }

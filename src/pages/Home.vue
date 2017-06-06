@@ -89,25 +89,25 @@
                         <div class="pf-body-separator"></div>
                         <div class="pf-card-section">
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Msgs Delivered" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_delivered_total'))"></pf-trend-details>
+                                <pf-trend-details title="Msgs Delivered" :data="simpleFormattedData('vertx_eventbus_messages_delivered_total', '0[.]0a')"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Msgs Published" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_published_total'))"></pf-trend-details>
+                                <pf-trend-details title="Msgs Published" :data="simpleFormattedData('vertx_eventbus_messages_published_total', '0[.]0a')"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Reply Failures" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_reply_failures_total'))"></pf-trend-details>
+                                <pf-trend-details title="Reply Failures" :data="simpleFormattedData('vertx_eventbus_messages_reply_failures_total', '0[.]0a')"></pf-trend-details>
                             </div>
                         </div>
                         <div class="pf-body-separator noline"></div>
                         <div class="pf-card-section">
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Pending (Local)" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_pending_local'))"></pf-trend-details>
+                                <pf-trend-details title="Pending (Local)" :data="simpleFormattedData('vertx_eventbus_messages_pending_local')"></pf-trend-details>
                             </div>
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Pending (Remote)" :used="parseInt(getSimpleMetricValue('vertx_eventbus_messages_pending_remote'))"></pf-trend-details>
+                                <pf-trend-details title="Pending (Remote)" :data="simpleFormattedData('vertx_eventbus_messages_pending_remote')"></pf-trend-details>
                             </div>    
                             <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Active Handlers" :used="parseInt(getSimpleMetricValue('vertx_eventbus_handlers'))"></pf-trend-details>
+                                <pf-trend-details title="Active Handlers" :data="simpleFormattedData('vertx_eventbus_handlers', '0[.]0a')"></pf-trend-details>
                             </div>
                         </div>
                     </pf-card>
