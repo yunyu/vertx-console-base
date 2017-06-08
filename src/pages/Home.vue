@@ -47,7 +47,7 @@
                 </div>
                 <div :class="getColumnClass(2)">
                     <pf-card class="match-util-trend" title="HTTP Response Times (ms) " :accented="false" :showTitlesSeparator="false">
-                        <pf-multi-line :height="288" :data="httpRequests"></pf-multi-line>
+                        <pf-stacked-bar :height="288" :data="httpRequests"></pf-stacked-bar>
                     </pf-card>
                 </div>
             </div>
@@ -279,8 +279,8 @@ export default {
                 indices: [new Date()],
                 values: {
                     '50th': numeral(perc50 * 1000).format('0.0'),
-                    '95th': numeral(perc95 * 1000).format('0.0'),
-                    '99th': numeral(perc99 * 1000).format('0.0')
+                    '95th': numeral((perc95 - perc50) * 1000).format('0.0'),
+                    '99th': numeral((perc99 - perc95) * 1000).format('0.0')
                 }
             }
         },

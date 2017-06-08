@@ -17,6 +17,7 @@ Vue.use(VueRouter);
 
 import DonutUtilizationChart from './components/c3/DonutUtilizationChart.vue';
 import SingleLineChart from './components/c3/SingleLineChart.vue';
+import StackedBarChart from './components/c3/StackedBarChart.vue';
 import MultiLineChart from './components/c3/MultiLineChart.vue';
 import SparklineChart from './components/c3/SparklineChart.vue';
 import UtilizationTrendChart from './components/c3/UtilizationTrendChart.vue';
@@ -26,6 +27,7 @@ import UtilizationBarChart from './components/c3/UtilizationBarChart.vue';
 
 Vue.component(DonutUtilizationChart.name, DonutUtilizationChart);
 Vue.component(SingleLineChart.name, SingleLineChart);
+Vue.component(StackedBarChart.name, StackedBarChart);
 Vue.component(MultiLineChart.name, MultiLineChart);
 Vue.component(SparklineChart.name, SparklineChart);
 Vue.component(UtilizationTrendChart.name, UtilizationTrendChart);
