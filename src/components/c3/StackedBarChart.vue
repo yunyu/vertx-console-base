@@ -59,8 +59,22 @@ export default {
                 prevValue = v;
                 c3Data.groups[0].push(k);
             }
+            if (this.data.baseline && this.chart) {
+                let yGridData = Object.assign({ class: 'stacked-bar-baseline' }, this.data.baseline);
+                this.chart.ygrids([yGridData])
+            }
             return c3Data;
         }
     }
 }
 </script>
+
+<style>
+.stacked-bar-baseline line {
+    stroke: #000;
+}
+
+.stacked-bar-baseline text {
+    fill: #000;
+}
+</style>

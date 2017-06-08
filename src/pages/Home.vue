@@ -286,6 +286,10 @@ export default {
                     '50th': '#7cc2e8', 
                     '95th': '#f9d67a', 
                     '99th': '#f39c3d'
+                },
+                baseline: {
+                    value: numeral(perc50 * 1000).format('0.0'),
+                    text: '5 minute average'
                 }
             }
         },
