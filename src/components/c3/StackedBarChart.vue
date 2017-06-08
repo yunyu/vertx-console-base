@@ -32,6 +32,9 @@ export default {
                 }
             };
             chartData.transition = { duration: 0 };
+            chartData.legend = {
+                position: 'right'
+            };
             return chartData;
         },
         getC3Data() {
