@@ -46,6 +46,9 @@ export default {
                 duration: 100,
                 groups: [[]]
             };
+            if (this.data.colors) {
+                c3Data.colors = this.data.colors;
+            }
             const cf = 10;
             let prevValue = 0;
             for (let [k, v] of Object.entries(this.data.values)) {

@@ -281,6 +281,11 @@ export default {
                     '50th': numeral(perc50 * 1000).format('0.0'),
                     '95th': numeral(perc95 * 1000).format('0.0'),
                     '99th': numeral(perc99 * 1000).format('0.0')
+                },
+                colors: {
+                    '50th': '#7cc2e8', 
+                    '95th': '#f9d67a', 
+                    '99th': '#f39c3d'
                 }
             }
         },
