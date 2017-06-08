@@ -279,8 +279,8 @@ export default {
                 indices: [new Date()],
                 values: {
                     '50th': numeral(perc50 * 1000).format('0.0'),
-                    '95th': numeral((perc95 - perc50) * 1000).format('0.0'),
-                    '99th': numeral((perc99 - perc95) * 1000).format('0.0')
+                    '95th': numeral(perc95 * 1000).format('0.0'),
+                    '99th': numeral(perc99 * 1000).format('0.0')
                 }
             }
         },

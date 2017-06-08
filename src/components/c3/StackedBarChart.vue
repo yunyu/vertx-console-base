@@ -46,8 +46,11 @@ export default {
                 duration: 100,
                 groups: [[]]
             };
+            const cf = 10;
+            let prevValue = 0;
             for (let [k, v] of Object.entries(this.data.values)) {
-                c3Data.columns.push([k].concat(v));
+                c3Data.columns.push([k].concat((v * cf - prevValue * cf) / cf));
+                prevValue = v;
                 c3Data.groups[0].push(k);
             }
             return c3Data;
