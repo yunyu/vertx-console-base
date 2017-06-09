@@ -16,7 +16,7 @@
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Open Connections" :count="getSimpleMetricValue('.*_open_connections_.*', true)" iconClass="fa fa-exchange">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
-                <pf-aggregate-status-card :class="getColumnClass(1)" title="Load Average" :count="getSimpleMetricValue('os_load_average')" iconClass="fa fa-hourglass">
+                <pf-aggregate-status-card :class="getColumnClass(1)" title="Load Average" :count="getSimpleMetricValue('os_load_average').toFixed(2)" iconClass="fa fa-hourglass">
                     <span class="pficon pficon-ok"></span>
                 </pf-aggregate-status-card>
             </div>
