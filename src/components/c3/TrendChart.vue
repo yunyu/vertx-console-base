@@ -39,7 +39,7 @@ export default {
     methods: {
         makeTooltipContents() {
             let tooltipFn = null;
-            let formatFn = this.data.formatFn ? this.data.formatFn : n => n;
+            let formatFn = this.data.formatFn ? this.data.formatFn : n => n.toString();
             if (this.labelType === 'used' || this.labelType === 'available') {
                 tooltipFn = d => {
                     let formattedText = formatFn(d[0].value);
