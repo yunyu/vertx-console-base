@@ -1,7 +1,7 @@
 <template>
     <div class="pf-trend-section pf-card-section">
         <div class="col-sm-4 col-md-4">
-            <pf-trend-details :data="data" :title="title" :showActualValue="showActualValue"></pf-trend-details>
+            <pf-trend-details :data="data" :title="title" :showActualValue="showActualValue" textSize="big"></pf-trend-details>
         </div>
         <div class="col-sm-8 col-md-8">
             <pf-sparkline :tooltipContents="sparklineTooltipContents" :maxDisplayed="historySize" :data="c3SparklineData"></pf-sparkline>
