@@ -30,7 +30,7 @@
                     <pf-card class="match-util-trend" title="System Load" :accented="false" :showTitlesSeparator="false">
                         <pf-trend labelType="used" title="CPU Usage" :data="cpuUsage"></pf-trend>
                         <div class="pf-body-separator"></div>
-                        <pf-trend labelType="used" title="Requests/sec" :data="avgRequestsPerSecond"></pf-trend>
+                        <pf-trend labelType="used" title="HTTP Reqs/sec" :data="avgRequestsPerSecond"></pf-trend>
                         <div class="pf-body-separator"></div>
                         <div class="pf-card-section">
                             <div class="col-sm-4 col-md-4">
