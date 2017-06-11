@@ -271,7 +271,8 @@ export default {
         },
         httpRequests() {
             const requestsMetric = this.getMetricByName('vertx_http_servers_.*:\\d+_requests', true);
-            // console.log(JSON.stringify(requestsMetric, null, 4));
+            const requestsDistMetric = this.getMetricByName('vertx_http_servers_.*_\\d+_requests_dist', true);
+            
             const perc50 = parseFloat(requestsMetric.metrics.quantiles['0.5']);
             const perc95 = parseFloat(requestsMetric.metrics.quantiles['0.95']);
             const perc99 = parseFloat(requestsMetric.metrics.quantiles['0.99']);
@@ -288,8 +289,8 @@ export default {
                     '99th': '#f39c3d'
                 },
                 baseline: {
-                    value: numeral(perc50 * 1000).format('0.0'),
-                    text: '5 minute average'
+                    value: numeral(requestsDistMetric.metrics.stat.mean.value * 1000).format('0.0'),
+                    text: 'Overall average'
                 }
             }
         },
