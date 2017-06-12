@@ -187,7 +187,9 @@ export default {
     },
     watch: {
         data() {
+            const origFilter = this.store.filter;
             this.updateStore(this.data);
+            this.store.filter = origFilter;
         }
     }
 }
