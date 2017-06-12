@@ -1,8 +1,5 @@
 <template>
     <div>
-        <div class="page-header">
-            <h1>Overview</h1>
-        </div>
         <div v-if="metrics">
             <div class="row row-eq-height row-cards-pf">
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticles" :count="getSimpleMetricValue('vertx_verticles')" iconClass="fa fa-cubes">
@@ -87,6 +84,8 @@
                     <pf-card class="match-util-trend" title="Event Bus" :accented="false" :showTitlesSeparator="false">
                         <pf-trend labelType="used" title="Published/sec" :data="eventBusMessagesPublishedPerSecond"></pf-trend>
                         <div class="pf-body-separator"></div>
+                        <pf-trend labelType="used" title="Active Handlers" :data="simpleFormattedData('vertx_eventbus_handlers', '0[.]0a')"></pf-trend>
+                        <div class="pf-body-separator"></div>
                         <div class="pf-card-section">
                             <div class="col-sm-4 col-md-4">
                                 <pf-trend-details title="Msgs Delivered" :data="simpleFormattedData('vertx_eventbus_messages_delivered_total', '0[.]0a')"></pf-trend-details>
@@ -96,18 +95,6 @@
                             </div>
                             <div class="col-sm-4 col-md-4">
                                 <pf-trend-details title="Reply Failures" :data="simpleFormattedData('vertx_eventbus_messages_reply_failures_total', '0[.]0a')"></pf-trend-details>
-                            </div>
-                        </div>
-                        <div class="pf-body-separator noline"></div>
-                        <div class="pf-card-section">
-                            <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Pending (Local)" :data="simpleFormattedData('vertx_eventbus_messages_pending_local')"></pf-trend-details>
-                            </div>
-                            <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Pending (Remote)" :data="simpleFormattedData('vertx_eventbus_messages_pending_remote')"></pf-trend-details>
-                            </div>    
-                            <div class="col-sm-4 col-md-4">
-                                <pf-trend-details title="Active Handlers" :data="simpleFormattedData('vertx_eventbus_handlers', '0[.]0a')"></pf-trend-details>
                             </div>
                         </div>
                     </pf-card>
@@ -272,7 +259,7 @@ export default {
         httpRequests() {
             const requestsMetric = this.getMetricByName('vertx_http_servers_.*:\\d+_requests', true);
             const requestsDistMetric = this.getMetricByName('vertx_http_servers_.*_\\d+_requests_dist', true);
-            
+
             const perc50 = parseFloat(requestsMetric.metrics.quantiles['0.5']);
             const perc95 = parseFloat(requestsMetric.metrics.quantiles['0.95']);
             const perc99 = parseFloat(requestsMetric.metrics.quantiles['0.99']);
