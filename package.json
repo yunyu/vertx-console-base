@@ -17,7 +17,8 @@
     "pretty-ms": "^2.1.0",
     "vue": "^2.3.4",
     "vue-patternfly": "^0.0.12",
-    "vue-router": "^2.5.3"
+    "vue-router": "^2.5.3",
+    "vuejs-datatable": "^0.10.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",

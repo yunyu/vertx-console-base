@@ -171,14 +171,19 @@ export default {
     },
     mounted() {
         // Necessary for reactivity
-        Metrics.addCallback(metrics => {
+        this.metricsCallback = metrics => {
             this.metrics = metrics;
             // console.log(JSON.stringify(this.metrics, null, 4));
-        });
+        };
+        Metrics.addCallback(this.metricsCallback);
+    },
+    beforeDestroy() {
+        Metrics.removeCallback(this.metricsCallback);
     },
     methods: {
-        getColumnClass(width) {
-            return 'col-md-' + 3 * width;
+        getColumnClass(width, noCollapse) {
+            let collapseStr = noCollapse ? '' : 'col-md-' + 6 * width + ' ';
+            return collapseStr + 'col-lg-' + 3 * width;
         },
         getMetricByName(name, isRegex) {
             if (isRegex) {

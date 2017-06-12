@@ -50,6 +50,10 @@ module.exports = {
       '/metrics': {
         target: 'http://localhost:5000',
         secure: false
+      },
+      '/discovery': {
+        target: 'http://localhost:5000',
+        secure: false
       }
     }
   },

@@ -14,11 +14,11 @@
           <span class="list-group-item-value">Logging</span>
         </a>
       </router-link>
-      <div class="list-group-item">
+      <router-link tag="li" class="list-group-item" active-class="active" to="/services" :exact="true">
         <a>
           <span class="list-group-item-value">Services</span>
         </a>
-      </div>
+      </router-link>
       <div class="list-group-item">
         <a>
           <span class="list-group-item-value">Circuit Breakers</span>
@@ -37,6 +37,7 @@
 
 <script>
 import Metrics from './metrics.js';
+import Services from './services.js';
 
 export default {
   name: 'app',
@@ -48,6 +49,7 @@ export default {
 }
 
 Metrics.initialize('/metrics');
+Services.initialize('/discovery');
 </script>
 
 <style lang="scss">
