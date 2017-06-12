@@ -9,12 +9,11 @@
           <span class="list-group-item-value">Overview</span>
         </a>
       </router-link>
-  
-      <div class="list-group-item">
+      <router-link tag="li" class="list-group-item" active-class="active" to="/logging" :exact="true">
         <a>
           <span class="list-group-item-value">Logging</span>
         </a>
-      </div>
+      </router-link>
       <div class="list-group-item">
         <a>
           <span class="list-group-item-value">Services</span>
@@ -29,7 +28,7 @@
         <a>
           <span class="list-group-item-value">Settings</span>
         </a>
-      </div>  
+      </div>
     </template>
   
     <router-view></router-view>

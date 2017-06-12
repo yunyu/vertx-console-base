@@ -11,6 +11,7 @@ import VueRouter from 'vue-router';
 import App from './App.vue'
 
 import Home from './pages/Home.vue'
+import Logging from './pages/Logging.vue'
 
 Vue.use(VuePatternFly);
 Vue.use(VueRouter);
@@ -40,6 +41,10 @@ const router = new VueRouter({
     {
       path: '/',
       component: Home
+    },
+    {
+      path: '/logging',
+      component: Logging
     }
   ],
   mode: 'abstract'

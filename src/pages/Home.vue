@@ -100,7 +100,7 @@
                     </pf-card>
                 </div>
                 <div :class="getColumnClass(2)">
-                    <pf-card class="match-util-trend" title="HTTP Request Rate History" :accented="false" :showTitlesSeparator="false">
+                    <pf-card class="match-util-trend" title="HTTP Requests/sec History" :accented="false" :showTitlesSeparator="false">
                         <pf-multi-line :height="288" :data="httpRequestsRates" chartType="area"></pf-multi-line>
                     </pf-card>
                 </div>
