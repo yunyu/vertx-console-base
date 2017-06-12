@@ -40,7 +40,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'd3$': '../../d3.js'
+      'd3$': path.resolve(__dirname, 'd3.js'),
+      'vertx-eventbus$': path.resolve(__dirname, 'vertx-eventbus.js')
     }
   },
   devServer: {
