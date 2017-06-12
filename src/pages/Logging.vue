@@ -7,7 +7,7 @@
             <div class="logger-name">{{ logger }}</div>
             <div class="log-level">{{ logLevel }}</div>
         </div>
-        <div class="log-display" id="logDisplay">
+        <div class="log-display" ref="logDisplay">
             <div class="log-lines">
                 <div class="log-line" v-for="logElement in logMsgs">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
             </div>
@@ -68,7 +68,7 @@ export default {
                 if (this.logMsgs.length > 50) {
                     this.logMsgs.shift();
                 }
-                var container = this.$el.querySelector("#logDisplay");
+                var container = this.$refs.logDisplay;
                 container.scrollTop = container.scrollHeight;
             })
         }, 1000);
