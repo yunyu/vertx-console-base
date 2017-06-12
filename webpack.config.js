@@ -56,9 +56,10 @@ module.exports = {
         target: 'http://localhost:5000',
         secure: false
       },
-      '/loggerproxy': {
+      '/loggerproxy/': {
         target: 'http://localhost:5000',
-        secure: false
+        secure: false,
+        ws: true
       }
     }
   },

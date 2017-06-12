@@ -8,7 +8,9 @@
             <div class="log-level">{{ logLevel }}</div>
         </div>
         <div class="log-display" id="logDisplay">
-            <div class="log-line" v-for="logElement in logMsgs">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.thread }} - {{ logElement.message }}</div>
+            <div class="log-lines">
+                <div class="log-line" v-for="logElement in logMsgs">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -18,9 +20,12 @@
     background: black;
     color: #ccc;
     font-family: monospace;
-    padding: 20px;
     height: 500px;
     overflow-y: scroll;
+}
+
+.log-lines {
+    padding: 10px;
 }
 
 .log-header {
@@ -29,11 +34,12 @@
     border: 1px solid #ddd;
     background-clip: padding-box;
     background-color: #f5f5f5;
-    background-image: linear-gradient(to bottom,#fafafa 0,#ededed 100%);
+    background-image: linear-gradient(to bottom, #fafafa 0, #ededed 100%);
     background-repeat: repeat-x;
 }
 
-.logger-name, .log-level {
+.logger-name,
+.log-level {
     display: inline-block;
     font-size: 16px;
 }
@@ -55,10 +61,13 @@ import dateFormat from 'dateformat';
 
 export default {
     mounted() {
-        this.eb = new EventBus('http://localhost:5000/loggerproxy/'); // wtf webpack isn't proxying this properly
+        this.eb = new EventBus('/loggerproxy/'); // wtf webpack isn't proxying this properly
         setTimeout(() => {
             this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
                 this.logMsgs.push(JSON.parse(m.body));
+                if (this.logMsgs.length > 50) {
+                    this.logMsgs.shift();
+                }
                 var container = this.$el.querySelector("#logDisplay");
                 container.scrollTop = container.scrollHeight;
             })

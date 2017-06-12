@@ -2,7 +2,7 @@ import parsePrometheusTextFormat from 'parse-prometheus-text-format';
 
 const subscribed = new Set();
 let url = null;
-let metrics = {};
+let prevMetrics = null;
 let callbacks = [];
 
 function updateMetrics() {
@@ -11,7 +11,7 @@ function updateMetrics() {
     xhr.open('GET', url + params, true);
     xhr.onreadystatechange = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
-            metrics = parsePrometheusTextFormat(xhr.responseText);
+            const metrics = parsePrometheusTextFormat(xhr.responseText);
             let mappedMetrics = {};
             for (let el of metrics) {
                 if (el.metrics.length === 1) {
@@ -49,8 +49,9 @@ function updateMetrics() {
                 mappedMetrics[elName] = el;
                 delete mappedMetrics[elName].name;
             }
+            prevMetrics = mappedMetrics;
             for (let cb of callbacks) {
-                cb(Object.assign({}, mappedMetrics)); // Clone object
+                cb(Object.assign({}, prevMetrics)); // Clone object
             }
         }
     };
@@ -65,9 +66,6 @@ export default {
     unsubscribe(metricName) {
         subscribed.delete(metricName);
     },
-    getMetrics() {
-        return metrics;
-    },
     initialize(endpoint) {
         url = endpoint;
         updateMetrics();
@@ -75,6 +73,7 @@ export default {
     },
     addCallback(cb) {
         callbacks.push(cb);
+        cb(Object.assign({}, prevMetrics));
     },
     removeCallback(cb) {
         callbacks = callbacks.filter(el => el != cb);
