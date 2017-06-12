@@ -23,5 +23,8 @@ export default {
     },
     addCallback(cb) {
         callbacks.push(cb);
+    },
+    removeCallback(cb) {
+        callbacks = callbacks.filter(el => el != cb);
     }
 }
