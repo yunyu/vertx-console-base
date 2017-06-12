@@ -55,7 +55,7 @@ import dateFormat from 'dateformat';
 
 export default {
     mounted() {
-        this.eb = new EventBus('http://twitterwall.yunyul.in/loggerproxy/'); // wtf webpack isn't proxying this properly
+        this.eb = new EventBus('http://localhost:5000/loggerproxy/'); // wtf webpack isn't proxying this properly
         setTimeout(() => {
             this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
                 this.logMsgs.push(JSON.parse(m.body));

@@ -37,7 +37,8 @@ Vue.component(TrendDetails.name, TrendDetails);
 Vue.component(TrendChart.name, TrendChart);
 Vue.component(UtilizationBarChart.name, UtilizationBarChart);
 
-import Datatable from 'vuejs-datatable';
+import Datatable from './extern/vue-datatable.vue';
+
 Vue.component('datatable', Datatable);
 
 const router = new VueRouter({
