@@ -16,6 +16,7 @@
     "object-path": "^0.11.4",
     "parse-prometheus-text-format": "^1.0.5",
     "pretty-ms": "^2.1.0",
+    "sockjs-client": "^1.1.4",
     "vue": "^2.3.4",
     "vue-patternfly": "^0.0.12",
     "vue-router": "^2.5.3",
