@@ -54,6 +54,10 @@ module.exports = {
       '/discovery': {
         target: 'http://localhost:5000',
         secure: false
+      },
+      '/loggerproxy': {
+        target: 'http://localhost:5000',
+        secure: false
       }
     }
   },
