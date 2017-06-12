@@ -14,6 +14,10 @@ export default {
         },
         maxDisplayed: {
             default: 30
+        },
+        chartType: {
+            type: String,
+            default: 'line'
         }
     },
     extends: FlowedLine,
@@ -40,7 +44,7 @@ export default {
                 columns: [
                     ['x_'].concat(this.data.indices)
                 ],
-                type: 'line',
+                type: this.chartType,
                 length: this.getC3FlowLength(),
                 duration: 100
             };

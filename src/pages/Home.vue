@@ -99,6 +99,11 @@
                         </div>
                     </pf-card>
                 </div>
+                <div :class="getColumnClass(2)">
+                    <pf-card class="match-util-trend" title="HTTP Request Rate History" :accented="false" :showTitlesSeparator="false">
+                        <pf-multi-line :height="288" :data="httpRequestsRates" chartType="area"></pf-multi-line>
+                    </pf-card>
+                </div>
             </div>
         </div>
     </div>
@@ -233,15 +238,15 @@ export default {
             return { count: count, sum: sum };
         },
         gcTotal() {
-            return { 
-                value: this.gcStats.sum, 
-                formatFn: n => numeral(n).format('0') + ' sec' 
+            return {
+                value: this.gcStats.sum,
+                formatFn: n => numeral(n).format('0') + ' sec'
             };
         },
         gcCount() {
-            return { 
-                value: this.gcStats.count, 
-                formatFn: n => numeral(n).format('0[.]0a') 
+            return {
+                value: this.gcStats.count,
+                formatFn: n => numeral(n).format('0[.]0a')
             };
         },
         cpuUsage() {
@@ -271,13 +276,29 @@ export default {
                     '99th': numeral(perc99 * 1000).format('0.0')
                 },
                 colors: {
-                    '50th': '#7cc2e8', 
-                    '95th': '#f9d67a', 
+                    '50th': '#7cc2e8',
+                    '95th': '#f9d67a',
                     '99th': '#f39c3d'
                 },
                 baseline: {
                     value: numeral(requestsDistMetric.metrics.stat.mean.value * 1000).format('0.0'),
                     text: 'Overall average'
+                }
+            }
+        },
+        httpRequestsRates() {
+            const requestsRateMetric = this.getMetricByName('vertx_http_servers_.*_\\d+_requests_rate', true);
+
+            const oneMin = parseFloat(requestsRateMetric.metrics.interval['oneMinute'].value);
+            const fiveMin = parseFloat(requestsRateMetric.metrics.interval['fiveMinute'].value);
+            const fifteenMin = parseFloat(requestsRateMetric.metrics.interval['fifteenMinute'].value);
+
+            return {
+                indices: [new Date()],
+                values: {
+                    '1 minute': numeral(oneMin).format('0.00'),
+                    '5 minutes': numeral(fiveMin).format('0.00'),
+                    '15 minutes': numeral(fifteenMin).format('0.00')
                 }
             }
         },
