@@ -73,7 +73,9 @@ export default {
     },
     addCallback(cb) {
         callbacks.push(cb);
-        cb(Object.assign({}, prevMetrics));
+        if (prevMetrics !== null) {
+            cb(Object.assign({}, prevMetrics));
+        }
     },
     removeCallback(cb) {
         callbacks = callbacks.filter(el => el != cb);
