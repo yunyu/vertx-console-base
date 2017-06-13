@@ -25,7 +25,7 @@
 }
 
 .log-lines {
-    padding: 10px;
+    margin: 10px;
 }
 
 .log-header {
@@ -68,8 +68,10 @@ export default {
                 if (this.logMsgs.length > 50) {
                     this.logMsgs.shift();
                 }
-                var logDisplay = this.$refs.logDisplay;
-                logDisplay.scrollTop = logDisplay.scrollHeight + 500; // Workaround weird padding issues
+                this.$nextTick(() => {
+                    var logDisplay = this.$refs.logDisplay;
+                    logDisplay.scrollTop = logDisplay.scrollHeight;
+                })
             })
         }, 1000);
     },
