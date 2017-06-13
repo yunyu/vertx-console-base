@@ -68,8 +68,8 @@ export default {
                 if (this.logMsgs.length > 50) {
                     this.logMsgs.shift();
                 }
-                var container = this.$refs.logDisplay;
-                container.scrollTop = container.scrollHeight;
+                var logDisplay = this.$refs.logDisplay;
+                logDisplay.scrollTop = logDisplay.scrollHeight + 500; // Workaround weird padding issues
             })
         }, 1000);
     },
