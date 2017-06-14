@@ -11,7 +11,7 @@ export default {
 			sort_by: '',
 			sort_dir: 'asc',
 			page: 1,
-			page_size: 10,
+			page_size: 25,
 			data: [],
 			table: null
 		}

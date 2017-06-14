@@ -83,7 +83,7 @@ export default {
 		},
 		sizeOptions: {
 			type: [Object, Array],
-			default: function () { return [10, 25, 50, 100]; }
+			default: function () { return [25, 50, 100]; }
 		},
 		dataStore: {
 			type: Object,
