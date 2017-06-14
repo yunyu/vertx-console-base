@@ -103,9 +103,11 @@ export default {
             default: null
         }
     },
-    data: () => ({
-        store: null
-    }),
+    data() {
+        return {
+            store: null
+        }
+    },
     computed: {
         column_props: function () {
             var i = 0;
@@ -188,8 +190,12 @@ export default {
     watch: {
         data() {
             const origFilter = this.store.filter;
+            const origSortBy = this.store.sort_by;
+            const origSortDir = this.store.sort_dir;
             this.updateStore(this.data);
             this.store.filter = origFilter;
+            this.store.sort_by = origSortBy;
+            this.store.sort_dir = origSortDir;
         }
     }
 }
