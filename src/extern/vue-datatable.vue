@@ -2,7 +2,7 @@
 	<div>
 	
 		<div class="row toolbar-pf table-view-pf-toolbar">
-			<div class="col-sm-12">	
+			<div class="col-sm-12">
 				<div class="toolbar-pf-actions">
 					<div v-if="filterable" class="form-group toolbar-pf-filter">
 						<label for="filter" class="sr-only">Filter</label>
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 	
-		<table class="table table-hover table-striped table-bordered">
+		<table class="table table-hover table-striped table-bordered dataTable" style="background:#fff">
 			<thead>
 				<tr>
 					<th v-for="head_column in column_props" :style="{'text-align': head_column.align}">
@@ -32,17 +32,19 @@
 			</tbody>
 		</table>
 	
-		<div class="table-below row form-inline">
-			<div class="col-xs-12">
+		<div class="content-view-pf-pagination table-view-pf-pagination clearfix">
 	
-				<div v-if="paginate && has_size_options" class="form-group">
-					<label for="filter">Page Size</label>
-					<select v-model="store.page_size" class="form-control" @change.stop="">
+			<div v-if="paginate && has_size_options" class="form-group">
+				<div class="pagination-pf-pagesize">
+					<select v-model="store.page_size" class="btn btn-default" @change.stop="">
 						<option v-for="size in sizeOptions" :value="size">{{ size }}</option>
 					</select>
+					<span>per page</span>
 				</div>
+			</div>
 	
-				<span v-if="paginate" class="btn-group">
+			<div v-if="paginate" class="form-group">
+				<span class="btn-group">
 					<button class="btn btn-default" v-if="store.page - 3 >= 1" @click="store.setPage(1, $event)">1</button>
 					<button class="btn btn-default" v-if="store.page - 4 >= 1" disabled>...</button>
 	
