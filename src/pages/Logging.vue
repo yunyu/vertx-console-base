@@ -65,6 +65,7 @@ export default {
         setTimeout(() => {
             this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
                 this.logMsgs.push(JSON.parse(m.body));
+                console.log(m.body);
                 if (this.logMsgs.length > 50) {
                     this.logMsgs.shift();
                 }

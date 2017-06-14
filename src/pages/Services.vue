@@ -7,26 +7,6 @@
     </div>
 </template>
 
-<style lang="scss">
-.table thead .glyphicon {
-    color: #aaa;
-}
-
-.table-above .col-xs-12, .table-below .col-xs-12 {
-    padding-left: 6px;
-    padding-bottom: 16px;
-}
-
-table.table {
-    border: 1px solid #ddd;
-    background: white;
-}
-
-.table-below .btn-group {
-    vertical-align: top;
-}
-</style>
-
 <script>
 import Services from '../services.js';
 
