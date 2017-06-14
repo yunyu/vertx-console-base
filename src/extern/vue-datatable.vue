@@ -15,9 +15,7 @@
 		<table class="table table-hover table-striped table-bordered dataTable">
 			<thead>
 				<tr>
-					<th v-for="head_column in column_props" :class="getHeaderColumnClass(head_column)" @click="store.sortBy(head_column.id)">
-						{{ head_column.label }}
-					</th>
+					<th v-for="head_column in column_props" :class="getHeaderColumnClass(head_column)" @click="store.sortBy(head_column.id)">{{ head_column.label }}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,7 +38,6 @@
 					<span>per page</span>
 				</div>
 			</div>
-	
 			<div class="form-group">
 				<span class="btn-group">
 					<button class="btn btn-default" v-if="store.page - 3 >= 1" @click="store.setPage(1, $event)">1</button>
@@ -59,7 +56,7 @@
 				</span>
 			</div>
 		</div>
-	</div>
+
 	</div>
 </template>
 
