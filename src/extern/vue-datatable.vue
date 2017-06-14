@@ -15,7 +15,7 @@
 		<table class="table table-hover table-striped table-bordered dataTable" style="background:#fff">
 			<thead>
 				<tr>
-					<th v-for="head_column in column_props" :class="getHeaderColumnClass(head_column)" @click="store.sortBy(head_column.id)">
+					<th v-for="head_column in column_props" :class="getHeaderColumnClass(head_column)" @click="store.sortBy(head_column.id)" style="height:29px">
 						{{ head_column.label }}
 					</th>
 				</tr>
