@@ -70,7 +70,9 @@ export default {
                 }
                 this.$nextTick(() => {
                     var logDisplay = this.$refs.logDisplay;
-                    logDisplay.scrollTop = logDisplay.scrollHeight;
+                    if (logDisplay) {
+                        logDisplay.scrollTop = logDisplay.scrollHeight;
+                    }
                 })
             })
         }, 1000);

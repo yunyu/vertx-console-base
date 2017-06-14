@@ -33,7 +33,6 @@ import Services from '../services.js';
 export default {
     mounted() {
         Services.addCallback(services => this.tableRows = services);
-        console.log(this.tableColumns);
     },
     data() {
         return {
