@@ -60,6 +60,16 @@
 	</div>
 </template>
 
+<style lang="scss">
+.dataTable {
+	background: #fff;
+
+	tr th {
+		height: 29px;
+	}
+}
+</style>
+
 <script>
 import Vue from 'vue';
 import objectPath from 'object-path';
