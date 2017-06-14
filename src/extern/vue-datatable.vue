@@ -15,9 +15,8 @@
 		<table class="table table-hover table-striped table-bordered dataTable" style="background:#fff">
 			<thead>
 				<tr>
-					<th v-for="head_column in column_props" :style="{'text-align': head_column.align}">
+					<th v-for="head_column in column_props" :class="getHeaderColumnClass(head_column)" @click="store.sortBy(head_column.id)">
 						{{ head_column.label }}
-						<span v-if="head_column.sortable" :class="getHeaderColumnClass(head_column)" @click="store.sortBy(head_column.id)"></span>
 					</th>
 				</tr>
 			</thead>
@@ -159,11 +158,9 @@ export default {
 				head_column.id === this.store.sort_by && this.store.sort_dir === 'dsc';
 
 			return {
-				'sort': can_sort,
-				'glyphicon': can_sort,
-				'glyphicon-sort': can_sort && sort_none,
-				'glyphicon-sort-by-alphabet': can_sort && sort_asc,
-				'glyphicon-sort-by-alphabet-alt': can_sort && sort_dsc,
+				'sorting': can_sort && sort_none,
+				'sorting_asc': can_sort && sort_asc,
+				'sorting_desc': can_sort && sort_dsc,
 			}
 		},
 		updateStore(data) {
