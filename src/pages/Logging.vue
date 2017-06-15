@@ -11,10 +11,11 @@
                 <div class="loggers-entries">
     
                     <div class="logger-entry" v-for="logger in loggers">
-                        <div class="pull-left logger-entry-checkbox">
+                        <div class="logger-entry-checkbox">
                             <input type="checkbox" checked>
                         </div>
-                        <div class="pull-right logger-entry-level">
+                        <div class="logger-entry-name">{{ logger.name }}</div>
+                        <div class="logger-entry-level">
                             <select class="btn btn-default">
                                 <option value="INFO">INFO</option>
                                 <option value="OFF">OFF</option>
@@ -26,7 +27,6 @@
                             </select>
                         </div>
     
-                        <div class="logger-entry-name">{{ logger.name }}</div>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
             margin: 0px 10px;
             padding: 10px;
             border-top: 1px solid #ededed;
-            overflow: hidden;
+            display: flex;
 
             &:hover {
                 background-color: #ededed;
@@ -79,19 +79,21 @@
             .logger-entry-checkbox {
                 border-right: 1px solid #d1d1d1;
                 padding-right: 10px;
+                margin-right: 10px;
                 input {
                     margin-top: 6px;
                 }
             }
 
             .logger-entry-name {
-                display: inline-block;
                 line-height: 24px;
-                margin-left: 10px;
                 word-break: break-all;
+                padding-right: 10px;
             }
 
-            .logger-entry-level {}
+            .logger-entry-level {
+                margin-left: auto;
+            }
         }
     }
 }
