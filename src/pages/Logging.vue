@@ -156,7 +156,7 @@ export default {
             if (this.filterQuery.length === 0) {
                 return this.loggers;
             } else {
-                return this.loggers.filter(el => el.name.includes(this.filterQuery));
+                return this.loggers.filter(el => el.name.toLowerCase().includes(this.filterQuery.toLowerCase()));
             }
         }
     }
