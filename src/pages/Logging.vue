@@ -41,7 +41,7 @@
 }
 
 .loggers-display {
-    height: 100%;
+    height: calc(100% - 47px);
     overflow-y: scroll;
 }
 
