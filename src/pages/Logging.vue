@@ -16,8 +16,8 @@
                         </div>
                         <div class="logger-entry-name">{{ logger.name }}</div>
                         <div class="logger-entry-level">
-                            <select class="btn btn-default">
-                                <option v-for="level in levels" :selected="logger.effectiveLevel.toUpperCase() === level">{{ level }}</option>
+                            <select class="btn btn-default" v-model="logger.effectiveLevel">
+                                <option v-for="level in levels">{{ level }}</option>
                             </select>
                         </div>
     
