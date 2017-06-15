@@ -64,16 +64,18 @@
     background-color: #fff;
 
     .loggers-entries {
-        padding: 10px 0px;
-
         .logger-entry {
-            margin: 0px 10px;
             padding: 10px;
+            margin: 0px 10px;
             border-top: 1px solid #ededed;
             display: flex;
 
             &:hover {
                 background-color: #ededed;
+            }
+
+            &:first-child {
+                border-top: none;
             }
 
             .logger-entry-checkbox {
