@@ -12,7 +12,11 @@ import Services from '../services.js';
 
 export default {
     mounted() {
-        Services.addCallback(services => this.tableRows = services);
+        this.servicesCallback = services => this.tableRows = services;
+        Services.addCallback(this.servicesCallback);
+    },
+    beforeDestroy() {
+        Services.removeCallback(this.servicesCallback);
     },
     data() {
         return {

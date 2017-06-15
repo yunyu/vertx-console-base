@@ -38,6 +38,7 @@
 <script>
 import Metrics from './metrics.js';
 import Services from './services.js';
+import Loggers from './loggers.js';
 
 export default {
   name: 'app',
@@ -50,6 +51,7 @@ export default {
 
 Metrics.initialize('/metrics');
 Services.initialize('/discovery');
+Loggers.initialize('/loggers');
 </script>
 
 <style lang="scss">

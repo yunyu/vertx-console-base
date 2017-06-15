@@ -1,6 +1,12 @@
 <template>
     <div class="logging-page row-no-padding">
-        <div class="col-md-4"></div>
+        <div class="loggers-wrapper col-md-4">
+            <div class="logger-display">
+                <div class="loggers-entries">
+                    <div class="logger-entry" v-for="logger in loggers">{{ logger.name }} - {{ logger.effectiveLevel }}</div>
+                </div>
+            </div>
+        </div>
         <div class="log-wrapper col-md-8">
             <div class="log-display" ref="logDisplay">
                 <div class="log-lines">
@@ -12,13 +18,20 @@
 </template>
 
 <style lang="scss">
-.logging-page, .log-wrapper {
+.logging-page,
+.loggers-wrapper,
+.log-wrapper {
     height: 100%;
 }
 
+.logger-display {
+    height: 100%;
+    overflow-y: scroll;
+}
+
 .log-display {
-    background: black;
-    color: #ccc;
+    background: #292e34;
+    color: #d1d1d1;
     font-family: monospace;
     height: 100%;
     overflow-y: scroll;
@@ -33,6 +46,7 @@
 <script>
 import EventBus from 'vertx-eventbus';
 import dateFormat from 'dateformat';
+import Loggers from '../loggers.js';
 
 export default {
     mounted() {
@@ -41,7 +55,7 @@ export default {
             this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
                 this.logMsgs.push(JSON.parse(m.body));
                 console.log(m.body);
-                if (this.logMsgs.length > 100) {
+                if (this.logMsgs.length > 250) {
                     this.logMsgs.shift();
                 }
                 this.$nextTick(() => {
@@ -52,11 +66,17 @@ export default {
                 })
             })
         }, 1000);
+        this.loggersCallback = loggers => this.loggers = loggers;
+        Loggers.addCallback(this.loggersCallback);
+    },
+    beforeDestroy() {
+        Loggers.removeCallback(this.loggersCallback);
     },
     data() {
         return {
             logMsgs: [],
-            dateFormat: dateFormat
+            dateFormat: dateFormat,
+            loggers: []
         }
     }
 }
