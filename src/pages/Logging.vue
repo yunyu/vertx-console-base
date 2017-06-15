@@ -17,13 +17,7 @@
                         <div class="logger-entry-name">{{ logger.name }}</div>
                         <div class="logger-entry-level">
                             <select class="btn btn-default">
-                                <option value="INFO">INFO</option>
-                                <option value="OFF">OFF</option>
-                                <option value="ERROR">ERROR</option>
-                                <option value="WARN">WARN</option>
-                                <option value="DEBUG">DEBUG</option>
-                                <option value="TRACE">TRACE</option>
-                                <option value="ALL">ALL</option>
+                                <option v-for="level in levels" :selected="logger.effectiveLevel.toUpperCase() === level">{{ level }}</option>
                             </select>
                         </div>
     
@@ -120,12 +114,14 @@ import dateFormat from 'dateformat';
 import Loggers from '../loggers.js';
 
 export default {
+    beforeCreate() {
+        this.levels = ['OFF', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE', 'ALL'];
+    },
     mounted() {
         this.eb = new EventBus('/loggerproxy/'); // wtf webpack isn't proxying this properly
         setTimeout(() => {
             this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
                 this.logMsgs.push(JSON.parse(m.body));
-                console.log(m.body);
                 if (this.logMsgs.length > 250) {
                     this.logMsgs.shift();
                 }
