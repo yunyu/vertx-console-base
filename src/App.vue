@@ -53,6 +53,12 @@ Services.initialize('/discovery');
 </script>
 
 <style lang="scss">
+$header-height: 60px;
+
+#app {
+  height: calc(100vh - $header-height);
+}
+
 .navbar-brand-name {
   line-height: 35px; // Full height
 }
