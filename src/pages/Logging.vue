@@ -1,7 +1,13 @@
 <template>
     <div class="logging-page row-no-padding">
         <div class="loggers-wrapper col-md-4">
-            <div class="logger-display">
+            <div class="toolbar-pf toolbar-pf-actions loggers-toolbar">
+                <div class="toolbar-pf-filter">
+                    <label for="filter" class="sr-only">Filter</label>
+                    <input type="text" id="filter" class="form-control" placeholder="Filter">
+                </div>
+            </div>
+            <div class="loggers-display">
                 <div class="loggers-entries">
                     <div class="logger-entry" v-for="logger in loggers">{{ logger.name }} - {{ logger.effectiveLevel }}</div>
                 </div>
@@ -24,7 +30,17 @@
     height: 100%;
 }
 
-.logger-display {
+.loggers-toolbar {
+    background-color: #f5f5f5;
+    padding: 10px 20px;
+    margin-bottom: 0px;
+
+    .toolbar-pf-filter {
+        min-width: 60%;
+    }
+}
+
+.loggers-display {
     height: 100%;
     overflow-y: scroll;
 }
