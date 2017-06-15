@@ -13,6 +13,7 @@
                         <div class="logger-entry-checkbox">
                             <input type="checkbox" checked>
                         </div>
+                        {{ hiddenStatuses[logger.name] }}
                         <div class="logger-entry-name">{{ logger.name }}</div>
                         <div class="logger-entry-level">
                             <select class="btn btn-default" v-model="logger.effectiveLevel" v-on:change="updateLogger(logger)">
@@ -142,7 +143,8 @@ export default {
             logMsgs: [],
             dateFormat: dateFormat,
             filterQuery: '',
-            loggers: []
+            loggers: [],
+            hiddenLoggers: []
         }
     },
     computed: {
@@ -152,6 +154,13 @@ export default {
             } else {
                 return this.loggers.filter(el => el.name.toLowerCase().includes(this.filterQuery.toLowerCase()));
             }
+        },
+        hiddenStatuses() {
+            return this.loggers.reduce((map, obj) => {
+                const loggerName = obj.name;
+                map[loggerName] = this.getHiddenStatus(loggerName);
+                return map;
+            }, {});
         }
     },
     methods: {
@@ -159,6 +168,16 @@ export default {
             this.$http.post('/loggers/' + logger.name + '/update', { level: logger.effectiveLevel, include: 'all' })
             .then(response => response.json())
             .then(this.loggersCallback);
+        },
+        getHiddenStatus(loggerName) {
+            for (let hiddenLoggerName of this.hiddenLoggers) {
+                if (hiddenLoggerName === loggerName) {
+                    return 2;
+                } else if (loggerName.startsWith(hiddenLoggerName)) {
+                    return 1;
+                }
+            }
+            return 0;
         }
     }
 }
