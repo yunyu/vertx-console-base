@@ -101,7 +101,7 @@
 }
 
 .log-display {
-    background: #292e34;
+    background: #030303;
     color: #d1d1d1;
     font-family: monospace;
     height: 100%;
