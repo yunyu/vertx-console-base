@@ -1,10 +1,10 @@
 <template>
 	<div>
 	
-		<div class="row toolbar-pf table-view-pf-toolbar">
+		<div v-if="filterable" class="row toolbar-pf table-view-pf-toolbar">
 			<div class="col-sm-12">
 				<div class="toolbar-pf-actions">
-					<div v-if="filterable" class="form-group toolbar-pf-filter">
+					<div class="form-group toolbar-pf-filter">
 						<label for="filter" class="sr-only">Filter</label>
 						<input type="text" id="filter" class="form-control" v-model="store.filter" placeholder="Filter">
 					</div>
