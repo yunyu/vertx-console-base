@@ -4,13 +4,13 @@
             <div class="toolbar-pf toolbar-pf-actions loggers-toolbar">
                 <div class="toolbar-pf-filter">
                     <label for="filter" class="sr-only">Filter</label>
-                    <input type="text" id="filter" class="form-control" placeholder="Filter">
+                    <input type="text" id="filter" class="form-control" placeholder="Filter" v-model="filterQuery">
                 </div>
             </div>
             <div class="loggers-display">
                 <div class="loggers-entries">
     
-                    <div class="logger-entry" v-for="logger in loggers">
+                    <div class="logger-entry" v-for="logger in filteredLoggers">
                         <div class="logger-entry-checkbox">
                             <input type="checkbox" checked>
                         </div>
@@ -147,7 +147,17 @@ export default {
         return {
             logMsgs: [],
             dateFormat: dateFormat,
+            filterQuery: '',
             loggers: []
+        }
+    },
+    computed: {
+        filteredLoggers() {
+            if (this.filterQuery.length === 0) {
+                return this.loggers;
+            } else {
+                return this.loggers.filter(el => el.name.includes(this.filterQuery));
+            }
         }
     }
 }
