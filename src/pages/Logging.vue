@@ -9,7 +9,20 @@
             </div>
             <div class="loggers-display">
                 <div class="loggers-entries">
-                    <div class="logger-entry" v-for="logger in loggers">{{ logger.name }} - {{ logger.effectiveLevel }}</div>
+    
+                    <div class="logger-entry" v-for="logger in loggers">
+                        <div class="pull-left logger-entry-checkbox">
+                            <input type="checkbox" checked>
+                        </div>
+                        <div class="logger-entry-name">{{ logger.name }}</div>
+                        <div class="pull-right logger-entry-level">
+                            <select class="btn btn-default">
+                                <option value="INFO">INFO</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -46,18 +59,32 @@
     background-color: #fff;
 
     .loggers-entries {
-        .logger-entry {
-            padding: 10px;
-            border-bottom: 1px solid #d1d1d1;
+        padding: 10px 0px;
 
-            &:nth-of-type(even) {
-                background-color: #f5f5f5;
-            }
+        .logger-entry {
+            margin: 0px 10px;
+            padding: 10px;
+            border-top: 1px solid #ededed;
 
             &:hover {
-                background-color: #def3ff;
-                border-bottom-color: #7dc3e8;
+                background-color: #ededed;
             }
+
+            .logger-entry-checkbox {
+                border-right: 1px solid #d1d1d1;
+                padding-right: 10px;
+                input {
+                    margin-top: 6px;
+                }
+            }
+
+            .logger-entry-name {
+                display: inline-block;
+                line-height: 24px;
+                margin-left: 10px;
+            }
+
+            .logger-entry-level {}
         }
     }
 }
