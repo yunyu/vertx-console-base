@@ -9,18 +9,16 @@
             </div>
             <div class="loggers-display">
                 <div class="loggers-entries">
-    
                     <div class="logger-entry" v-for="logger in filteredLoggers">
                         <div class="logger-entry-checkbox">
                             <input type="checkbox" checked>
                         </div>
                         <div class="logger-entry-name">{{ logger.name }}</div>
                         <div class="logger-entry-level">
-                            <select class="btn btn-default" v-model="logger.effectiveLevel">
+                            <select class="btn btn-default" v-model="logger.effectiveLevel" v-on:change="updateLogger(logger)">
                                 <option v-for="level in levels">{{ level }}</option>
                             </select>
                         </div>
-    
                     </div>
                 </div>
             </div>
@@ -118,7 +116,7 @@ export default {
         this.levels = ['OFF', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE', 'ALL'];
     },
     mounted() {
-        this.eb = new EventBus('/loggerproxy/'); // wtf webpack isn't proxying this properly
+        this.eb = new EventBus('/loggerproxy/');
         setTimeout(() => {
             this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
                 this.logMsgs.push(JSON.parse(m.body));
@@ -154,6 +152,11 @@ export default {
             } else {
                 return this.loggers.filter(el => el.name.toLowerCase().includes(this.filterQuery.toLowerCase()));
             }
+        }
+    },
+    methods: {
+        updateLogger(logger) {
+            console.log(JSON.stringify(logger))
         }
     }
 }
