@@ -5,9 +5,9 @@ require('./pf-settings/patternfly-settings-colors.js');
 
 import Vue from 'vue'
 
-
 import VuePatternFly from 'vue-patternfly'
 import VueRouter from 'vue-router';
+import VueResource from 'vue-resource'
 import App from './App.vue'
 
 import Home from './pages/Home.vue';
@@ -16,6 +16,7 @@ import Services from './pages/Services.vue';
 
 Vue.use(VuePatternFly);
 Vue.use(VueRouter);
+Vue.use(VueResource);
 
 import DonutUtilizationChart from './components/c3/DonutUtilizationChart.vue';
 import SingleLineChart from './components/c3/SingleLineChart.vue';
