@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-fluid">
         <div class="page-header">
             <h1>Services</h1>
         </div>

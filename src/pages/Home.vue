@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-fluid">
         <div v-if="metrics">
             <div class="row row-eq-height row-cards-pf">
                 <pf-aggregate-status-card :class="getColumnClass(1)" title="Deployed Verticles" :count="getSimpleMetricValue('vertx_verticles')" iconClass="fa fa-cubes">

@@ -1,5 +1,5 @@
 <template>
-  <pf-layout id="app">
+  <pf-layout id="app" nomargin>
     <div slot="brand" class="navbar-brand">
       <span class="navbar-brand-name">Vert.x Console</span>
     </div>
@@ -53,10 +53,20 @@ Services.initialize('/discovery');
 </script>
 
 <style lang="scss">
-$header-height: 60px;
-
 #app {
-  height: calc(100vh - $header-height);
+  height: calc(100vh - 60px);
+}
+
+.row-no-padding {
+  & > [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+.pf-layout-container {
+  height: 100%;
+  min-height: 100%;
 }
 
 .navbar-brand-name {

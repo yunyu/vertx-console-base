@@ -1,15 +1,18 @@
 <template>
-    <div class="log-wrapper">
-        <div class="log-display" ref="logDisplay">
-            <div class="log-lines">
-                <div class="log-line" v-for="logElement in logMsgs">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
+    <div class="logging-page row-no-padding">
+        <div class="col-md-4"></div>
+        <div class="log-wrapper col-md-8">
+            <div class="log-display" ref="logDisplay">
+                <div class="log-lines">
+                    <div class="log-line" v-for="logElement in logMsgs">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <style lang="scss">
-.log-wrapper {
+.logging-page, .log-wrapper {
     height: 100%;
 }
 
@@ -38,7 +41,7 @@ export default {
             this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
                 this.logMsgs.push(JSON.parse(m.body));
                 console.log(m.body);
-                if (this.logMsgs.length > 50) {
+                if (this.logMsgs.length > 100) {
                     this.logMsgs.shift();
                 }
                 this.$nextTick(() => {
