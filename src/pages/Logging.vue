@@ -43,6 +43,23 @@
 .loggers-display {
     height: calc(100% - 47px);
     overflow-y: scroll;
+    background-color: #fff;
+
+    .loggers-entries {
+        .logger-entry {
+            padding: 10px;
+            border-bottom: 1px solid #d1d1d1;
+
+            &:nth-of-type(even) {
+                background-color: #f5f5f5;
+            }
+
+            &:hover {
+                background-color: #def3ff;
+                border-bottom-color: #7dc3e8;
+            }
+        }
+    }
 }
 
 .log-display {
