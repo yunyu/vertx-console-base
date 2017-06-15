@@ -1,12 +1,5 @@
 <template>
-    <div>
-        <div class="page-header">
-            <h1>Logging</h1>
-        </div>
-        <div class="log-header">
-            <div class="logger-name">{{ logger }}</div>
-            <div class="log-level">{{ logLevel }}</div>
-        </div>
+    <div class="log-wrapper">
         <div class="log-display" ref="logDisplay">
             <div class="log-lines">
                 <div class="log-line" v-for="logElement in logMsgs">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
@@ -16,41 +9,20 @@
 </template>
 
 <style lang="scss">
+.log-wrapper {
+    height: 100%;
+}
+
 .log-display {
     background: black;
     color: #ccc;
     font-family: monospace;
-    height: 500px;
+    height: 100%;
     overflow-y: scroll;
 }
 
 .log-lines {
     margin: 10px;
-}
-
-.log-header {
-    overflow: hidden;
-    padding: 10px;
-    border: 1px solid #ddd;
-    background-clip: padding-box;
-    background-color: #f5f5f5;
-    background-image: linear-gradient(to bottom, #fafafa 0, #ededed 100%);
-    background-repeat: repeat-x;
-}
-
-.logger-name,
-.log-level {
-    display: inline-block;
-    font-size: 16px;
-}
-
-.logger-name {
-    float: left;
-    font-weight: bold;
-}
-
-.log-level {
-    float: right;
 }
 </style>
 
@@ -81,8 +53,6 @@ export default {
     data() {
         return {
             logMsgs: [],
-            logger: "Default",
-            logLevel: "INFO",
             dateFormat: dateFormat
         }
     }
