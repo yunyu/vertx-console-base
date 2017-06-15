@@ -14,14 +14,19 @@
                         <div class="pull-left logger-entry-checkbox">
                             <input type="checkbox" checked>
                         </div>
-                        <div class="logger-entry-name">{{ logger.name }}</div>
                         <div class="pull-right logger-entry-level">
                             <select class="btn btn-default">
                                 <option value="INFO">INFO</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
+                                <option value="OFF">OFF</option>
+                                <option value="ERROR">ERROR</option>
+                                <option value="WARN">WARN</option>
+                                <option value="DEBUG">DEBUG</option>
+                                <option value="TRACE">TRACE</option>
+                                <option value="ALL">ALL</option>
                             </select>
                         </div>
+    
+                        <div class="logger-entry-name">{{ logger.name }}</div>
                     </div>
                 </div>
             </div>
@@ -65,6 +70,7 @@
             margin: 0px 10px;
             padding: 10px;
             border-top: 1px solid #ededed;
+            overflow: hidden;
 
             &:hover {
                 background-color: #ededed;
@@ -82,6 +88,7 @@
                 display: inline-block;
                 line-height: 24px;
                 margin-left: 10px;
+                word-break: break-all;
             }
 
             .logger-entry-level {}
