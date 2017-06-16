@@ -157,11 +157,11 @@ export default {
             }
         },
         hiddenStatuses() {
-            return this.loggers.reduce((map, obj) => {
-                const loggerName = obj.name;
-                map[loggerName] = this.getHiddenStatus(loggerName);
-                return map;
-            }, {});
+            const statuses = {};
+            for (var logger of this.loggers) {
+                statuses[logger.name] = this.getHiddenStatus(logger.name);
+            }
+            return statuses;
         }
     },
     methods: {
