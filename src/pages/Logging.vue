@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="log-wrapper col-md-8">
-            <div class="log-display" ref="logDisplay">
+            <div class="log-display" v-chat-scroll>
                 <div class="log-lines">
                     <div class="log-line" v-for="logElement in logMsgs" v-if="!hiddenStatuses[logElement.logger]">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
                 </div>
@@ -125,12 +125,6 @@ export default {
                 if (this.logMsgs.length > 200) {
                     this.logMsgs.shift();
                 }
-                this.$nextTick(() => {
-                    var logDisplay = this.$refs.logDisplay;
-                    if (logDisplay) {
-                        logDisplay.scrollTop = logDisplay.scrollHeight;
-                    }
-                })
             })
         }, 1000);
         this.loggersCallback = loggers => this.loggers = loggers;

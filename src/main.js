@@ -18,6 +18,35 @@ Vue.use(VuePatternFly);
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
+// https://github.com/theomessin/vue-chat-scroll/issues/8#issuecomment-307991402
+const scrollToBottom = el => {
+    el.scrollTop = el.scrollHeight
+}
+
+const vChatScroll = {
+    bind: (el, binding) => {
+        let timeout
+        let scrolled = false
+
+        el.addEventListener('scroll', e => {
+            if (timeout) window.clearTimeout(timeout)
+            timeout = window.setTimeout(function() {
+                scrolled = el.scrollTop + el.clientHeight + 1 < el.scrollHeight
+            }, 200)
+        });
+
+        (new MutationObserver(e => {
+            let config = binding.value || {}
+            let pause = config.always === false && scrolled
+            if (pause || e[e.length - 1].addedNodes.length !== 1) return
+            scrollToBottom(el)
+        })).observe(el, {childList: true})
+    },
+    inserted: scrollToBottom
+}
+
+Vue.directive('chat-scroll', vChatScroll)
+
 import DonutUtilizationChart from './components/c3/DonutUtilizationChart.vue';
 import SingleLineChart from './components/c3/SingleLineChart.vue';
 import StackedBarChart from './components/c3/StackedBarChart.vue';
