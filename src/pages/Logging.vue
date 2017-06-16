@@ -11,7 +11,7 @@
                 <div class="loggers-entries">
                     <div class="logger-entry" v-for="logger in filteredLoggers">
                         <div class="logger-entry-checkbox">
-                            <input type="checkbox" checked>
+                            <input type="checkbox" checked v-on:click="updateHiddenStatus(logger.name, $event)">
                         </div>
                         {{ hiddenStatuses[logger.name] }}
                         <div class="logger-entry-name">{{ logger.name }}</div>
@@ -173,11 +173,18 @@ export default {
             for (let hiddenLoggerName of this.hiddenLoggers) {
                 if (hiddenLoggerName === loggerName) {
                     return 2;
-                } else if (loggerName.startsWith(hiddenLoggerName)) {
+                } else if (hiddenLoggerName === 'ROOT' || loggerName.startsWith(hiddenLoggerName)) {
                     return 1;
                 }
             }
             return 0;
+        },
+        updateHiddenStatus(loggerName, event) {
+            if (!event.target.checked) {
+                this.hiddenLoggers.push(loggerName);
+            } else {
+                this.hiddenLoggers.splice(this.hiddenLoggers.findIndex(el => el === loggerName), 1);
+            }
         }
     }
 }
