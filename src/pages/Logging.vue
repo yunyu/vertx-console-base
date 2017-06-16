@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="log-wrapper col-md-8">
-            <div class="log-display" v-chat-scroll>
+            <div class="log-display">
                 <div class="log-line" v-for="logElement in logMsgs" v-if="!hiddenStatuses[logElement.logger]">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
             </div>
         </div>
@@ -97,6 +97,8 @@
     height: 100%;
     overflow-y: scroll;
     padding: 10px;
+    display: flex;
+    flex-direction: column-reverse;
 }
 </style>
 
@@ -116,9 +118,9 @@ export default {
         this.eb = new EventBus('/loggerproxy/');
         setTimeout(() => {
             this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
-                this.logMsgs.push(JSON.parse(m.body));
+                this.logMsgs.unshift(JSON.parse(m.body));
                 if (this.logMsgs.length > 200) {
-                    this.logMsgs.shift();
+                    this.logMsgs.pop();
                 }
             })
         }, 1000);
