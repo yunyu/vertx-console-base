@@ -37,7 +37,7 @@ export default {
         this.eb.onopen = () => {
             this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
                 this.logMsgs.unshift(JSON.parse(m.body));
-                if (this.logMsgs.length > 200) {
+                if (this.logMsgs.length > 250) {
                     this.logMsgs.pop();
                 }
             })
