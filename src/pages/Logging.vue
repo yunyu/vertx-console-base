@@ -11,7 +11,7 @@
                 <div class="loggers-entries">
                     <div class="logger-entry" v-for="logger in filteredLoggers">
                         <div class="logger-entry-checkbox">
-                            <input type="checkbox" :checked="hiddenStatuses[logger.name] === 0" :disabled="hiddenStatuses[logger.name] === 1" v-on:click="updateHiddenStatus(logger.name, $event)">
+                            <input type="checkbox" :checked="!hiddenStatuses[logger.name]" :disabled="hiddenStatuses[logger.name] === 1" v-on:click="updateHiddenLoggers(logger.name, $event)">
                         </div>
                         <div class="logger-entry-name">{{ logger.name }}</div>
                         <div class="logger-entry-level">
@@ -26,7 +26,7 @@
         <div class="log-wrapper col-md-8">
             <div class="log-display" ref="logDisplay">
                 <div class="log-lines">
-                    <div class="log-line" v-for="logElement in logMsgs" v-if="hiddenStatuses[logElement.logger] === 0">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
+                    <div class="log-line" v-for="logElement in logMsgs" v-if="!hiddenStatuses[logElement.logger]">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
                 </div>
             </div>
         </div>
@@ -145,7 +145,8 @@ export default {
             dateFormat: dateFormat,
             filterQuery: '',
             loggers: [],
-            hiddenLoggers: []
+            hiddenLoggers: [],
+            hiddenStatuses: {}
         }
     },
     computed: {
@@ -155,13 +156,6 @@ export default {
             } else {
                 return this.loggers.filter(el => el.name.toLowerCase().includes(this.filterQuery.toLowerCase()));
             }
-        },
-        hiddenStatuses() {
-            const statuses = {};
-            for (var logger of this.loggers) {
-                statuses[logger.name] = this.getHiddenStatus(logger.name);
-            }
-            return statuses;
         }
     },
     methods: {
@@ -180,12 +174,21 @@ export default {
             }
             return 0;
         },
-        updateHiddenStatus(loggerName, event) {
+        updateHiddenLoggers(loggerName, event) {
             if (!event.target.checked) {
                 this.hiddenLoggers.push(loggerName);
             } else {
                 this.hiddenLoggers.splice(this.hiddenLoggers.findIndex(el => el === loggerName), 1);
             }
+        }
+    },
+    watch: {
+        hiddenLoggers() {
+            const statuses = {};
+            for (var logger of this.loggers) {
+                statuses[logger.name] = this.getHiddenStatus(logger.name);
+            }
+            this.hiddenStatuses = statuses;
         }
     }
 }
