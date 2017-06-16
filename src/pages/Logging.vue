@@ -11,9 +11,8 @@
                 <div class="loggers-entries">
                     <div class="logger-entry" v-for="logger in filteredLoggers">
                         <div class="logger-entry-checkbox">
-                            <input type="checkbox" checked v-on:click="updateHiddenStatus(logger.name, $event)">
+                            <input type="checkbox" :checked="hiddenStatuses[logger.name] === 0" :disabled="hiddenStatuses[logger.name] === 1" v-on:click="updateHiddenStatus(logger.name, $event)">
                         </div>
-                        {{ hiddenStatuses[logger.name] }}
                         <div class="logger-entry-name">{{ logger.name }}</div>
                         <div class="logger-entry-level">
                             <select class="btn btn-default" v-model="logger.effectiveLevel" v-on:change="updateLogger(logger)">
@@ -27,7 +26,7 @@
         <div class="log-wrapper col-md-8">
             <div class="log-display" ref="logDisplay">
                 <div class="log-lines">
-                    <div class="log-line" v-for="logElement in logMsgs">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
+                    <div class="log-line" v-for="logElement in logMsgs" v-if="hiddenStatuses[logElement.logger] === 0">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
                 </div>
             </div>
         </div>
@@ -112,6 +111,8 @@ import EventBus from 'vertx-eventbus';
 import dateFormat from 'dateformat';
 import Loggers from '../loggers.js';
 
+const ROOT = 'ROOT';
+
 export default {
     beforeCreate() {
         this.levels = ['OFF', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE', 'ALL'];
@@ -166,14 +167,14 @@ export default {
     methods: {
         updateLogger(logger) {
             this.$http.post('/loggers/' + logger.name + '/update', { level: logger.effectiveLevel, include: 'all' })
-            .then(response => response.json())
-            .then(this.loggersCallback);
+                .then(response => response.json())
+                .then(this.loggersCallback);
         },
         getHiddenStatus(loggerName) {
             for (let hiddenLoggerName of this.hiddenLoggers) {
                 if (hiddenLoggerName === loggerName) {
                     return 2;
-                } else if (hiddenLoggerName === 'ROOT' || loggerName.startsWith(hiddenLoggerName)) {
+                } else if (hiddenLoggerName === ROOT || loggerName.startsWith(hiddenLoggerName)) {
                     return 1;
                 }
             }
