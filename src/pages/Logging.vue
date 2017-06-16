@@ -24,9 +24,7 @@
             </div>
         </div>
         <div class="log-wrapper col-md-8">
-            <div class="log-display">
-                <div class="log-line" v-for="logElement in logMsgs" v-if="!hiddenStatuses[logElement.logger]">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
-            </div>
+            <log-display :hiddenStatuses="hiddenStatuses" eventBusUrl="/loggerproxy/"></log-display>
         </div>
     </div>
 </template>
@@ -89,41 +87,23 @@
         }
     }
 }
-
-.log-display {
-    background: #030303;
-    color: #d1d1d1;
-    font-family: monospace;
-    height: 100%;
-    overflow-y: scroll;
-    padding: 10px;
-    display: flex;
-    flex-direction: column-reverse;
-}
 </style>
 
 
 <script>
-import EventBus from 'vertx-eventbus';
-import dateFormat from 'dateformat';
 import Loggers from '../loggers.js';
+import LogDisplay from '../components/logging/LogDisplay.vue';
 
 const ROOT = 'ROOT';
 
 export default {
+    components: {
+        'log-display': LogDisplay
+    },
     beforeCreate() {
         this.levels = ['OFF', 'ERROR', 'WARN', 'INFO', 'DEBUG', 'TRACE', 'ALL'];
     },
     mounted() {
-        this.eb = new EventBus('/loggerproxy/');
-        setTimeout(() => {
-            this.eb.registerHandler("vertx.console.logger.default", (e, m) => {
-                this.logMsgs.unshift(JSON.parse(m.body));
-                if (this.logMsgs.length > 200) {
-                    this.logMsgs.pop();
-                }
-            })
-        }, 1000);
         this.loggersCallback = loggers => this.loggers = loggers;
         Loggers.addCallback(this.loggersCallback);
     },
@@ -132,8 +112,6 @@ export default {
     },
     data() {
         return {
-            logMsgs: [],
-            dateFormat: dateFormat,
             filterQuery: '',
             loggers: [],
             hiddenLoggers: [],
@@ -174,6 +152,7 @@ export default {
         }
     },
     watch: {
+        // Selective reactivity for performance reasons
         hiddenLoggers() {
             const statuses = {};
             for (var logger of this.loggers) {
