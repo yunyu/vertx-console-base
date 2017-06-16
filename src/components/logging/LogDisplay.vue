@@ -12,7 +12,14 @@
     height: 100%;
     overflow-y: scroll;
     padding: 10px;
+
+    // Snap to bottom
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: column-reverse;
     flex-direction: column-reverse;
 }
 </style>

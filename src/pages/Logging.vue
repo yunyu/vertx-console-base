@@ -56,6 +56,8 @@
             padding: 10px;
             margin: 0px 10px;
             border-top: 1px solid #ededed;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
 
             &:hover {
