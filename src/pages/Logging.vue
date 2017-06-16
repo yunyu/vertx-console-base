@@ -25,9 +25,7 @@
         </div>
         <div class="log-wrapper col-md-8">
             <div class="log-display" v-chat-scroll>
-                <div class="log-lines">
-                    <div class="log-line" v-for="logElement in logMsgs" v-if="!hiddenStatuses[logElement.logger]">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
-                </div>
+                <div class="log-line" v-for="logElement in logMsgs" v-if="!hiddenStatuses[logElement.logger]">[{{ dateFormat(logElement.date, 'HH:MM:ss') }}] [{{ logElement.level }}] {{ logElement.logger }} - {{ logElement.message }}</div>
             </div>
         </div>
     </div>
@@ -98,10 +96,7 @@
     font-family: monospace;
     height: 100%;
     overflow-y: scroll;
-}
-
-.log-lines {
-    margin: 10px;
+    padding: 10px;
 }
 </style>
 
