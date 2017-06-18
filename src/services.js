@@ -2,6 +2,17 @@ let url = null;
 let callbacks = [];
 let lastServices = null;
 
+/*
+function repeatArray(arr, count) {
+    var ln = arr.length;
+    var b = [];
+    for (var i = 0; i < count; i++) {
+        b.push(arr[i % ln]);
+    }
+    return b;
+}
+*/
+
 function updateServices() {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
@@ -10,7 +21,7 @@ function updateServices() {
             let services = JSON.parse(xhr.responseText);
             lastServices = services;
             for (let cb of callbacks) {
-                cb(lastServices.slice());
+                cb(lastServices.slice(), 200);
             }
         }
     }

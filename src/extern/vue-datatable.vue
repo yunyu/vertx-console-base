@@ -39,24 +39,55 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<span class="btn-group">
-					<button class="btn btn-default" v-if="store.page - 3 >= 1" @click="store.setPage(1, $event)">1</button>
-					<button class="btn btn-default" v-if="store.page - 4 >= 1" disabled>...</button>
+				<ul class="pagination">
+					<li :class="{ disabled: store.page == 1 }" @click="store.page > 1 && store.setPage(store.page - 1, $event)">
+						<a>
+							<span class="i fa fa-angle-left"></span>
+						</a>
+					</li>
 	
-					<button class="btn btn-default" v-if="store.page - 2 >= 1" @click="store.setPage(store.page - 2, $event)">{{ store.page - 2 }}</button>
-					<button class="btn btn-default" v-if="store.page - 1 >= 1" @click="store.setPage(store.page - 1, $event)">{{ store.page - 1 }}</button>
+					<li v-if="store.page - 3 >= 1" @click="store.setPage(1, $event)">
+						<a>1</a>
+					</li>
+					<li class="disabled" v-if="store.page - 4 >= 1">
+						<a>...</a>
+					</li>
 	
-					<button class="btn btn-default active">{{ store.page }}</button>
+					<li v-if="store.page - 2 >= 1" @click="store.setPage(store.page - 2, $event)">
+						<a>{{ store.page - 2 }}</a>
+					</li>
+					<li v-if="store.page - 1 >= 1" @click="store.setPage(store.page - 1, $event)">
+						<a>{{ store.page - 1 }}</a>
+					</li>
 	
-					<button class="btn btn-default" v-if="store.page + 1 <= store.last_page" @click="store.setPage(store.page + 1, $event)">{{ store.page + 1 }}</button>
-					<button class="btn btn-default" v-if="store.page + 2 <= store.last_page" @click="store.setPage(store.page + 2, $event)">{{ store.page + 2 }}</button>
+					<li class="active">
+						<a>{{ store.page }}</a>
+					</li>
 	
-					<button class="btn btn-default" v-if="store.page + 4 <= store.last_page" disabled>...</button>
-					<button class="btn btn-default" v-if="store.page + 3 <= store.last_page" @click="store.setPage(store.last_page, $event)">{{ store.last_page }}</button>
-				</span>
+					<li v-if="store.page + 1 <= store.last_page" @click="store.setPage(store.page + 1, $event)">
+						<a>{{ store.page + 1 }}</a>
+					</li>
+					<li v-if="store.page + 2 <= store.last_page" @click="store.setPage(store.page + 2, $event)">
+						<a>{{ store.page + 2 }}</a>
+					</li>
+	
+					<li class="disabled" v-if="store.page + 4 <= store.last_page">
+						<a>...</a>
+					</li>
+					<li v-if="store.page + 3 <= store.last_page" @click="store.setPage(store.last_page, $event)">
+						<a>{{ store.last_page }}</a>
+					</li>
+	
+					<li :class="{ disabled: store.page == store.last_page }" @click="store.page < store.last_page && store.setPage(store.page + 1, $event)">
+						<a>
+							<span class="i fa fa-angle-right"></span>
+						</a>
+					</li>
+	
+				</ul>
 			</div>
 		</div>
-
+	
 	</div>
 </template>
 
