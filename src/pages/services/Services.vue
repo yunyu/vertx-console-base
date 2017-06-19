@@ -27,10 +27,10 @@ export default {
         return {
             tableColumns: [
                 { label: 'Name', field: 'name' },
-                { label: 'Status', component: StatusLabel },
                 { label: 'Type', field: 'type' },
                 { label: 'Endpoint', field: 'location.endpoint' },
-                { label: 'Registration', field: 'registration' }
+                { label: 'Registration', field: 'registration' },
+                { label: 'Status', component: StatusLabel }
             ],
             tableRows: []
         }
