@@ -12,6 +12,8 @@ import Services from './services.js';
 
 Services.initialize('/discovery');
 
+import StatusLabel from './StatusLabel.vue';
+
 export default {
     name: 'Services',
     mounted() {
@@ -25,7 +27,7 @@ export default {
         return {
             tableColumns: [
                 { label: 'Name', field: 'name' },
-                { label: 'Status', field: 'status' },
+                { label: 'Status', component: StatusLabel },
                 { label: 'Type', field: 'type' },
                 { label: 'Endpoint', field: 'location.endpoint' },
                 { label: 'Registration', field: 'registration' }

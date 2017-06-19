@@ -141,7 +141,12 @@ export default {
 				var filterable = typeof column.filterable === 'undefined' ? true : column.filterable;
 
 				if (column.component) {
-					var component_definition = this.$root.$options.components[column.component];
+					var component_definition;
+					if (typeof column.component === 'string') {
+						component_definition = this.$root.$options.components[column.component];
+					} else {
+						component_definition = column.component;
+					}
 					var plain_text_function = component_definition.options.asPlainText;
 
 					if (plain_text_function) {
