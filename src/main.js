@@ -69,4 +69,4 @@ new Vue(Object.assign(App, {
   router
 }));
 
-router.replace('/');
+router.replace(routerOptions.routes[0].path);
