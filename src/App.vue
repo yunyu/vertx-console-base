@@ -36,22 +36,9 @@
 </template>
 
 <script>
-import Metrics from './metrics.js';
-import Services from './services.js';
-import Loggers from './loggers.js';
-
 export default {
-  name: 'app',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
+  name: 'app'
 }
-
-Metrics.initialize('/metrics');
-Services.initialize('/discovery');
-Loggers.initialize('/loggers');
 </script>
 
 <style lang="scss">

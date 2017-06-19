@@ -107,6 +107,7 @@ import objectPath from 'object-path';
 import json_store from './json-store.js';
 
 export default {
+	name: 'datatable',
 	props: {
 		columns: [Object, Array],
 		data: [Object, Array, String],

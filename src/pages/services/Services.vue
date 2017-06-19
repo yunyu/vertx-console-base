@@ -8,7 +8,9 @@
 </template>
 
 <script>
-import Services from '../services.js';
+import Services from './services.js';
+
+Services.initialize('/discovery');
 
 export default {
     mounted() {

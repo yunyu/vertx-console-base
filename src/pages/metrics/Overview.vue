@@ -150,12 +150,11 @@
 </style>
 
 <script>
-import Card from 'vue-patternfly';
-import UtilizationBarCard from '../cards/UtilizationBarCard.vue'
-import Util from '../util.js';
-import Metrics from '../metrics.js';
 import prettyMs from 'pretty-ms';
 import numeral from 'numeral';
+
+import Metrics from './metrics.js';
+Metrics.initialize('/metrics');
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;

@@ -93,8 +93,10 @@
 
 
 <script>
-import Loggers from '../loggers.js';
-import LogDisplay from '../components/logging/LogDisplay.vue';
+import Loggers from './loggers.js';
+import LogDisplay from './LogDisplay.vue';
+
+Loggers.initialize('/loggers');
 
 const ROOT = 'ROOT';
 
