@@ -42,7 +42,7 @@ import Overview from './pages/metrics/Overview.vue';
 import Logging from './pages/logging/Logging.vue';
 import Services from './pages/services/Services.vue';
 
-const routerOptions = {
+const router = new VueRouter({
   routes: [
     {
       path: '/',
@@ -58,8 +58,7 @@ const routerOptions = {
     }
   ],
   mode: 'abstract'
-};
-const router = new VueRouter(routerOptions);
+});
 
 // App
 import App from './App.vue'
@@ -69,4 +68,4 @@ new Vue(Object.assign(App, {
   router
 }));
 
-router.replace(routerOptions.routes[0].path);
+router.replace(router.options.routes[0].path);
