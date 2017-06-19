@@ -66,8 +66,7 @@ import App from './App.vue'
 
 new Vue(Object.assign(App, {
   el: '#app',
-  router,
-  paths: routerOptions.routes.map(el => ({ path: el.path, name: el.component.name }))
+  router
 }));
 
 router.replace('/');

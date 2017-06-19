@@ -4,41 +4,22 @@
       <span class="navbar-brand-name">Vert.x Console</span>
     </div>
     <template slot="vertical-menu">
-      <router-link tag="li" class="list-group-item" active-class="active" to="/" :exact="true">
+      <router-link tag="li" class="list-group-item" active-class="active" v-for="route in routes" :key="route.path" :to="route.path" exact>
         <a>
-          <span class="list-group-item-value">Overview</span>
+          <span class="list-group-item-value">{{ route.name }}</span>
         </a>
       </router-link>
-      <router-link tag="li" class="list-group-item" active-class="active" to="/logging" :exact="true">
-        <a>
-          <span class="list-group-item-value">Logging</span>
-        </a>
-      </router-link>
-      <router-link tag="li" class="list-group-item" active-class="active" to="/services" :exact="true">
-        <a>
-          <span class="list-group-item-value">Services</span>
-        </a>
-      </router-link>
-      <div class="list-group-item">
-        <a>
-          <span class="list-group-item-value">Circuit Breakers</span>
-        </a>
-      </div>
-      <div class="list-group-item">
-        <a>
-          <span class="list-group-item-value">Settings</span>
-        </a>
-      </div>
     </template>
-  
     <router-view></router-view>
   </pf-layout>
 </template>
 
 <script>
 export default {
-  mounted() {
-    console.log(this.$root.paths);
+  beforeCreate() {
+    this.routes = this.$router.options.routes.map(el => (
+      { path: el.path, name: el.component.name }
+    ));
   }
 }
 </script>
@@ -49,7 +30,7 @@ export default {
 }
 
 .row-no-padding {
-  & > [class*="col-"] {
+  &>[class*="col-"] {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
