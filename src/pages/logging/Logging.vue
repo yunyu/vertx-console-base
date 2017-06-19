@@ -101,6 +101,7 @@ Loggers.initialize('/loggers');
 const ROOT = 'ROOT';
 
 export default {
+    name: 'Logging',
     components: {
         'log-display': LogDisplay
     },

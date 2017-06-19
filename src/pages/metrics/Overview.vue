@@ -161,6 +161,7 @@ function getRandomInt(min, max) {
 }
 
 export default {
+    name: 'Overview',
     data() {
         return {
             requestedMetrics: [],

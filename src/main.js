@@ -38,15 +38,15 @@ Vue.component(UtilizationBarChart.name, UtilizationBarChart);
 Vue.component(Datatable.name, Datatable);
 
 // Routing
-import Home from './pages/metrics/Overview.vue';
+import Overview from './pages/metrics/Overview.vue';
 import Logging from './pages/logging/Logging.vue';
 import Services from './pages/services/Services.vue';
 
-const router = new VueRouter({
+const routerOptions = {
   routes: [
     {
       path: '/',
-      component: Home
+      component: Overview
     },
     {
       path: '/logging',
@@ -58,15 +58,16 @@ const router = new VueRouter({
     }
   ],
   mode: 'abstract'
-});
+};
+const router = new VueRouter(routerOptions);
 
 // App
 import App from './App.vue'
 
-new Vue({
+new Vue(Object.assign(App, {
   el: '#app',
   router,
-  render: h => h(App)
-})  
+  paths: routerOptions.routes.map(el => ({ path: el.path, name: el.component.name }))
+}));
 
 router.replace('/');

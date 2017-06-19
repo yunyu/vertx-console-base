@@ -13,6 +13,7 @@ import Services from './services.js';
 Services.initialize('/discovery');
 
 export default {
+    name: 'Services',
     mounted() {
         this.servicesCallback = services => this.tableRows = services;
         Services.addCallback(this.servicesCallback);
