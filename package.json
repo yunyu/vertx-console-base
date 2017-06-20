@@ -13,6 +13,7 @@
     "c3": "0.4.12",
     "dateformat": "^2.0.0",
     "dot-access": "^1.0.0",
+    "json-markup": "^1.1.0",
     "matcher": "^1.0.0",
     "numeral": "^2.0.6",
     "object-path": "^0.11.4",

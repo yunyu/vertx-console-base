@@ -2272,6 +2272,10 @@ json-loader@^0.5.4:
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/json-loader/-/json-loader-0.5.4.tgz#8baa1365a632f58a3c46d20175fc6002c96e37de"
 
+json-markup@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/json-markup/-/json-markup-1.1.0.tgz#4ab1cda4e9b9fa3c7376094ffac3ef1d4e55c607"
+
 json-schema@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"

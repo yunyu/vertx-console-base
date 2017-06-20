@@ -3,7 +3,7 @@
         <vs-dropdown v-if="hasMetadata" class="dropdown dropdown-kebab-pf">
             <div slot="button">View</div>
             <div slot="dropdown-menu" class="dropdown-menu dropdown-menu-right dropdown-menu-container">
-                <code>{{ rowString }}</code>
+                <code v-html="formattedRowString"></code>
             </div>
         </vs-dropdown>
         <button v-else class="btn btn-default disabled">None</button>
@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss">
-.metadata-display > .btn-group {
+.metadata-display>.btn-group {
     width: 100%;
     height: 100%;
 
@@ -28,10 +28,34 @@
         background: none;
         padding: 0;
     }
+
+    .json-markup {
+        color: #aaa;
+    }
+
+    .json-markup-key {
+        color: #000;
+        font-weight: bold;
+    }
+
+    .json-markup-bool {
+        color: firebrick;
+    }
+    .json-markup-string {
+        color: green;
+    }
+    .json-markup-null {
+        color: gray;
+    }
+    .json-markup-number {
+        color: blue;
+    }
 }
 </style>
 
 <script>
+import jsonMarkup from 'json-markup';
+
 export default {
     props: {
         row: Object
@@ -47,6 +71,9 @@ export default {
         },
         rowString() {
             return JSON.stringify(this.row.metadata, null, 4);
+        },
+        formattedRowString() {
+            return jsonMarkup(this.row.metadata);
         }
     }
 }
