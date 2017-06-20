@@ -5,14 +5,20 @@ require('./pf-settings/patternfly-settings-charts.js');
 require('./pf-settings/patternfly-settings-colors.js');
 
 // Vue plugins
-import Vue from 'vue'
-import VuePatternFly from 'vue-patternfly'
+import Vue from 'vue';
+import VuePatternFly from 'vue-patternfly';
 import VueRouter from 'vue-router';
-import VueResource from 'vue-resource'
+import VueResource from 'vue-resource';
 
 Vue.use(VuePatternFly);
 Vue.use(VueRouter);
 Vue.use(VueResource);
+
+import VueStrap from 'vue-strap';
+
+for (let [name, component] of Object.entries(VueStrap)) {
+  Vue.component('vs-' + name, component);
+}
 
 // Components
 import DonutUtilizationChart from './components/c3/DonutUtilizationChart.vue';
