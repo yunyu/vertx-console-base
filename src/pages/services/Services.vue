@@ -13,6 +13,7 @@ import Services from './services.js';
 Services.initialize('/discovery');
 
 import StatusLabel from './StatusLabel.vue';
+import MetadataDisplay from './MetadataDisplay.vue';
 
 export default {
     name: 'Services',
@@ -30,7 +31,8 @@ export default {
                 { label: 'Type', field: 'type' },
                 { label: 'Endpoint', field: 'location.endpoint' },
                 { label: 'Registration', field: 'registration' },
-                { label: 'Status', component: StatusLabel }
+                { label: 'Status', component: StatusLabel },
+                { label: 'Metadata', component: MetadataDisplay, cellClass: 'table-view-pf-actions' }
             ],
             tableRows: []
         }
