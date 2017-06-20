@@ -48,21 +48,23 @@ import Overview from './pages/metrics/Overview.vue';
 import Logging from './pages/logging/Logging.vue';
 import Services from './pages/services/Services.vue';
 
+window.vertxConsoleRoutes = [
+  {
+    path: '/',
+    component: Overview
+  },
+  {
+    path: '/logging',
+    component: Logging
+  },
+  {
+    path: '/services',
+    component: Services
+  }
+];
+
 const router = new VueRouter({
-  routes: [
-    {
-      path: '/',
-      component: Overview
-    },
-    {
-      path: '/logging',
-      component: Logging
-    },
-    {
-      path: '/services',
-      component: Services
-    }
-  ],
+  routes: window.vertxConsoleRoutes,
   mode: 'abstract'
 });
 
