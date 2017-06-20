@@ -1,8 +1,29 @@
 <template>
-    <div class="table-view-pf-btn">
-        <button class="btn btn-default" :class="{ disabled: !hasMetadata }">{{ hasMetadata ? 'View' : 'None' }}</button>
+    <div class="table-view-pf-btn metadata-display">
+        <vs-dropdown v-if="hasMetadata" class="dropdown dropdown-kebab-pf">
+            <div slot="button">View</div>
+            <div slot="dropdown-menu" class="dropdown-menu dropdown-menu-right dropdown-menu-container">
+                <code style="white-space: pre">{{ rowString }}</code>
+            </div>
+        </vs-dropdown>
+        <button v-else class="btn btn-default disabled">None</button>
     </div>
 </template>
+
+<style lang="scss">
+.metadata-display > .btn-group {
+    width: 100%;
+    height: 100%;
+
+    .btn .caret {
+        display: none;
+    }
+
+    .dropdown-menu-container {
+        padding: 10px;
+    }
+}
+</style>
 
 <script>
 export default {
@@ -11,12 +32,15 @@ export default {
     },
     options: {
         asPlainText(row) {
-            return '';
+            return this.rowString;
         }
     },
     computed: {
         hasMetadata() {
             return this.row.metadata !== undefined && Object.keys(this.row.metadata).length > 0;
+        },
+        rowString() {
+            return JSON.stringify(this.row.metadata, null, 4);
         }
     }
 }
