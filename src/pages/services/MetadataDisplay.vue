@@ -1,6 +1,6 @@
 <template>
     <div class="table-view-pf-btn metadata-display">
-        <vs-dropdown v-if="hasMetadata" class="dropdown dropdown-kebab-pf">
+        <vs-dropdown v-if="displayMetadata" class="dropdown dropdown-kebab-pf">
             <div slot="button">View</div>
             <div slot="dropdown-menu" class="dropdown-menu dropdown-menu-right dropdown-menu-container">
                 <code v-html="formattedRowString"></code>
@@ -56,21 +56,20 @@
 <script>
 import jsonMarkup from 'json-markup';
 
+const hasMetadata = row => row.metadata !== undefined && Object.keys(row.metadata).length > 0;
+
 export default {
     props: {
         row: Object
     },
     options: {
         asPlainText(row) {
-            return this.rowString;
+            return hasMetadata(row) ? 'v' : 'n';
         }
     },
     computed: {
-        hasMetadata() {
-            return this.row.metadata !== undefined && Object.keys(this.row.metadata).length > 0;
-        },
-        rowString() {
-            return JSON.stringify(this.row.metadata, null, 4);
+        displayMetadata() {
+            return hasMetadata(this.row);
         },
         formattedRowString() {
             return jsonMarkup(this.row.metadata);
