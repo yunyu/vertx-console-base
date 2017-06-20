@@ -20,7 +20,7 @@
 			</thead>
 			<tbody>
 				<tr v-for="row in store.visible_rows">
-					<td v-for="row_column in column_props" :style="{'text-align': row_column.align}">
+					<td v-for="row_column in column_props" :style="{'text-align': row_column.align}" :class="row_column.cellClass">
 						<span v-if="row_column.field">{{ getRowFromField(row, row_column.field) }}</span>
 						<span v-if="row_column.callback">{{ row_column.callback(row) }}</span>
 						<component v-if="row_column.component" :is="row_column.component" :row="row"></component>
@@ -162,6 +162,7 @@ export default {
 					id: i++,
 					label: column.label || '',
 					align: column.align || 'left',
+					cellClass: column.cellClass || null,
 					sortable: sortable,
 					filterable: filterable,
 					field: column.field || null,
