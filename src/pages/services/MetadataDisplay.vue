@@ -3,7 +3,7 @@
         <vs-dropdown v-if="hasMetadata" class="dropdown dropdown-kebab-pf">
             <div slot="button">View</div>
             <div slot="dropdown-menu" class="dropdown-menu dropdown-menu-right dropdown-menu-container">
-                <code style="white-space: pre">{{ rowString }}</code>
+                <code>{{ rowString }}</code>
             </div>
         </vs-dropdown>
         <button v-else class="btn btn-default disabled">None</button>
@@ -21,6 +21,12 @@
 
     .dropdown-menu-container {
         padding: 10px;
+    }
+
+    code {
+        white-space: pre;
+        background: none;
+        padding: 0;
     }
 }
 </style>
