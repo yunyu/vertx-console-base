@@ -38,11 +38,9 @@ public class WebConsoleRegistry {
     private boolean mounted = false;
 
     public void mount() {
-        /*
         if (pages.size() == 0) {
             throw new IllegalStateException("At least one page must be added before mounting");
         }
-        */
         if (mounted) {
             throw new IllegalStateException("Registry already mounted");
         }
