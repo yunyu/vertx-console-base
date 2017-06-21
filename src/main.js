@@ -1,8 +1,8 @@
 // Patternfly defaults
-require('./pf-settings/patternfly-settings.js');
-require('./pf-settings/patternfly-settings-base.js');
-require('./pf-settings/patternfly-settings-charts.js');
-require('./pf-settings/patternfly-settings-colors.js');
+import './pf-settings/patternfly-settings.js';
+import './pf-settings/patternfly-settings-base.js';
+import './pf-settings/patternfly-settings-charts.js';
+import './pf-settings/patternfly-settings-colors.js';
 
 // Vue plugins
 import Vue from 'vue';
@@ -42,26 +42,6 @@ Vue.component(TrendDetails.name, TrendDetails);
 Vue.component(TrendChart.name, TrendChart);
 Vue.component(UtilizationBarChart.name, UtilizationBarChart);
 Vue.component(Datatable.name, Datatable);
-
-// Routing
-import Overview from './pages/metrics/Overview.vue';
-import Logging from './pages/logging/Logging.vue';
-import Services from './pages/services/Services.vue';
-
-window.vertxConsoleRoutes = [
-  {
-    path: '/',
-    component: Overview
-  },
-  {
-    path: '/logging',
-    component: Logging
-  },
-  {
-    path: '/services',
-    component: Services
-  }
-];
 
 const router = new VueRouter({
   routes: window.vertxConsoleRoutes,

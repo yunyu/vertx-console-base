@@ -1,6 +1,6 @@
 {
-  "name": "vertx-metrics-frontend",
-  "description": "PatternFly-based frontend for Prometheus metrics on Vert.x",
+  "name": "vertx-console-base",
+  "description": "PatternFly-based console frontend for Vert.x",
   "version": "1.0.0",
   "author": "Yunyu Lin <yunyu.lin@vanderbilt.edu>",
   "private": true,
@@ -9,17 +9,8 @@
     "build": "cross-env NODE_ENV=production webpack --progress"
   },
   "dependencies": {
-    "babel-preset-env": "^1.5.2",
     "c3": "0.4.12",
-    "dateformat": "^2.0.0",
-    "dot-access": "^1.0.0",
-    "json-markup": "^1.1.0",
-    "matcher": "^1.0.0",
-    "numeral": "^2.0.6",
     "object-path": "^0.11.4",
-    "parse-prometheus-text-format": "^1.0.5",
-    "pretty-ms": "^2.1.0",
-    "sockjs-client": "^1.1.4",
     "vue": "^2.3.4",
     "vue-patternfly": "^0.0.12",
     "vue-router": "^2.5.3"
@@ -27,6 +18,7 @@
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.2",
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
     "file-loader": "^0.11.2",
