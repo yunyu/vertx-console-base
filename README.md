@@ -1,6 +1,6 @@
-# vertx-metrics-frontend
+# vertx-console-base
 
-> PatternFly-based frontend for Prometheus metrics on Vert.x
+> PatternFly-based console frontend for Vert.x
 
 ## Build Setup
 
