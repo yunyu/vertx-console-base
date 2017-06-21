@@ -16,8 +16,13 @@ Vue.use(VueResource);
 
 import VueStrap from 'vue-strap';
 
+const reserved = ['aside', 'input', 'option', 'select'];
+
 for (let [name, component] of Object.entries(VueStrap)) {
-  Vue.component('v-' + name, component);
+  if (reserved.includes(name)) {
+    name = 'v-' + name;
+  }
+  Vue.component(name, component);
 }
 
 // Components
