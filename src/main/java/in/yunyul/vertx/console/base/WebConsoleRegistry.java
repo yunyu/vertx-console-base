@@ -9,6 +9,7 @@ import io.vertx.ext.web.impl.Utils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("unused")
 public class WebConsoleRegistry {
@@ -31,11 +32,9 @@ public class WebConsoleRegistry {
     }
 
     private boolean cacheBusterEnabled;
-    private Random random;
 
     public void setCacheBusterEnabled(boolean enabled) {
         this.cacheBusterEnabled = enabled;
-        random = new Random();
     }
 
     private static final String PLACEHOLDER_TAG = "<script src=\"vertx-console-placeholder.js\"></script>";
@@ -61,7 +60,7 @@ public class WebConsoleRegistry {
                     .append(basePath)
                     .append(page.getLoaderFileName());
             if (cacheBusterEnabled) {
-                scriptTags.append("?").append(random.nextLong());
+                scriptTags.append("?").append(ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE));
             }
             scriptTags.append("\"></script>");
         }
