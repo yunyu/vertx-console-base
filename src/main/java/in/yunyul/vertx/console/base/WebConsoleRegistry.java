@@ -13,14 +13,9 @@ import java.util.List;
 public class WebConsoleRegistry {
     public static final String CONSOLE_ROOT = "consoleroot";
 
-    private final Vertx vertx;
-    private final Router router;
     private final String basePath;
 
-
-    public WebConsoleRegistry(Vertx vertx, Router router, String basePath) {
-        this.vertx = vertx;
-        this.router = router;
+    public WebConsoleRegistry(String basePath) {
         // Remove trailing slashes
         if (basePath.endsWith("/")) {
             basePath = basePath.substring(0, basePath.length() - 1);
@@ -37,7 +32,7 @@ public class WebConsoleRegistry {
     private static final String PLACEHOLDER_TAG = "<script src=\"vertx-console-placeholder.js\"></script>";
     private boolean mounted = false;
 
-    public void mount() {
+    public void mount(Vertx vertx, Router router) {
         if (pages.size() == 0) {
             throw new IllegalStateException("At least one page must be added before mounting");
         }
@@ -68,5 +63,4 @@ public class WebConsoleRegistry {
         });
         router.route(basePath + "/*").handler(StaticHandler.create(CONSOLE_ROOT));
     }
-
 }
