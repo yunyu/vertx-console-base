@@ -47,19 +47,19 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true,
     proxy: {
-      '/metrics': {
+      '/admin/metrics': {
         target: 'http://localhost:5000',
         secure: false
       },
-      '/discovery': {
+      '/admin/discovery': {
         target: 'http://localhost:5000',
         secure: false
       },
-      '/loggers': {
+      '/admin/loggers': {
         target: 'http://localhost:5000',
         secure: false
       },
-      '/loggerproxy/': {
+      '/admin/loggerproxy/': {
         target: 'http://localhost:5000',
         secure: false,
         ws: true

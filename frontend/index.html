@@ -16,7 +16,12 @@
 
 <body class="cards-pf">
   <div id="app"></div>
-  <script src="./dist/build.js"></script>
+  <script>
+    if (window.location.pathname !== '/admin') {
+      window.location.pathname = '/admin';
+    }
+  </script>
+  <script src="./dist/base.js"></script>
 </body>
 
 </html>
