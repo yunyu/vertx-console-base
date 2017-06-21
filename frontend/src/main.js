@@ -17,7 +17,7 @@ Vue.use(VueResource);
 import VueStrap from 'vue-strap';
 
 for (let [name, component] of Object.entries(VueStrap)) {
-  Vue.component('vs-' + name, component);
+  Vue.component('v-' + name, component);
 }
 
 // Components
