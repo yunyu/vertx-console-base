@@ -19,6 +19,20 @@
   font-weight: 300;
   line-height: 1;
 }
+
+@media (min-width: 1200px) and (max-width: 1600px) {
+    .trend-header-compact-pf {
+        font-size: 11px;
+    }
+
+    .trend-title-compact-medium-pf {
+        font-size: 22px;
+    }
+
+    .trend-title-compact-big-pf {
+        font-size: 28px;
+    }
+}
 </style>
 
 <script>
