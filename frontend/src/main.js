@@ -1,3 +1,6 @@
+// Polyfills
+import 'core-js/fn/object/entries';
+
 // Patternfly defaults
 import './pf-settings/patternfly-settings.js';
 import './pf-settings/patternfly-settings-base.js';
@@ -15,14 +18,21 @@ Vue.use(VueRouter);
 Vue.use(VueResource);
 
 import VueStrap from 'vue-strap';
-
-const reserved = ['aside', 'input', 'option', 'select'];
+import Select from './components/vue-strap/Select.vue';
 
 for (let [name, component] of Object.entries(VueStrap)) {
-  if (reserved.includes(name)) {
-    name = 'v-' + name;
+  if (name === 'aside') {
+    Vue.component('sidebar', component);
+  } else if (name === 'input') {
+    // Do nothing
+  } else if (name === 'option') {
+    Vue.component('v-option', component);
+  } else if (name === 'select') {
+    Vue.component('bs-select', Select);
+    Vue.component('v-select', Select);
+  } else {
+    Vue.component(name, component);
   }
-  Vue.component(name, component);
 }
 
 // Components
