@@ -1,6 +1,6 @@
 <template>
     <div ref="select" :class="classes" v-click-outside="close" @blur="canSearch ? null : close()">
-        <button ref="btn" type="button" class="btn btn-default dropdown-toggle" tabindex="1" :disabled="disabled || !hasParent" :readonly="readonly" @click="toggle()" @keydown.esc.stop.prevent="close" @keydown.space.stop.prevent="toggle" @keydown.enter.stop.prevent="toggle">
+        <button ref="btn" type="button" class="btn" :class="buttonClass + ' dropdown-toggle'" tabindex="1" :disabled="disabled || !hasParent" :readonly="readonly" @click="toggle()" @keydown.esc.stop.prevent="close" @keydown.space.stop.prevent="toggle" @keydown.enter.stop.prevent="toggle">
             <span class="filter-option pull-left" v-html="loading ? text.loading : showPlaceholder || (multiple && showCount ? selectedText : selected)"></span>
             <span v-if="clearButton&&values.length" class="close" @click="clear()">&times;</span>
             &nbsp;
@@ -22,7 +22,7 @@
                     <a @mousedown.prevent="clear() && close()">{{ placeholder || text.notSelected }}</a>
                 </li>
                 <li v-for="option in filteredOptions" :id="option[optionsValue]">
-                    <a @mousedown.prevent="select(option[optionsValue])">
+                    <a @mousedown.prevent="userSelect(option[optionsValue])">
                         <span v-html="option[optionsLabel]"></span>
                         <span class="glyphicon glyphicon-ok check-mark" v-show="isSelected(option[optionsValue])"></span>
                     </a>
@@ -47,6 +47,12 @@ import { select } from 'vue-strap';
 
 export default {
     extends: select,
+    props: {
+        buttonClass: {
+            type: String,
+            default: 'btn-default'
+        }
+    },
     computed: {
         classes() { return [this.isLi ? 'dropdown' : this.inInput ? 'input-group-btn' : 'btn-group', 'bootstrap-select', { open: this.show, disabled: this.disabled }, this.class] },
     },
@@ -61,7 +67,12 @@ export default {
             this.show = !this.show
             if (!this.show) this.$refs.btn.blur()
         },
-
+    },
+    methods: {
+        userSelect(v) {
+            this.$emit('select', v);
+            this.select(v);
+        }
     }
 }
 </script>

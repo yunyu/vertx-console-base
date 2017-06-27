@@ -31,9 +31,7 @@
 	
 		<div v-if="paginate" class="content-view-pf-pagination table-view-pf-pagination clearfix">
 			<div v-if="has_size_options" class="form-group">
-				<v-select v-model="store.page_size" class="pagination-pf-pagesize">
-					<v-option v-for="size in sizeOptions" :key="size" :value="size">{{ size }}</v-option>
-				</v-select>
+				<v-select v-model="store.page_size" class="pagination-pf-pagesize" :options="sizeOptions"></v-select>
 				<span>per page</span>
 			</div>
 			<div class="form-group">
