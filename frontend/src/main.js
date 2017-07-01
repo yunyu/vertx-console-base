@@ -35,6 +35,9 @@ for (let [name, component] of Object.entries(VueStrap)) {
   }
 }
 
+import NumberSpinner from './components/vue-strap/NumberSpinner.vue';
+Vue.component(NumberSpinner.name, NumberSpinner);
+
 // Components
 import DonutUtilizationChart from './components/c3/DonutUtilizationChart.vue';
 import SingleLineChart from './components/c3/SingleLineChart.vue';
