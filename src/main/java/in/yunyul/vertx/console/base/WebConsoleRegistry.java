@@ -56,6 +56,7 @@ public class WebConsoleRegistry {
         StringBuilder scriptTags = new StringBuilder();
         for (ConsolePage page : pagesToMount) {
             page.mount(vertx, router, basePath);
+            if (basePath == null) continue;
             scriptTags.append("<script src=\"")
                     .append(basePath)
                     .append(page.getLoaderFileName());
