@@ -21,6 +21,9 @@ export default {
         splitFormattedFn: {
             type: Function,
             default: s => s.split(' ')
+        },
+        extraChartOptions: {
+            type: Object
         }
     },
     beforeCreate() {
@@ -30,8 +33,11 @@ export default {
         this.totalDisplayed = 0;
         this.buffer = [];
         this.prevHidden = false;
-        
+
         this.chartData = this.getDefaults(this.patternfly.c3ChartDefaults);
+        if (this.extraChartOptions) {
+            Object.assign(chartData, this.extraChartOptions);
+        }
         this.chartData.bindto = this.$el;
         if (this.width || this.height) {
             let size = {};
