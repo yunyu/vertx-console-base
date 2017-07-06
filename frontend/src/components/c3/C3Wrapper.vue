@@ -36,7 +36,7 @@ export default {
 
         this.chartData = this.getDefaults(this.patternfly.c3ChartDefaults);
         if (this.extraChartOptions) {
-            Object.assign(chartData, this.extraChartOptions);
+            Object.assign(this.chartData, this.extraChartOptions);
         }
         this.chartData.bindto = this.$el;
         if (this.width || this.height) {
