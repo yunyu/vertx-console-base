@@ -46,7 +46,7 @@ public class WebConsoleRegistry {
     private static final String PLACEHOLDER_TAG = "<script src=\"vertx-console-placeholder.js\"></script>";
     private boolean mounted = false;
 
-    public void mount(Vertx vertx, Router router) {
+    public WebConsoleRegistry mount(Vertx vertx, Router router) {
         if (pages.size() == 0) {
             throw new IllegalStateException("At least one page must be added before mounting");
         }
@@ -80,5 +80,6 @@ public class WebConsoleRegistry {
             res.end(indexHtml);
         });
         router.route(basePath + "/*").handler(StaticHandler.create(CONSOLE_ROOT));
+        return this;
     }
 }
