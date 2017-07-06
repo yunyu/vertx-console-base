@@ -17,6 +17,10 @@ public class WebConsoleRegistry {
 
     private final String basePath;
 
+    public static WebConsoleRegistry create(String basePath) {
+        return new WebConsoleRegistry(basePath);
+    }
+
     public WebConsoleRegistry(String basePath) {
         // Remove trailing slashes
         if (basePath.endsWith("/")) {
@@ -27,14 +31,16 @@ public class WebConsoleRegistry {
 
     private List<ConsolePage> pages = new ArrayList<>();
 
-    public void addPage(ConsolePage page) {
+    public WebConsoleRegistry addPage(ConsolePage page) {
         pages.add(page);
+        return this;
     }
 
     private boolean cacheBusterEnabled;
 
-    public void setCacheBusterEnabled(boolean enabled) {
+    public WebConsoleRegistry setCacheBusterEnabled(boolean enabled) {
         this.cacheBusterEnabled = enabled;
+        return this;
     }
 
     private static final String PLACEHOLDER_TAG = "<script src=\"vertx-console-placeholder.js\"></script>";
