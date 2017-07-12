@@ -17,6 +17,15 @@ Vue.use(VuePatternFly);
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
+import Cookies from 'js-cookie';
+window.Cookies = Cookies;
+
+// Set up CSRFHandler support
+Vue.http.interceptors.push(function (request, next) {
+    request.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
+    next();
+});
+
 import VueStrap from 'vue-strap';
 import Select from './components/vue-strap/Select.vue';
 
