@@ -21,7 +21,7 @@ import Cookies from 'js-cookie';
 window.Cookies = Cookies;
 
 // Set up CSRFHandler support
-Vue.http.interceptors.push(function (request, next) {
+Vue.http.interceptors.push((request, next) => {
     request.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
     next();
 });
