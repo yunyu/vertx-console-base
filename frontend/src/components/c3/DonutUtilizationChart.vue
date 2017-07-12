@@ -69,7 +69,7 @@ export default {
             } else if (this.centerLabelType === 'percent') {
                 const formatted = this.splitFormattedFn(this.data.formatFn(this.filledData.total));
                 centerLabelText.big = Math.round(this.filledData.used / this.filledData.total * 100.0) + '%';
-                centerLabelText.small = 'of ' + formatted;
+                centerLabelText.small = formatted;
             }
             this.patternfly.pfSetDonutChartTitle(this.$el, centerLabelText.big, centerLabelText.small);
         }
