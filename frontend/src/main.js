@@ -26,6 +26,10 @@ Vue.http.interceptors.push((request, next) => {
     next();
 });
 
+import VueResize from 'vue-resize-directive';
+
+Vue.directive('resize', VueResize);
+
 import VueStrap from 'vue-strap';
 import Select from './components/vue-strap/Select.vue';
 
