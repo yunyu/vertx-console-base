@@ -17,6 +17,9 @@ Vue.use(VuePatternFly);
 Vue.use(VueRouter);
 Vue.use(VueResource);
 
+import d3Tip from 'd3-tip';
+window.d3.tip = d3Tip;
+
 import Cookies from 'js-cookie';
 window.Cookies = Cookies;
 
