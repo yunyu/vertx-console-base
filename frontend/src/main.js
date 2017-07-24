@@ -9,13 +9,13 @@ import './pf-settings/patternfly-settings-colors.js';
 
 // Vue plugins
 import Vue from 'vue';
-import VuePatternFly from 'vue-patternfly';
-import VueRouter from 'vue-router';
-import VueResource from 'vue-resource';
 
+import VuePatternFly from 'vue-patternfly';
 Vue.use(VuePatternFly);
+import VueRouter from 'vue-router';
 Vue.use(VueRouter);
-Vue.use(VueResource);
+import VueResize from 'vue-resize-directive';
+Vue.directive('resize', VueResize);
 
 import d3Tip from 'd3-tip';
 window.d3.tip = d3Tip;
@@ -23,15 +23,9 @@ window.d3.tip = d3Tip;
 import Cookies from 'js-cookie';
 window.Cookies = Cookies;
 
-// Set up CSRFHandler support
-Vue.http.interceptors.push((request, next) => {
-    request.headers.set('X-XSRF-TOKEN', Cookies.get('XSRF-TOKEN'));
-    next();
-});
-
-import VueResize from 'vue-resize-directive';
-
-Vue.directive('resize', VueResize);
+import axios from 'axios';
+window.axios = axios;
+Vue.prototype.$http = axios;
 
 import VueStrap from 'vue-strap';
 import Select from './components/vue-strap/Select.vue';

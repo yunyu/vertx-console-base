@@ -9,6 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --display-optimization-bailout"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "c3": "0.4.12",
     "d3-tip": "^0.7.1",
     "js-cookie": "^2.1.4",
