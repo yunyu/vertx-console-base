@@ -67,6 +67,9 @@
             <resource>
                 <directory>${frontend.directory}/dist</directory>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
         </resources>
     </build>
 </project>
