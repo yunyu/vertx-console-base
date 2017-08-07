@@ -49,6 +49,7 @@ import NumberSpinner from './components/vue-strap/NumberSpinner.vue';
 Vue.component(NumberSpinner.name, NumberSpinner);
 
 // Components
+import DonutChart from './components/c3/DonutChart.vue'
 import DonutUtilizationChart from './components/c3/DonutUtilizationChart.vue';
 import SingleLineChart from './components/c3/SingleLineChart.vue';
 import StackedBarChart from './components/c3/StackedBarChart.vue';
@@ -60,6 +61,7 @@ import TrendChart from './components/c3/TrendChart.vue';
 import UtilizationBarChart from './components/c3/UtilizationBarChart.vue';
 import Datatable from './components/datatable/vue-datatable.vue';
 
+Vue.component(DonutChart.name, DonutChart);
 Vue.component(DonutUtilizationChart.name, DonutUtilizationChart);
 Vue.component(SingleLineChart.name, SingleLineChart);
 Vue.component(StackedBarChart.name, StackedBarChart);
