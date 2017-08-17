@@ -7,9 +7,9 @@ public interface ConsolePage {
     /**
      * Sets up and mounts the supporting endpoints for the page.
      *
-     * @param vertx    Vert.x instance to use
-     * @param router   Router to mount endpoints on
-     * @param basePath Base path to mount the endpoints under
+     * @param vertx    the Vert.x instance
+     * @param router   the router to mount endpoints on
+     * @param basePath the base path to mount the endpoints under
      */
     void mount(Vertx vertx, Router router, String basePath);
 
@@ -18,7 +18,7 @@ public interface ConsolePage {
      * relative to {@link WebConsoleRegistry#CONSOLE_ROOT}.
      * Should start with a forward slash, e.g. '/js/mypage.js'.
      *
-     * @return The script file name
+     * @return the script file name
      */
     String getLoaderFileName();
 }

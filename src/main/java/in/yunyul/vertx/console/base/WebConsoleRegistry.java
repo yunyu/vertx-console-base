@@ -13,14 +13,28 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("unused")
 public class WebConsoleRegistry {
+    /**
+     * The value of the console root, where scripts are loaded from
+     */
     public static final String CONSOLE_ROOT = "consoleroot";
 
     private final String basePath;
 
+    /**
+     * Creates the registry using the specified base path
+     *
+     * @param basePath the base path to mount the registry under
+     * @return the registry
+     */
     public static WebConsoleRegistry create(String basePath) {
         return new WebConsoleRegistry(basePath);
     }
 
+    /**
+     * Creates the registry using the specified base path
+     *
+     * @param basePath the base path to mount the registry under
+     */
     public WebConsoleRegistry(String basePath) {
         // Remove trailing slashes
         if (basePath.endsWith("/")) {
@@ -31,6 +45,12 @@ public class WebConsoleRegistry {
 
     private List<ConsolePage> pages = new ArrayList<>();
 
+    /**
+     * Adds a page to the registry
+     *
+     * @param page the page to add
+     * @return the registry
+     */
     public WebConsoleRegistry addPage(ConsolePage page) {
         pages.add(page);
         return this;
@@ -38,6 +58,12 @@ public class WebConsoleRegistry {
 
     private boolean cacheBusterEnabled;
 
+    /**
+     * Enables query parameter randomization on injected scripts
+     *
+     * @param enabled whether the cachebuster should be enabled
+     * @return the registry
+     */
     public WebConsoleRegistry setCacheBusterEnabled(boolean enabled) {
         this.cacheBusterEnabled = enabled;
         return this;
@@ -46,6 +72,13 @@ public class WebConsoleRegistry {
     private static final String PLACEHOLDER_TAG = "<script src=\"vertx-console-placeholder.js\"></script>";
     private boolean mounted = false;
 
+    /**
+     * Mounts the console under the base path
+     *
+     * @param vertx  the Vert.x instance
+     * @param router the router to mount the console on
+     * @return the registry
+     */
     public WebConsoleRegistry mount(Vertx vertx, Router router) {
         if (pages.size() == 0) {
             throw new IllegalStateException("At least one page must be added before mounting");
