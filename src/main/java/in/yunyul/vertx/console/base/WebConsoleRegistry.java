@@ -30,12 +30,7 @@ public class WebConsoleRegistry {
         return new WebConsoleRegistry(basePath);
     }
 
-    /**
-     * Creates the registry using the specified base path
-     *
-     * @param basePath the base path to mount the registry under
-     */
-    public WebConsoleRegistry(String basePath) {
+    private WebConsoleRegistry(String basePath) {
         // Remove trailing slashes
         if (basePath.endsWith("/")) {
             basePath = basePath.substring(0, basePath.length() - 1);
