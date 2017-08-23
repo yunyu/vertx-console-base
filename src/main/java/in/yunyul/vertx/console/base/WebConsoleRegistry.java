@@ -54,7 +54,7 @@ public class WebConsoleRegistry {
     private boolean cacheBusterEnabled;
 
     /**
-     * Enables cache busting (query parameter) randomization on injected scripts
+     * Enables cache busting (query parameter randomization) on injected scripts
      *
      * @param enabled whether the cache buster should be enabled
      * @return the registry
